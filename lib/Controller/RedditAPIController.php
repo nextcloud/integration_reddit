@@ -69,34 +69,8 @@ class RedditAPIController extends Controller {
         if ($this->accessToken === '') {
             return new DataResponse($result, 400);
         }
-        $result = $this->redditAPIService->getNotifications($this->accessToken, $since, false);
+        $result = $this->redditAPIService->getNotifications($this->accessToken, $since);
         if (is_array($result)) {
-            $response = new DataResponse($result);
-        } else {
-            $response = new DataResponse($result, 401);
-        }
-        return $response;
-    }
-
-    /**
-     * @NoAdminRequired
-     */
-    public function unsubscribeNotification($id) {
-        $result = $this->redditAPIService->unsubscribeNotification($this->accessToken, $id);
-        if (is_null($result) or is_array($result)) {
-            $response = new DataResponse($result);
-        } else {
-            $response = new DataResponse($result, 401);
-        }
-        return $response;
-    }
-
-    /**
-     * @NoAdminRequired
-     */
-    public function markNotificationAsRead($id) {
-        $result = $this->redditAPIService->markNotificationAsRead($this->accessToken, $id);
-        if (is_null($result) or is_array($result)) {
             $response = new DataResponse($result);
         } else {
             $response = new DataResponse($result, 401);
@@ -109,8 +83,8 @@ class RedditAPIController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function getAvatar($url) {
-        $response = new DataDisplayResponse($this->redditAPIService->getAvatar($url));
+    public function getAvatar($username) {
+        $response = new DataDisplayResponse($this->redditAPIService->getAvatar($username, $this->accessToken));
         $response->cacheFor(60*60*24);
         return $response;
     }

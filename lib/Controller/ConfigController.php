@@ -99,21 +99,18 @@ class ConfigController extends Controller {
         $this->config->setUserValue($this->userId, 'reddit', 'oauth_state', '');
 
         if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
-            $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('mastodon.config.oauthRedirect');
-            $result = $this->requestOAuthAccessToken([
+            $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('reddit.config.oauthRedirect');
+            $result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
                 'grant_type' => 'authorization_code',
-                //'client_id' => $clientID,
-                //'client_secret' => $clientSecret,
                 'code' => $code,
                 'redirect_uri' => $redirect_uri,
-                //'state' => $state
             ], 'POST');
             if (is_array($result) and isset($result['access_token'])) {
                 $accessToken = $result['access_token'];
                 $this->config->setUserValue($this->userId, 'reddit', 'token', $accessToken);
                 return new RedirectResponse(
                     $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'linked-accounts']) .
-                    '?redditToken=success'
+                    '?redditToken=success&scope='.$result['scope'].'&type='.$result['token_type'].'&expires_in='.$result['expires_in']
                 );
             }
             $result = $this->l->t('Error getting OAuth access token');

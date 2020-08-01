@@ -2,36 +2,21 @@
     <DashboardWidget :items="items"
         :showMore="true"
         @moreClicked="onMoreClick"
-        @unsubscribe="onUnsubscribe"
-        @markRead="onMarkRead"
-        :loading="state === 'loading'"
-        :itemMenu="itemMenu">
-        <!-- if we want to override the item component -->
-        <!--template v-slot:default="{ item }">
-            {{ item.mainText }}
-        </template-->
-
-        <!-- if we want to define the item popover (works with DashboardWidgetItem component only) -->
-        <!--template v-slot:popover="{ item }">
-            <h3>{{ item.subText }}</h3>
-            {{ item.mainText }}<br/>
-            {{ item.popFormattedDate }}<br/><br/>
-            {{ item.popContent }}
-        </template-->
+        :loading="state === 'loading'">
         <template v-slot:empty-content>
             <div v-if="state === 'no-token'">
                 <a :href="settingsUrl">
-                    {{ t('github', 'Click here to configure the access to your Github account.')}}
+                    {{ t('reddit', 'Click here to configure the access to your Reddit account.')}}
                 </a>
             </div>
             <div v-else-if="state === 'error'">
                 <a :href="settingsUrl">
-                    {{ t('github', 'Incorrect access token.') }}
-                    {{ t('github', 'Click here to configure the access to your Github account.')}}
+                    {{ t('reddit', 'Incorrect access token.') }}
+                    {{ t('reddit', 'Click here to configure the access to your Reddit account.')}}
                 </a>
             </div>
             <div v-else-if="state === 'ok'">
-                {{ t('github', 'Nothing to show') }}
+                {{ t('reddit', 'Nothing to show') }}
             </div>
         </template>
     </DashboardWidget>
@@ -72,16 +57,7 @@ export default {
             state: 'loading',
             settingsUrl: generateUrl('/settings/user/linked-accounts'),
             darkThemeColor: OCA.Accessibility.theme === 'dark' ? '181818' : 'ffffff',
-            itemMenu: {
-                'markRead': {
-                    text: t('github', 'Mark as read'),
-                    icon: 'icon-checkmark',
-                },
-                'unsubscribe': {
-                    text: t('github', 'Unsubscribe'),
-                    icon: 'icon-unsubscribe',
-                }
-            },
+            themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
         }
     },
 
@@ -91,16 +67,13 @@ export default {
                 return {
                     id: n.id,
                     targetUrl: this.getNotificationTarget(n),
-                    avatarUrl: this.getRepositoryAvatarUrl(n),
+                    avatarUrl: this.getAvatarUrl(n),
                     //avatarUsername: '',
                     overlayIconUrl: this.getNotificationTypeImage(n),
-                    mainText: n.subject.title,
+                    mainText: n.subject,
                     subText: this.getSubline(n),
                 }
             })
-        },
-        lastMoment() {
-            return moment(this.lastDate)
         },
     },
 
@@ -112,7 +85,7 @@ export default {
                     since: this.lastDate
                 }
             }
-            axios.get(generateUrl('/apps/github/notifications'), req).then((response) => {
+            axios.get(generateUrl('/apps/reddit/notifications'), req).then((response) => {
                 this.processNotifications(response.data)
                 this.state = 'ok'
             }).catch((error) => {
@@ -120,7 +93,7 @@ export default {
                 if (error.response && error.response.status === 400) {
                     this.state = 'no-token'
                 } else if (error.response && error.response.status === 401) {
-                    showError(t('github', 'Failed to get Github notifications.'))
+                    showError(t('reddit', 'Failed to get Reddit notifications.'))
                     this.state = 'error'
                 } else {
                     // there was an error in notif processing
@@ -132,7 +105,7 @@ export default {
             if (this.lastDate) {
                 // just add those which are more recent than our most recent one
                 let i = 0;
-                while (i < newNotifications.length && this.lastMoment.isBefore(newNotifications[i].updated_at)) {
+                while (i < newNotifications.length && this.lastDate < newNotifications[i].created_utc) {
                     i++
                 }
                 if (i > 0) {
@@ -145,100 +118,40 @@ export default {
             }
             // update lastDate manually (explained in data)
             const nbNotif = this.notifications.length
-            this.lastDate = (nbNotif > 0) ? this.notifications[0].updated_at : null
+            this.lastDate = (nbNotif > 0) ? this.notifications[0].created_utc : null
         },
         filter(notifications) {
+            return notifications
             // only keep the unread ones with specific reasons
             return notifications.filter((n) => {
                 return (n.unread && ['assign', 'mention', 'review_requested'].includes(n.reason))
             })
         },
         onMoreClick() {
-            const win = window.open('https://github.com/notifications', '_blank')
+            const win = window.open('https://reddit.com', '_blank')
             win.focus()
         },
-        onUnsubscribe(item) {
-            const i = this.notifications.findIndex((n) => n.id === item.id)
-            if (i !== -1) {
-                this.notifications.splice(i, 1)
-            }
-            this.editNotification(item, 'unsubscribe')
-        },
-        onMarkRead(item) {
-            const i = this.notifications.findIndex((n) => n.id === item.id)
-            if (i !== -1) {
-                this.notifications.splice(i, 1)
-            }
-            this.editNotification(item, 'mark-read')
-        },
-        editNotification(item, action) {
-            axios.put(generateUrl('/apps/github/notifications/' + item.id + '/' + action)).then((response) => {
-            }).catch((error) => {
-                showError(t('github', 'Failed to edit Github notification.'))
-            })
-        },
-        getRepositoryAvatarUrl(n) {
-            return (n.repository && n.repository.owner && n.repository.owner.avatar_url) ?
-                    generateUrl('/apps/github/avatar?') + encodeURIComponent('url') + '=' + encodeURIComponent(n.repository.owner.avatar_url) :
+        getAvatarUrl(n) {
+            return (n.author) ?
+                    generateUrl('/apps/reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author) :
                     ''
         },
         getNotificationTarget(n) {
-            return n.subject.url
-                .replace('api.github.com', 'github.com')
-                .replace('/repos/', '/')
-                .replace('/pulls/', '/pull/')
-        },
-        getNotificationContent(n) {
-            // reason : mention, comment, review_requested, state_change
-            if (n.reason === 'mention') {
-                if (n.subject.type === 'PullRequest') {
-                    return t('github', 'You were mentioned in a pull request')
-                } else if (n.subject.type === 'Issue') {
-                    return t('github', 'You were mentioned in an issue')
-                }
-            } else if (n.reason === 'comment') {
-                return t('github', 'Comment')
-            } else if (n.reason === 'review_requested') {
-                return t('github', 'Your review was requested')
-            } else if (n.reason === 'state_change') {
-                if (n.subject.type === 'PullRequest') {
-                    return t('github', 'Pull request state changed')
-                } else if (n.subject.type === 'Issue') {
-                    return t('github', 'Issue state changed')
-                }
-            } else if (n.reason === 'assign') {
-                return t('github', 'You are assigned')
-            }
-            return ''
-        },
-        getNotificationActionChar(n) {
-            if (['review_requested', 'assign'].includes(n.reason)) {
-                return '👁 '
-            } else if (['comment', 'mention'].includes(n.reason)) {
-                return '🗨 '
-            }
-            return ''
+            return 'https://www.reddit.com/message/messages/' + n.id
         },
         getSubline(n) {
-            return this.getNotificationActionChar(n) + ' ' + n.repository.name + this.getTargetIdentifier(n)
+            return '@' + n.author
         },
         getNotificationTypeImage(n) {
-            if (n.subject.type === 'PullRequest') {
-                return generateUrl('/svg/github/pull_request?color=' + this.darkThemeColor)
-            } else if (n.subject.type === 'Issue') {
-                return generateUrl('/svg/github/issue?color=' + this.darkThemeColor)
-            }
-            return ''
-        },
-        getTargetIdentifier(n) {
-            if (['PullRequest', 'Issue'].includes(n.subject.type)) {
-                const parts = n.subject.url.split('/')
-                return '#' + parts[parts.length - 1]
+            if (n.notification_type === 'privatemessage') {
+                return generateUrl('/svg/reddit/message?color=' + this.themingColor)
+            } else if (n.type === 'post') {
+                return generateUrl('/svg/reddit/post?color=' + this.themingColor)
             }
             return ''
         },
         getFormattedDate(n) {
-            return moment(n.updated_at).locale(this.locale).format('LLL')
+            return moment(parseInt(n.created_utc) * 1000).locale(this.locale).format('LLL')
         },
     },
 }

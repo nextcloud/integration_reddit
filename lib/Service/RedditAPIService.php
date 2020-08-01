@@ -36,42 +36,38 @@ class RedditAPIService {
         $this->client = $clientService->newClient();
     }
 
-    public function getAvatar($url) {
-        return $this->client->get($url)->getBody();
+    public function getAvatar($username, $accessToken) {
+        $response = $this->request($accessToken, 'user/' . urlencode($username) . '/about');
+        if (is_array($response) and isset($response['data']) and isset($response['data']['icon_img'])) {
+            $url = $response['data']['icon_img'];
+            return $this->client->get($url)->getBody();
+        }
+        return '';
     }
 
-    public function getNotifications($accessToken, $since = null, $participating = null) {
+    public function getNotifications($accessToken, $since = null) {
         $params = [];
-        if (is_null($since)) {
-            $twoWeeksEarlier = new \DateTime();
-            $twoWeeksEarlier->sub(new \DateInterval('P14D'));
-            $params['since'] = $twoWeeksEarlier->format('Y-m-d\TH:i:s\Z');
-        } else {
-            $params['since'] = $since;
-        }
-        if (!is_null($participating)) {
-            $params['participating'] = $participating ? 'true' : 'false';
-        }
-        $result = $this->request($accessToken, 'notifications', $params);
-        return $result;
-    }
+        //if (!is_null($since)) {
+        //    $params['since'] = $since;
+        //}
 
-    public function unsubscribeNotification($accessToken, $id) {
-        $params = [
-            'ignored' => true
-        ];
-        $result = $this->request($accessToken, 'notifications/threads/' . $id . '/subscription', $params, 'PUT');
-        return $result;
-    }
-
-    public function markNotificationAsRead($accessToken, $id) {
-        $result = $this->request($accessToken, 'notifications/threads/' . $id, [], 'POST');
-        return $result;
+        $messages = [];
+        $result = $this->request($accessToken, 'message/inbox', $params);
+        if (is_array($result) and isset($result['data']) and isset($result['data']['children']) and is_array($result['data']['children'])) {
+            foreach ($result['data']['children'] as $m) {
+                if (is_array($m) and isset($m['data']) and isset($m['data']['author']) and isset($m['data']['subject'])) {
+                    $theMessage = $m['data'];
+                    $theMessage['notification_type'] = 'privatemessage';
+                    array_push($messages, $theMessage);
+                }
+            }
+        }
+        return $messages;
     }
 
     public function request($accessToken, $endPoint, $params = [], $method = 'GET') {
         try {
-            $url = 'https://www.reddit.com/api/v1/' . $endPoint;
+            $url = 'https://oauth.reddit.com/' . $endPoint;
             $options = [
                 'headers' => [
                     'Authorization' => 'bearer ' . $accessToken,
