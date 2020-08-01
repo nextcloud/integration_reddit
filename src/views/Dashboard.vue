@@ -144,9 +144,9 @@ export default {
         },
         getNotificationTypeImage(n) {
             if (n.notification_type === 'privatemessage') {
-                return generateUrl('/svg/reddit/message?color=' + this.themingColor)
+                return generateUrl('/svg/reddit/message?color=ffffff')
             } else if (n.type === 'post') {
-                return generateUrl('/svg/reddit/post?color=' + this.themingColor)
+                return generateUrl('/svg/reddit/post?color=ffffff')
             }
             return ''
         },
