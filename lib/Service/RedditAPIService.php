@@ -13,6 +13,7 @@ namespace OCA\Reddit\Service;
 
 use OCP\IL10N;
 use OCP\ILogger;
+use OCP\IConfig;
 use OCP\Http\Client\IClientService;
 
 class RedditAPIService {
@@ -27,11 +28,15 @@ class RedditAPIService {
         string $appName,
         ILogger $logger,
         IL10N $l10n,
-        IClientService $clientService
+        IConfig $config,
+        IClientService $clientService,
+        $userId
     ) {
         $this->appName = $appName;
         $this->l10n = $l10n;
         $this->logger = $logger;
+        $this->config = $config;
+        $this->userId = $userId;
         $this->clientService = $clientService;
         $this->client = $clientService->newClient();
     }
