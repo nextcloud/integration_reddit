@@ -29,6 +29,8 @@ use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Controller;
 use OCP\Http\Client\IClientService;
 
+use OCA\Reddit\Service\RedditAPIService;
+
 class ConfigController extends Controller {
 
 
@@ -48,6 +50,7 @@ class ConfigController extends Controller {
                                 IL10N $l,
                                 ILogger $logger,
                                 IClientService $clientService,
+                                RedditAPIService $redditAPIService,
                                 $userId) {
         parent::__construct($AppName, $request);
         $this->l = $l;
@@ -60,6 +63,7 @@ class ConfigController extends Controller {
         $this->urlGenerator = $urlGenerator;
         $this->logger = $logger;
         $this->clientService = $clientService;
+        $this->redditAPIService = $redditAPIService;
     }
 
     /**
@@ -100,7 +104,7 @@ class ConfigController extends Controller {
 
         if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
             $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('reddit.config.oauthRedirect');
-            $result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
+            $result = $this->redditAPIService->requestOAuthAccessToken($clientID, $clientSecret, [
                 'grant_type' => 'authorization_code',
                 'code' => $code,
                 'redirect_uri' => $redirect_uri,
@@ -108,6 +112,8 @@ class ConfigController extends Controller {
             if (is_array($result) and isset($result['access_token'])) {
                 $accessToken = $result['access_token'];
                 $this->config->setUserValue($this->userId, 'reddit', 'token', $accessToken);
+                $refreshToken = $result['refresh_token'];
+                $this->config->setUserValue($this->userId, 'reddit', 'refresh_token', $refreshToken);
                 return new RedirectResponse(
                     $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'linked-accounts']) .
                     '?redditToken=success&scope='.$result['scope'].'&type='.$result['token_type'].'&expires_in='.$result['expires_in']
@@ -123,46 +129,4 @@ class ConfigController extends Controller {
         );
     }
 
-    private function requestOAuthAccessToken($clientID, $clientSecret, $params = [], $method = 'GET') {
-        $client = $this->clientService->newClient();
-        try {
-            $url = 'https://www.reddit.com/api/v1/access_token';
-            $options = [
-                'headers' => [
-                    'Authorization' => 'Basic '. base64_encode($clientID. ':' . $clientSecret),
-                    'User-Agent' => 'Nextcloud Reddit integration'
-                ],
-            ];
-
-            if (count($params) > 0) {
-                if ($method === 'GET') {
-                    $paramsContent = http_build_query($params);
-                    $url .= '?' . $paramsContent;
-                } else {
-                    $options['body'] = $params;
-                }
-            }
-
-            if ($method === 'GET') {
-                $response = $client->get($url, $options);
-            } else if ($method === 'POST') {
-                $response = $client->post($url, $options);
-            } else if ($method === 'PUT') {
-                $response = $client->put($url, $options);
-            } else if ($method === 'DELETE') {
-                $response = $client->delete($url, $options);
-            }
-            $body = $response->getBody();
-            $respCode = $response->getStatusCode();
-
-            if ($respCode >= 400) {
-                return $this->l->t('OAuth access token refused');
-            } else {
-                return json_decode($body, true);
-            }
-        } catch (\Throwable $e) {
-            $this->logger->warning('Reddit OAuth error : '.$e, array('app' => $this->appName));
-            return $e;
-        }
-    }
 }

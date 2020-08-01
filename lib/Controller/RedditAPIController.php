@@ -59,6 +59,9 @@ class RedditAPIController extends Controller {
         $this->logger = $logger;
         $this->redditAPIService = $redditAPIService;
         $this->accessToken = $this->config->getUserValue($this->userId, 'reddit', 'token', '');
+        $this->refreshToken = $this->config->getUserValue($this->userId, 'reddit', 'refresh_token', '');
+        $this->clientID = $this->config->getAppValue('reddit', 'client_id', '');
+        $this->clientSecret = $this->config->getAppValue('reddit', 'client_secret', '');
     }
 
     /**
@@ -69,7 +72,7 @@ class RedditAPIController extends Controller {
         if ($this->accessToken === '') {
             return new DataResponse($result, 400);
         }
-        $result = $this->redditAPIService->getNotifications($this->accessToken, $since);
+        $result = $this->redditAPIService->getNotifications($this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $since);
         if (is_array($result)) {
             $response = new DataResponse($result);
         } else {
@@ -84,7 +87,9 @@ class RedditAPIController extends Controller {
      * @NoCSRFRequired
      */
     public function getAvatar($username) {
-        $response = new DataDisplayResponse($this->redditAPIService->getAvatar($username, $this->accessToken));
+        $response = new DataDisplayResponse(
+            $this->redditAPIService->getAvatar($this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken, $username)
+        );
         $response->cacheFor(60*60*24);
         return $response;
     }
