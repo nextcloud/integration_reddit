@@ -93,7 +93,10 @@ export default {
                 if (error.response && error.response.status === 400) {
                     this.state = 'no-token'
                 } else if (error.response && error.response.status === 401) {
-                    showError(t('reddit', 'Failed to get Reddit notifications.'))
+                    showError(
+                        t('reddit', 'Failed to get Reddit notifications.') + ' ' +
+                        error.response.request.responseText
+                    )
                     this.state = 'error'
                 } else {
                     // there was an error in notif processing
