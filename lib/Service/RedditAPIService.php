@@ -56,9 +56,9 @@ class RedditAPIService {
         //    $params['since'] = $since;
         //}
 
-        $messages = [];
         $result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'message/inbox', $params);
         if (is_array($result) and isset($result['data']) and isset($result['data']['children']) and is_array($result['data']['children'])) {
+            $messages = [];
             foreach ($result['data']['children'] as $m) {
                 if (is_array($m) and isset($m['data']) and isset($m['data']['author']) and isset($m['data']['subject'])) {
                     $theMessage = $m['data'];
@@ -66,8 +66,10 @@ class RedditAPIService {
                     array_push($messages, $theMessage);
                 }
             }
+            return $messages;
+        } else {
+            return $result;
         }
-        return $messages;
     }
 
     public function request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params = [], $method = 'GET') {
@@ -108,17 +110,29 @@ class RedditAPIService {
             }
         } catch (\Exception $e) {
             $this->logger->warning('Reddit API error : '.$e, array('app' => $this->appName));
-            $this->logger->warning('Trying to REFRESH the access token', array('app' => $this->appName));
-            // try to refresh the token
-            $result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
-                'grant_type' => 'refresh_token',
-                'refresh_token' => $refreshToken,
-            ], 'POST');
-            if (is_array($result) and isset($result['access_token'])) {
-                $accessToken = $result['access_token'];
-                $this->config->setUserValue($this->userId, 'reddit', 'token', $accessToken);
-                // retry the request with new access token
-                return $this->request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params, $method);
+            $response = $e->getResponse();
+            $headers = $response->getHeaders();
+            if (isset($headers['www-authenticate']) and count(array_keys($headers['www-authenticate']) > 0)) {
+                $keys = array_keys($headers['www-authenticate']);
+                $wwwa = $headers['www-authenticate'][$keys[0]];
+                if (strpos($wwwa, 'invalid_token') !== false) {
+                    $this->logger->warning('Trying to REFRESH the access token', array('app' => $this->appName));
+                    // try to refresh the token
+                    $result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
+                        'grant_type' => 'refresh_token',
+                        'refresh_token' => $refreshToken,
+                    ], 'POST');
+                    if (is_array($result) and isset($result['access_token'])) {
+                        $this->logger->warning('Reddit access token successfully refreshed', array('app' => $this->appName));
+                        $accessToken = $result['access_token'];
+                        $this->config->setUserValue($this->userId, 'reddit', 'token', $accessToken);
+                        // retry the request with new access token
+                        return $this->request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params, $method);
+                    } else {
+                        // impossible to refresh the token
+                        return $this->l10n->t('Token is not valid anymore. Impossible to refresh it.');
+                    }
+                }
             }
             return $e;
         }
