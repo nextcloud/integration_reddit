@@ -65,26 +65,31 @@ export default {
         items() {
             return this.notifications.map((n) => {
                 return {
-                    id: n.id,
+                    id: n.name,
                     targetUrl: this.getNotificationTarget(n),
                     avatarUrl: this.getAvatarUrl(n),
-                    //avatarUsername: '',
+                    avatarUsername: n.subreddit,
                     overlayIconUrl: this.getNotificationTypeImage(n),
-                    mainText: n.subject,
+                    mainText: n.title,
                     subText: this.getSubline(n),
                 }
             })
+        },
+        lastId() {
+            const nbNotif = this.notifications.length
+            return (nbNotif > 0) ? this.notifications[0].name : null
         },
     },
 
     methods: {
         fetchNotifications() {
             const req = {}
-            if (this.lastDate) {
+            // dunnow why after param does not work
+            /*if (this.lastId) {
                 req.params = {
-                    since: this.lastDate
+                    after: this.lastId
                 }
-            }
+            }*/
             axios.get(generateUrl('/apps/reddit/notifications'), req).then((response) => {
                 this.processNotifications(response.data)
                 this.state = 'ok'
@@ -125,30 +130,30 @@ export default {
         },
         filter(notifications) {
             return notifications
-            // only keep the unread ones with specific reasons
-            return notifications.filter((n) => {
-                return (n.unread && ['assign', 'mention', 'review_requested'].includes(n.reason))
-            })
         },
         onMoreClick() {
-            const win = window.open('https://reddit.com', '_blank')
+            const win = window.open('https://reddit.com/new', '_blank')
             win.focus()
         },
         getAvatarUrl(n) {
-            return (n.author) ?
+            if (n.notification_type === 'privatemessage') {
+                return (n.author) ?
                     generateUrl('/apps/reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author) :
                     ''
+            } else if (n.notification_type === 'post') {
+                return generateUrl('/apps/reddit/avatar?') + encodeURIComponent('subreddit') + '=' + encodeURIComponent(n.subreddit)
+            }
         },
         getNotificationTarget(n) {
-            return 'https://www.reddit.com/message/messages/' + n.id
+            return 'https://reddit.com' + n.permalink
         },
         getSubline(n) {
-            return '@' + n.author
+            return '/r/' + n.subreddit
         },
         getNotificationTypeImage(n) {
             if (n.notification_type === 'privatemessage') {
                 return generateUrl('/svg/reddit/message?color=ffffff')
-            } else if (n.type === 'post') {
+            } else if (n.notification_type === 'post') {
                 return generateUrl('/svg/reddit/post?color=ffffff')
             }
             return ''

@@ -41,35 +41,70 @@ class RedditAPIService {
         $this->client = $clientService->newClient();
     }
 
-    public function getAvatar($accessToken, $refreshToken, $clientID, $clientSecret, $username) {
-        $response = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'user/' . urlencode($username) . '/about');
-        if (is_array($response) and isset($response['data']) and isset($response['data']['icon_img'])) {
-            $url = $response['data']['icon_img'];
+    public function getAvatar($accessToken, $refreshToken, $clientID, $clientSecret, $username, $subreddit) {
+        $url = null;
+        if (!is_null($username)) {
+            $response = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'user/' . urlencode($username) . '/about');
+            if (is_array($response) and isset($response['data']) and isset($response['data']['icon_img']) and $response['data']['icon_img'] !== '') {
+                $url = $response['data']['icon_img'];
+            }
+        } else {
+            $response = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'r/' . urlencode($subreddit) . '/about');
+            if (is_array($response) and isset($response['data'])) {
+                if (isset($response['data']['community_icon']) and $response['data']['community_icon'] !== '') {
+                    $url = parse_url($response['data']['community_icon']);
+                    $url = $url['scheme'] . '://' . $url['host'] . $url['path'];
+                }
+                else if (isset($response['data']['icon_img']) and $response['data']['icon_img'] !== '') {
+                    $url = $response['data']['icon_img'];
+                }
+            }
+        }
+        if ($url !== null) {
             return $this->client->get($url)->getBody();
         }
         return '';
     }
 
-    public function getNotifications($accessToken, $refreshToken, $clientID, $clientSecret, $since = null) {
+    public function getNotifications($accessToken, $refreshToken, $clientID, $clientSecret, $after = null) {
         $params = [];
-        //if (!is_null($since)) {
-        //    $params['since'] = $since;
-        //}
+        if (!is_null($after)) {
+            $params['after'] = $after;
+        }
 
-        $result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'message/inbox', $params);
+        // get new stuff
+        $posts = [];
+        $result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'new', $params);
         if (is_array($result) and isset($result['data']) and isset($result['data']['children']) and is_array($result['data']['children'])) {
-            $messages = [];
+            $posts = [];
             foreach ($result['data']['children'] as $m) {
-                if (is_array($m) and isset($m['data']) and isset($m['data']['author']) and isset($m['data']['subject'])) {
-                    $theMessage = $m['data'];
-                    $theMessage['notification_type'] = 'privatemessage';
-                    array_push($messages, $theMessage);
+                if (is_array($m) and isset($m['data']) and isset($m['data']['subreddit']) and isset($m['data']['title'])) {
+                    $post = $m['data'];
+                    $post['notification_type'] = 'post';
+                    array_push($posts, $post);
                 }
             }
-            return $messages;
         } else {
             return $result;
         }
+
+        return $posts;
+
+        //// private messages
+        //$result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'message/inbox', $params);
+        //if (is_array($result) and isset($result['data']) and isset($result['data']['children']) and is_array($result['data']['children'])) {
+        //    $messages = [];
+        //    foreach ($result['data']['children'] as $m) {
+        //        if (is_array($m) and isset($m['data']) and isset($m['data']['author']) and isset($m['data']['subject'])) {
+        //            $theMessage = $m['data'];
+        //            $theMessage['notification_type'] = 'privatemessage';
+        //            array_push($messages, $theMessage);
+        //        }
+        //    }
+        //    return $messages;
+        //} else {
+        //    return $result;
+        //}
     }
 
     public function request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params = [], $method = 'GET') {

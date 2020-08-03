@@ -68,11 +68,11 @@ class RedditAPIController extends Controller {
      * get notification list
      * @NoAdminRequired
      */
-    public function getNotifications($since = null) {
+    public function getNotifications($after = null) {
         if ($this->accessToken === '') {
             return new DataResponse($result, 400);
         }
-        $result = $this->redditAPIService->getNotifications($this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $since);
+        $result = $this->redditAPIService->getNotifications($this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $after);
         if (is_array($result)) {
             $response = new DataResponse($result);
         } else {
@@ -86,9 +86,11 @@ class RedditAPIController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function getAvatar($username) {
+    public function getAvatar($username = null, $subreddit = null) {
         $response = new DataDisplayResponse(
-            $this->redditAPIService->getAvatar($this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken, $username)
+            $this->redditAPIService->getAvatar(
+                $this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken, $username, $subreddit
+            )
         );
         $response->cacheFor(60*60*24);
         return $response;
