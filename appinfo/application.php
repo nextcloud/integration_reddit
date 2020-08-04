@@ -18,7 +18,7 @@ use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 
 use OCA\Reddit\Controller\PageController;
-use OCA\Reddit\Dashboard\RedditPanel;
+use OCA\Reddit\Dashboard\RedditWidget;
 
 /**
  * Class Application
@@ -39,7 +39,7 @@ class Application extends App implements IBootstrap {
     }
 
     public function register(IRegistrationContext $context): void {
-        $context->registerDashboardPanel(RedditPanel::class);
+        $context->registerDashboardWidget(RedditWidget::class);
     }
 
     public function boot(IBootContext $context): void {

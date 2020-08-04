@@ -23,9 +23,10 @@
 
 namespace OCA\Reddit\Dashboard;
 
+use OCP\Dashboard\IWidget;
 use OCP\IL10N;
 
-class RedditPanel implements \OCP\Dashboard\IPanel {
+class RedditWidget implements IWidget {
 
 	/** @var IL10N */
 	private $l10n;
