@@ -1,7 +1,6 @@
 <template>
     <DashboardWidget :items="items"
-        :showMore="true"
-        @moreClicked="onMoreClick"
+        :showMoreUrl="showMoreUrl"
         :loading="state === 'loading'">
         <template v-slot:empty-content>
             <div v-if="state === 'no-token'">
@@ -49,6 +48,7 @@ export default {
     data() {
         return {
             notifications: [],
+            showMoreUrl: 'https://reddit.com/new',
             // lastDate could be computed but we want to keep the value when first notification is removed
             // to avoid getting it again on next request
             lastDate: null,
@@ -130,10 +130,6 @@ export default {
         },
         filter(notifications) {
             return notifications
-        },
-        onMoreClick() {
-            const win = window.open('https://reddit.com/new', '_blank')
-            win.focus()
         },
         getAvatarUrl(n) {
             if (n.notification_type === 'privatemessage') {
