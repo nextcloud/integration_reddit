@@ -35,11 +35,17 @@ class Application extends App implements IBootstrap {
     public function __construct(array $urlParams = []) {
         parent::__construct('reddit', $urlParams);
 
-        $container = $this->getContainer();
+        $this->container = $this->getContainer();
     }
 
     public function register(IRegistrationContext $context): void {
-        $context->registerDashboardWidget(RedditWidget::class);
+        // enable dashboard widget only if client ID and secret were defined by an admin
+        $config = $this->container->query(\OCP\IConfig::class);
+        $clientId = $config->getAppValue('reddit', 'client_id', '');
+        $clientSecret = $config->getAppValue('reddit', 'client_secret', '');
+        if ($clientId !== '' and $clientSecret !== '') {
+            $context->registerDashboardWidget(RedditWidget::class);
+        }
     }
 
     public function boot(IBootContext $context): void {

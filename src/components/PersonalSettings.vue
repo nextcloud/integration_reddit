@@ -1,5 +1,5 @@
 <template>
-    <div id="reddit_prefs" class="section">
+    <div id="reddit_prefs" class="section" v-if="state.client_id && state.client_secret">
             <h2>
                 <a class="icon icon-reddit"></a>
                 {{ t('reddit', 'Reddit') }}
