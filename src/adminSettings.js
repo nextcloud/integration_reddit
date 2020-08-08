@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/* jshint esversion: 6 */
 
 /**
  * Nextcloud - reddit
@@ -18,6 +18,6 @@ import AdminSettings from './components/AdminSettings'
 'use strict'
 
 new Vue({
-    el: "#reddit_prefs",
-    render: h => h(AdminSettings),
+	el: '#reddit_prefs',
+	render: h => h(AdminSettings),
 })
