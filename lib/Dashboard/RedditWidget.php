@@ -76,7 +76,7 @@ class RedditWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-        \OC_Util::addScript('reddit', 'dashboard');
+        \OC_Util::addScript('reddit', 'reddit-dashboard');
         \OC_Util::addStyle('reddit', 'dashboard');
     }
 }

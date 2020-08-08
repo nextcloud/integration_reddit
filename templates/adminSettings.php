@@ -1,5 +1,5 @@
 <?php
-script('reddit', 'adminSettings');
+script('reddit', 'reddit-adminSettings');
 ?>
 
 <div id="reddit_prefs"></div>
