@@ -48,7 +48,7 @@ class RedditWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function getTitle(): string {
-        return $this->l10n->t('Reddit');
+        return $this->l10n->t('Reddit news');
         }
 
 	/**
