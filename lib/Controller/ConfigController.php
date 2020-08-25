@@ -32,6 +32,8 @@ use OCP\Http\Client\IClientService;
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
 
+require_once __DIR__ . '/../constants.php';
+
 class ConfigController extends Controller {
 
 
@@ -91,20 +93,38 @@ class ConfigController extends Controller {
     }
 
     /**
+     * receive oauth payload with protocol handler redirect
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function oauthProtocolRedirect($url) {
+        $parts = parse_url($url);
+        parse_str($parts['query'], $params);
+        return $this->oauthRedirect($params['code'], $params['state'], $params['error']);
+    }
+
+    /**
      * receive oauth code and get oauth access token
      * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function oauthRedirect($code, $state, $error) {
         $configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
-        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_CLIENT_ID);
+        $clientID = $clientID ? $clientID : DEFAULT_CLIENT_ID;
         $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
 
         // anyway, reset state
         $this->config->setUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
 
-        if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
-            $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('integration_reddit.config.oauthRedirect');
+        if ($clientID && $configState !== '' && $configState === $state) {
+            // if there is a client secret, then the app should be a 'classic' one redirecting to a web page
+            if ($clientSecret) {
+                $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('integration_reddit.config.oauthRedirect');
+            } else {
+                // otherwise it's redirecting to the protocol
+                $redirect_uri = 'web+nextcloudreddit://oauth-protocol-redirect';
+            }
             $result = $this->redditAPIService->requestOAuthAccessToken($clientID, $clientSecret, [
                 'grant_type' => 'authorization_code',
                 'code' => $code,

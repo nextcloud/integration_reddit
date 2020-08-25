@@ -12,6 +12,8 @@ use OCP\IInitialStateService;
 
 use OCA\Reddit\AppInfo\Application;
 
+require_once __DIR__ . '/../constants.php';
+
 class Personal implements ISettings {
 
     private $request;
@@ -44,7 +46,8 @@ class Personal implements ISettings {
         $token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
 
         // for OAuth
-        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_CLIENT_ID);
+        $clientID = $clientID ? $clientID : DEFAULT_CLIENT_ID;
         $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '') !== '';
 
         $userConfig = [

@@ -33,6 +33,8 @@ use OCP\AppFramework\Controller;
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
 
+require_once __DIR__ . '/../constants.php';
+
 class RedditAPIController extends Controller {
 
 
@@ -61,7 +63,8 @@ class RedditAPIController extends Controller {
         $this->redditAPIService = $redditAPIService;
         $this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
         $this->refreshToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'refresh_token', '');
-        $this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+        $this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_CLIENT_ID);
+        $this->$clientID = $this->$clientID ? $this->$clientID : DEFAULT_CLIENT_ID;
         $this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
     }
 
@@ -73,7 +76,9 @@ class RedditAPIController extends Controller {
         if ($this->accessToken === '') {
             return new DataResponse($result, 400);
         }
-        $result = $this->redditAPIService->getNotifications($this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $after);
+        $result = $this->redditAPIService->getNotifications(
+            $this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $after
+        );
         if (is_array($result)) {
             $response = new DataResponse($result);
         } else {
@@ -90,7 +95,8 @@ class RedditAPIController extends Controller {
     public function getAvatar($username = null, $subreddit = null) {
         $response = new DataDisplayResponse(
             $this->redditAPIService->getAvatar(
-                $this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken, $username, $subreddit
+                $this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken,
+                $username, $subreddit
             )
         );
         $response->cacheFor(60*60*24);

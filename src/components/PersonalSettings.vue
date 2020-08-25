@@ -1,5 +1,5 @@
 <template>
-	<div v-if="state.client_id && state.client_secret" id="reddit_prefs" class="section">
+	<div v-if="state.client_id" id="reddit_prefs" class="section">
 		<h2>
 			<a class="icon icon-reddit" />
 			{{ t('integration_reddit', 'Reddit integration') }}
@@ -48,7 +48,7 @@ export default {
 
 	computed: {
 		showOAuth() {
-			return this.state.client_id && this.state.client_secret
+			return this.state.client_id
 		},
 	},
 
@@ -64,6 +64,11 @@ export default {
 			showSuccess(t('integration_reddit', 'Reddit OAuth access token successfully retrieved!'))
 		} else if (rdToken === 'error') {
 			showError(t('integration_reddit', 'Reddit OAuth error:') + ' ' + urlParams.get('message'))
+		}
+
+		// register protocol handler
+		if (window.isSecureContext && window.navigator.registerProtocolHandler) {
+			window.navigator.registerProtocolHandler('web+nextcloudreddit', generateUrl('/apps/integration_reddit/oauth-protocol-redirect') + '?url=%s', 'Nextcloud Reddit integration')
 		}
 	},
 
@@ -95,8 +100,13 @@ export default {
 				})
 		},
 		onOAuthClick() {
-			const redirectEndpoint = generateUrl('/apps/integration_reddit/oauth-redirect')
-			const redirectUri = OC.getProtocol() + '://' + OC.getHostName() + redirectEndpoint
+			let redirectUri
+			if (this.state.client_secret) {
+				const redirectEndpoint = generateUrl('/apps/integration_reddit/oauth-redirect')
+				redirectUri = window.location.protocol + '//' + window.location.protocol + redirectEndpoint
+			} else {
+				redirectUri = 'web+nextcloudreddit://oauth-protocol-redirect'
+			}
 			const oauthState = Math.random().toString(36).substring(3)
 			const requestUrl = 'https://www.reddit.com/api/v1/authorize?client_id=' + encodeURIComponent(this.state.client_id)
 				+ '&redirect_uri=' + encodeURIComponent(redirectUri)
