@@ -30,6 +30,7 @@ use OCP\AppFramework\Controller;
 use OCP\Http\Client\IClientService;
 
 use OCA\Reddit\Service\RedditAPIService;
+use OCA\Reddit\AppInfo\Application;
 
 class ConfigController extends Controller {
 
@@ -72,7 +73,7 @@ class ConfigController extends Controller {
      */
     public function setConfig($values) {
         foreach ($values as $key => $value) {
-            $this->config->setUserValue($this->userId, 'reddit', $key, $value);
+            $this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
         }
         $response = new DataResponse(1);
         return $response;
@@ -83,7 +84,7 @@ class ConfigController extends Controller {
      */
     public function setAdminConfig($values) {
         foreach ($values as $key => $value) {
-            $this->config->setAppValue('reddit', $key, $value);
+            $this->config->setAppValue(Application::APP_ID, $key, $value);
         }
         $response = new DataResponse(1);
         return $response;
@@ -95,15 +96,15 @@ class ConfigController extends Controller {
      * @NoCSRFRequired
      */
     public function oauthRedirect($code, $state, $error) {
-        $configState = $this->config->getUserValue($this->userId, 'reddit', 'oauth_state', '');
-        $clientID = $this->config->getAppValue('reddit', 'client_id', '');
-        $clientSecret = $this->config->getAppValue('reddit', 'client_secret', '');
+        $configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+        $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
 
         // anyway, reset state
-        $this->config->setUserValue($this->userId, 'reddit', 'oauth_state', '');
+        $this->config->setUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
 
         if ($clientID and $clientSecret and $configState !== '' and $configState === $state) {
-            $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('reddit.config.oauthRedirect');
+            $redirect_uri = $this->urlGenerator->linkToRouteAbsolute('integration_reddit.config.oauthRedirect');
             $result = $this->redditAPIService->requestOAuthAccessToken($clientID, $clientSecret, [
                 'grant_type' => 'authorization_code',
                 'code' => $code,
@@ -111,9 +112,9 @@ class ConfigController extends Controller {
             ], 'POST');
             if (is_array($result) and isset($result['access_token'])) {
                 $accessToken = $result['access_token'];
-                $this->config->setUserValue($this->userId, 'reddit', 'token', $accessToken);
+                $this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
                 $refreshToken = $result['refresh_token'];
-                $this->config->setUserValue($this->userId, 'reddit', 'refresh_token', $refreshToken);
+                $this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
                 return new RedirectResponse(
                     $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'linked-accounts']) .
                     '?redditToken=success&scope='.$result['scope'].'&type='.$result['token_type'].'&expires_in='.$result['expires_in']

@@ -16,6 +16,8 @@ use OCP\ILogger;
 use OCP\IConfig;
 use OCP\Http\Client\IClientService;
 
+use OCA\Reddit\AppInfo\Application;
+
 class RedditAPIService {
 
     private $l10n;
@@ -160,7 +162,7 @@ class RedditAPIService {
                     if (is_array($result) and isset($result['access_token'])) {
                         $this->logger->warning('Reddit access token successfully refreshed', array('app' => $this->appName));
                         $accessToken = $result['access_token'];
-                        $this->config->setUserValue($this->userId, 'reddit', 'token', $accessToken);
+                        $this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
                         // retry the request with new access token
                         return $this->request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params, $method);
                     } else {

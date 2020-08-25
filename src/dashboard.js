@@ -17,7 +17,7 @@ import Dashboard from './views/Dashboard'
 
 document.addEventListener('DOMContentLoaded', function() {
 
-	OCA.Dashboard.register('reddit', (el, { widget }) => {
+	OCA.Dashboard.register('reddit_news', (el, { widget }) => {
 		const View = Vue.extend(Dashboard)
 		new View({
 			propsData: { title: widget.title },

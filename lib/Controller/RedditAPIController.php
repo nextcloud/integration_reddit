@@ -31,6 +31,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 
 use OCA\Reddit\Service\RedditAPIService;
+use OCA\Reddit\AppInfo\Application;
 
 class RedditAPIController extends Controller {
 
@@ -58,10 +59,10 @@ class RedditAPIController extends Controller {
         $this->config = $config;
         $this->logger = $logger;
         $this->redditAPIService = $redditAPIService;
-        $this->accessToken = $this->config->getUserValue($this->userId, 'reddit', 'token', '');
-        $this->refreshToken = $this->config->getUserValue($this->userId, 'reddit', 'refresh_token', '');
-        $this->clientID = $this->config->getAppValue('reddit', 'client_id', '');
-        $this->clientSecret = $this->config->getAppValue('reddit', 'client_secret', '');
+        $this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
+        $this->refreshToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'refresh_token', '');
+        $this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+        $this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
     }
 
     /**

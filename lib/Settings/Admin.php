@@ -10,6 +10,8 @@ use OCP\Util;
 use OCP\IURLGenerator;
 use OCP\IInitialStateService;
 
+use OCA\Reddit\AppInfo\Application;
+
 class Admin implements ISettings {
 
     private $request;
@@ -39,15 +41,15 @@ class Admin implements ISettings {
      * @return TemplateResponse
      */
     public function getForm() {
-        $clientID = $this->config->getAppValue('reddit', 'client_id', '');
-        $clientSecret = $this->config->getAppValue('reddit', 'client_secret', '');
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', '');
+        $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
 
         $adminConfig = [
             'client_id' => $clientID,
             'client_secret' => $clientSecret
         ];
         $this->initialStateService->provideInitialState($this->appName, 'admin-config', $adminConfig);
-        return new TemplateResponse('reddit', 'adminSettings');
+        return new TemplateResponse(Application::APP_ID, 'adminSettings');
     }
 
     public function getSection() {

@@ -2,23 +2,23 @@
 	<div v-if="state.client_id && state.client_secret" id="reddit_prefs" class="section">
 		<h2>
 			<a class="icon icon-reddit" />
-			{{ t('reddit', 'Reddit') }}
+			{{ t('integration_reddit', 'Reddit') }}
 		</h2>
 		<div class="reddit-grid-form">
 			<label for="reddit-token">
 				<a class="icon icon-category-auth" />
-				{{ t('reddit', 'Reddit access token') }}
+				{{ t('integration_reddit', 'Reddit access token') }}
 			</label>
 			<input id="reddit-token"
 				v-model="state.token"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('reddit', 'Get it with OAuth')"
+				:placeholder="t('integration_reddit', 'Get it with OAuth')"
 				@input="onInput"
 				@focus="readonly = false">
 			<button v-if="showOAuth" id="reddit-oauth" @click="onOAuthClick">
 				<span class="icon icon-external" />
-				{{ t('reddit', 'Get access with OAuth') }}
+				{{ t('integration_reddit', 'Get access with OAuth') }}
 			</button>
 		</div>
 	</div>
@@ -41,7 +41,7 @@ export default {
 
 	data() {
 		return {
-			state: loadState('reddit', 'user-config'),
+			state: loadState('integration_reddit', 'user-config'),
 			readonly: true,
 		}
 	},
@@ -57,12 +57,13 @@ export default {
 
 	mounted() {
 		const paramString = window.location.search.substr(1)
+		// eslint-disable-next-line
 		const urlParams = new URLSearchParams(paramString)
 		const rdToken = urlParams.get('redditToken')
 		if (rdToken === 'success') {
-			showSuccess(t('reddit', 'Reddit OAuth access token successfully retrieved!'))
+			showSuccess(t('integration_reddit', 'Reddit OAuth access token successfully retrieved!'))
 		} else if (rdToken === 'error') {
-			showError(t('reddit', 'Reddit OAuth error:') + ' ' + urlParams.get('message'))
+			showError(t('integration_reddit', 'Reddit OAuth error:') + ' ' + urlParams.get('message'))
 		}
 	},
 
@@ -79,14 +80,14 @@ export default {
 					token: this.state.token,
 				},
 			}
-			const url = generateUrl('/apps/reddit/config')
+			const url = generateUrl('/apps/integration_reddit/config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('reddit', 'Reddit options saved.'))
+					showSuccess(t('integration_reddit', 'Reddit options saved.'))
 				})
 				.catch((error) => {
 					showError(
-						t('reddit', 'Failed to save Reddit options')
+						t('integration_reddit', 'Failed to save Reddit options')
 						+ ': ' + error.response.request.responseText
 					)
 				})
@@ -94,7 +95,7 @@ export default {
 				})
 		},
 		onOAuthClick() {
-			const redirectEndpoint = generateUrl('/apps/reddit/oauth-redirect')
+			const redirectEndpoint = generateUrl('/apps/integration_reddit/oauth-redirect')
 			const redirectUri = OC.getProtocol() + '://' + OC.getHostName() + redirectEndpoint
 			const oauthState = Math.random().toString(36).substring(3)
 			const requestUrl = 'https://www.reddit.com/api/v1/authorize?client_id=' + encodeURIComponent(this.state.client_id)
@@ -109,14 +110,14 @@ export default {
 					oauth_state: oauthState,
 				},
 			}
-			const url = generateUrl('/apps/reddit/config')
+			const url = generateUrl('/apps/integration_reddit/config')
 			axios.put(url, req)
 				.then((response) => {
 					window.location.replace(requestUrl)
 				})
 				.catch((error) => {
 					showError(
-						t('reddit', 'Failed to save Reddit OAuth state')
+						t('integration_reddit', 'Failed to save Reddit OAuth state')
 						+ ': ' + error.response.request.responseText
 					)
 				})

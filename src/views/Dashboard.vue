@@ -6,17 +6,17 @@
 		<template v-slot:empty-content>
 			<div v-if="state === 'no-token'">
 				<a :href="settingsUrl">
-					{{ t('reddit', 'Click here to configure the access to your Reddit account.') }}
+					{{ t('integration_reddit', 'Click here to configure the access to your Reddit account.') }}
 				</a>
 			</div>
 			<div v-else-if="state === 'error'">
 				<a :href="settingsUrl">
-					{{ t('reddit', 'Incorrect access token.') }}
-					{{ t('reddit', 'Click here to configure the access to your Reddit account.') }}
+					{{ t('integration_reddit', 'Incorrect access token.') }}
+					{{ t('integration_reddit', 'Click here to configure the access to your Reddit account.') }}
 				</a>
 			</div>
 			<div v-else-if="state === 'ok'">
-				{{ t('reddit', 'Nothing to show') }}
+				{{ t('integration_reddit', 'Nothing to show') }}
 			</div>
 		</template>
 	</DashboardWidget>
@@ -26,6 +26,7 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
+// eslint-disable-next-line
 import { getLocale } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
@@ -97,7 +98,7 @@ export default {
 					after: this.lastId
 				}
 			} */
-			axios.get(generateUrl('/apps/reddit/notifications'), req).then((response) => {
+			axios.get(generateUrl('/apps/integration_reddit/notifications'), req).then((response) => {
 				this.processNotifications(response.data)
 				this.state = 'ok'
 			}).catch((error) => {
@@ -106,7 +107,7 @@ export default {
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
 					showError(
-						t('reddit', 'Failed to get Reddit notifications.') + ' '
+						t('integration_reddit', 'Failed to get Reddit notifications.') + ' '
 						+ error.response.request.responseText
 					)
 					this.state = 'error'
@@ -141,10 +142,10 @@ export default {
 		getAvatarUrl(n) {
 			if (n.notification_type === 'privatemessage') {
 				return (n.author)
-					? generateUrl('/apps/reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author)
+					? generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author)
 					: ''
 			} else if (n.notification_type === 'post') {
-				return generateUrl('/apps/reddit/avatar?') + encodeURIComponent('subreddit') + '=' + encodeURIComponent(n.subreddit)
+				return generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('subreddit') + '=' + encodeURIComponent(n.subreddit)
 			}
 		},
 		getNotificationTarget(n) {
@@ -155,9 +156,9 @@ export default {
 		},
 		getNotificationTypeImage(n) {
 			if (n.notification_type === 'privatemessage') {
-				return generateUrl('/svg/reddit/message?color=ffffff')
+				return generateUrl('/svg/integration_reddit/message?color=ffffff')
 			} else if (n.notification_type === 'post') {
-				return generateUrl('/svg/reddit/post?color=ffffff')
+				return generateUrl('/svg/integration_reddit/post?color=ffffff')
 			}
 			return ''
 		},

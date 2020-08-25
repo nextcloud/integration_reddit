@@ -26,6 +26,8 @@ namespace OCA\Reddit\Dashboard;
 use OCP\Dashboard\IWidget;
 use OCP\IL10N;
 
+use OCA\Reddit\AppInfo\Application;
+
 class RedditWidget implements IWidget {
 
 	/** @var IL10N */
@@ -41,7 +43,7 @@ class RedditWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function getId(): string {
-		return 'reddit';
+		return 'reddit_news';
 	}
 
 	/**
@@ -76,7 +78,7 @@ class RedditWidget implements IWidget {
 	 * @inheritDoc
 	 */
 	public function load(): void {
-        \OC_Util::addScript('reddit', 'reddit-dashboard');
-        \OC_Util::addStyle('reddit', 'dashboard');
+        \OC_Util::addScript(Application::APP_ID, Application::APP_ID . '-dashboard');
+        \OC_Util::addStyle(Application::APP_ID, 'dashboard');
     }
 }

@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <info>
-    <id>reddit</id>
-    <name>Reddit</name>
+    <id>integration_reddit</id>
+    <name>Reddit integration</name>
     <summary> </summary><description> </description>
     <version>0.0.1</version>
     <licence>agpl</licence>
     <author>Julien Veyssier</author>
     <namespace>Reddit</namespace>
     <documentation>
-        <developer>https://nowhere.org/wikis/devdoc</developer>
+        <developer>https://github.com/nextcloud/integration_reddit/wikis/devdoc</developer>
     </documentation>
     <category>integration</category>
-    <website>https://github.com/nextcloud/reddit</website>
-    <bugs>https://github.com/nextcloud/reddit/issues</bugs>
+    <website>https://github.com/nextcloud/integration_reddit</website>
+    <bugs>https://github.com/nextcloud/integration_reddit/issues</bugs>
     <dependencies>
         <database min-version="9.4">pgsql</database>
         <database>sqlite</database>

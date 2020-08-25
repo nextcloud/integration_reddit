@@ -27,13 +27,15 @@ use OCA\Reddit\Dashboard\RedditWidget;
  */
 class Application extends App implements IBootstrap {
 
+    public const APP_ID = 'integration_reddit';
+
     /**
      * Constructor
      *
      * @param array $urlParams
      */
     public function __construct(array $urlParams = []) {
-        parent::__construct('reddit', $urlParams);
+        parent::__construct(self::APP_ID, $urlParams);
 
         $this->container = $this->getContainer();
     }
@@ -41,8 +43,8 @@ class Application extends App implements IBootstrap {
     public function register(IRegistrationContext $context): void {
         // enable dashboard widget only if client ID and secret were defined by an admin
         $config = $this->container->query(\OCP\IConfig::class);
-        $clientId = $config->getAppValue('reddit', 'client_id', '');
-        $clientSecret = $config->getAppValue('reddit', 'client_secret', '');
+        $clientId = $config->getAppValue(self::APP_ID, 'client_id', '');
+        $clientSecret = $config->getAppValue(self::APP_ID, 'client_secret', '');
         if ($clientId !== '' and $clientSecret !== '') {
             $context->registerDashboardWidget(RedditWidget::class);
         }

@@ -2,35 +2,35 @@
 	<div id="reddit_prefs" class="section">
 		<h2>
 			<a class="icon icon-reddit" />
-			{{ t('reddit', 'Reddit') }}
+			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<p class="settings-hint">
-			{{ t('reddit', 'If you want to allow your Nextcloud users to use OAuth to authenticate to https://reddit.com, create a Reddit application in your Reddit preferences (https://www.reddit.com/prefs/apps) and set the ID and secret here.') }}
+			{{ t('integration_reddit', 'If you want to allow your Nextcloud users to use OAuth to authenticate to https://reddit.com, create a Reddit application in your Reddit preferences (https://www.reddit.com/prefs/apps) and set the ID and secret here.') }}
 			<br>
-			{{ t('reddit', 'Make sure you set the "redirect_uri" to') }}
+			{{ t('integration_reddit', 'Make sure you set the "redirect_uri" to') }}
 			<br><b> {{ redirect_uri }} </b>
 		</p>
 		<div class="grid-form">
 			<label for="reddit-client-id">
 				<a class="icon icon-category-auth" />
-				{{ t('reddit', 'Reddit application client ID') }}
+				{{ t('integration_reddit', 'Reddit application client ID') }}
 			</label>
 			<input id="reddit-client-id"
 				v-model="state.client_id"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('reddit', 'Client ID or your Reddit application')"
+				:placeholder="t('integration_reddit', 'Client ID or your Reddit application')"
 				@input="onInput"
 				@focus="readonly = false">
 			<label for="reddit-client-secret">
 				<a class="icon icon-category-auth" />
-				{{ t('reddit', 'Reddit application client secret') }}
+				{{ t('integration_reddit', 'Reddit application client secret') }}
 			</label>
 			<input id="reddit-client-secret"
 				v-model="state.client_secret"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('reddit', 'Client secret or your Reddit application')"
+				:placeholder="t('integration_reddit', 'Client secret or your Reddit application')"
 				@input="onInput"
 				@focus="readonly = false">
 		</div>
@@ -54,10 +54,10 @@ export default {
 
 	data() {
 		return {
-			state: loadState('reddit', 'admin-config'),
+			state: loadState('integration_reddit', 'admin-config'),
 			// to prevent some browsers to fill fields with remembered passwords
 			readonly: true,
-			redirect_uri: OC.getProtocol() + '://' + OC.getHostName() + generateUrl('/apps/reddit/oauth-redirect'),
+			redirect_uri: OC.getProtocol() + '://' + OC.getHostName() + generateUrl('/apps/integration_reddit/oauth-redirect'),
 		}
 	},
 
@@ -81,14 +81,14 @@ export default {
 					client_secret: this.state.client_secret,
 				},
 			}
-			const url = generateUrl('/apps/reddit/admin-config')
+			const url = generateUrl('/apps/integration_reddit/admin-config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('reddit', 'Reddit admin options saved.'))
+					showSuccess(t('integration_reddit', 'Reddit admin options saved.'))
 				})
 				.catch((error) => {
 					showError(
-						t('reddit', 'Failed to save Reddit admin options')
+						t('integration_reddit', 'Failed to save Reddit admin options')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)
