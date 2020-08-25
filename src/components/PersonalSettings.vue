@@ -2,7 +2,7 @@
 	<div v-if="state.client_id && state.client_secret" id="reddit_prefs" class="section">
 		<h2>
 			<a class="icon icon-reddit" />
-			{{ t('integration_reddit', 'Reddit') }}
+			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<div class="reddit-grid-form">
 			<label for="reddit-token">
