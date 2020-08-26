@@ -109,7 +109,7 @@ class RedditAPIService {
         //}
     }
 
-    public function request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params = [], $method = 'GET') {
+    public function request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params = [], $method = 'GET'): array {
         try {
             $url = 'https://oauth.reddit.com/' . $endPoint;
             $options = [
@@ -141,12 +141,12 @@ class RedditAPIService {
             $respCode = $response->getStatusCode();
 
             if ($respCode >= 400) {
-                return $this->l10n->t('Bad credentials');
+                return ['error' => $this->l10n->t('Bad credentials')];
             } else {
                 return json_decode($body, true);
             }
         } catch (\Exception $e) {
-            $this->logger->warning('Reddit API error : '.$e, array('app' => $this->appName));
+            $this->logger->warning('Reddit API error : '.$e->getMessage(), array('app' => $this->appName));
             $response = $e->getResponse();
             $headers = $response->getHeaders();
             if (isset($headers['www-authenticate']) and count(array_keys($headers['www-authenticate']) > 0)) {
@@ -159,7 +159,7 @@ class RedditAPIService {
                         'grant_type' => 'refresh_token',
                         'refresh_token' => $refreshToken,
                     ], 'POST');
-                    if (is_array($result) and isset($result['access_token'])) {
+                    if (isset($result['access_token'])) {
                         $this->logger->warning('Reddit access token successfully refreshed', array('app' => $this->appName));
                         $accessToken = $result['access_token'];
                         $this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
@@ -167,15 +167,15 @@ class RedditAPIService {
                         return $this->request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params, $method);
                     } else {
                         // impossible to refresh the token
-                        return $this->l10n->t('Token is not valid anymore. Impossible to refresh it.');
+                        return ['error' => $this->l10n->t('Token is not valid anymore. Impossible to refresh it.') . ' ' . $result['error']];
                     }
                 }
             }
-            return $e;
+            return ['error' => $e->getMessage()];
         }
     }
 
-    public function requestOAuthAccessToken($clientID, $clientSecret, $params = [], $method = 'GET') {
+    public function requestOAuthAccessToken($clientID, $clientSecret, $params = [], $method = 'GET'): array {
         try {
             $url = 'https://www.reddit.com/api/v1/access_token';
             $options = [
@@ -207,13 +207,13 @@ class RedditAPIService {
             $respCode = $response->getStatusCode();
 
             if ($respCode >= 400) {
-                return $this->l10n->t('OAuth access token refused');
+                return ['error' => $this->l10n->t('OAuth access token refused')];
             } else {
                 return json_decode($body, true);
             }
         } catch (\Throwable $e) {
-            $this->logger->warning('Reddit OAuth error : '.$e, array('app' => $this->appName));
-            return $e;
+            $this->logger->warning('Reddit OAuth error : '.$e->getMessage(), array('app' => $this->appName));
+            return ['error' => $e->getMessage()];
         }
     }
 }

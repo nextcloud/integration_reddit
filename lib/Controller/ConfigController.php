@@ -108,7 +108,7 @@ class ConfigController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function oauthRedirect($code, $state, $error) {
+    public function oauthRedirect($code, $state, $error): RedirectResponse {
         $configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
         $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_CLIENT_ID);
         $clientID = $clientID ? $clientID : DEFAULT_CLIENT_ID;
@@ -130,7 +130,7 @@ class ConfigController extends Controller {
                 'code' => $code,
                 'redirect_uri' => $redirect_uri,
             ], 'POST');
-            if (is_array($result) and isset($result['access_token'])) {
+            if (isset($result['access_token'])) {
                 $accessToken = $result['access_token'];
                 $this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
                 $refreshToken = $result['refresh_token'];
@@ -140,7 +140,7 @@ class ConfigController extends Controller {
                     '?redditToken=success&scope='.$result['scope'].'&type='.$result['token_type'].'&expires_in='.$result['expires_in']
                 );
             }
-            $result = $this->l->t('Error getting OAuth access token');
+            $result = $this->l->t('Error getting OAuth access token') . ' ' . $result['error'];
         } else {
             $result = $this->l->t('Error during OAuth exchanges');
         }
