@@ -4,6 +4,9 @@
 			<a class="icon icon-reddit" />
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
+		<p class="settings-hint">
+			{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
+		</p>
 		<div class="reddit-grid-form">
 			<label for="reddit-token">
 				<a class="icon icon-category-auth" />

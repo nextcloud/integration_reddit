@@ -5,10 +5,25 @@
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<p class="settings-hint">
-			{{ t('integration_reddit', 'If you want to allow your Nextcloud users to use OAuth to authenticate to https://reddit.com, create a Reddit application in your Reddit preferences (https://www.reddit.com/prefs/apps) and set the ID and secret here.') }}
+			{{ t('integration_reddit', 'There are 2 ways to allow your Nextcloud users to use OAuth to authenticate to https://reddit.com:') }}
 			<br>
-			{{ t('integration_reddit', 'Make sure you set the "redirect_uri" to') }}
-			<br><b> {{ redirect_uri }} </b>
+			<ul>
+				<li>
+					<b>1. </b>{{ t('integration_reddit', 'Create a Reddit "web application" in your Reddit preferences (https://www.reddit.com/prefs/apps) and set the ID and secret here.') }}
+					<br>
+					{{ t('integration_reddit', 'Make sure you set the "redirect_uri" to') }}
+					<br><b> {{ redirect_uri }} </b>
+					<br><br>
+				</li>
+				<li>
+					<b>2. </b>{{ t('integration_reddit', 'Create a Reddit "mobile application" in your Reddit preferences (https://www.reddit.com/prefs/apps) and set the app ID here. Leave the app secret empty.') }}
+					<br>
+					{{ t('integration_reddit', 'Make sure you set the "redirect_uri" to') }}
+					<br><b> {{ redirect_uri_protocol }} </b>
+					<br/>
+					<i>{{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}</i>
+				</li>
+			</ul>
 		</p>
 		<div class="grid-form">
 			<label for="reddit-client-id">
@@ -58,6 +73,7 @@ export default {
 			// to prevent some browsers to fill fields with remembered passwords
 			readonly: true,
 			redirect_uri: window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_reddit/oauth-redirect'),
+			redirect_uri_protocol: 'web+nextcloudreddit://oauth-protocol-redirect',
 		}
 	},
 
