@@ -20,7 +20,7 @@
 					<br>
 					{{ t('integration_reddit', 'Make sure you set the "redirect_uri" to') }}
 					<br><b> {{ redirect_uri_protocol }} </b>
-					<br/>
+					<br>
 					<i>{{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}</i>
 				</li>
 			</ul>
