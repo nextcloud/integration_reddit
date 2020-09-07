@@ -5,7 +5,15 @@
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<p class="settings-hint">
-			{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
+			<span v-if="usingCustomApp">
+				{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
+			</span>
+			<span v-else-if="usingDefaultRedditAppInHttp">
+				{{ t('integration_reddit', 'You must access this page with HTTPS to be able to authenticate to Reddit.') }}
+			</span>
+			<span v-else>
+				{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
+			</span>
 		</p>
 		<div class="reddit-grid-form">
 			<label for="reddit-token">
@@ -51,7 +59,16 @@ export default {
 
 	computed: {
 		showOAuth() {
+			// 2 cases, no client secret means the default app is used => https required
+			// if there is a client secret, redirect URL is probably correctly defined by NC admin in Reddit OAuth app
 			return this.state.client_id
+				&& (this.state.client_secret || window.location.protocol === 'https:')
+		},
+		usingDefaultRedditAppInHttp() {
+			return !this.state.client_secret && window.location.protocol !== 'https:'
+		},
+		usingCustomApp() {
+			return this.state.client_id && this.state.client_secret
 		},
 	},
 
