@@ -79,7 +79,7 @@ class RedditAPIController extends Controller {
         $result = $this->redditAPIService->getNotifications(
             $this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $after
         );
-        if (is_array($result)) {
+        if (!isset($result['error'])) {
             $response = new DataResponse($result);
         } else {
             $response = new DataResponse($result, 401);
