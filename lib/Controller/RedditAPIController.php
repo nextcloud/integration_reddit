@@ -63,8 +63,8 @@ class RedditAPIController extends Controller {
         $this->redditAPIService = $redditAPIService;
         $this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
         $this->refreshToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'refresh_token', '');
-        $this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_CLIENT_ID);
-        $this->clientID = $this->clientID ? $this->clientID : DEFAULT_CLIENT_ID;
+        $this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
+        $this->clientID = $this->clientID ? $this->clientID : DEFAULT_REDDIT_CLIENT_ID;
         $this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
     }
 

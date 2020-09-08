@@ -1,3 +1,3 @@
 <?php
-define('DEFAULT_CLIENT_ID', 'Wvd050kRx2lDwg');
+define('DEFAULT_REDDIT_CLIENT_ID', 'Wvd050kRx2lDwg');
 ?>
