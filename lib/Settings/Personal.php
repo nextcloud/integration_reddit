@@ -44,6 +44,7 @@ class Personal implements ISettings {
      */
     public function getForm() {
         $token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
+        $userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name', '');
 
         // for OAuth
         $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
@@ -54,6 +55,7 @@ class Personal implements ISettings {
             'token' => $token,
             'client_id' => $clientID,
             'client_secret' => $clientSecret,
+            'user_name' => $userName,
         ];
         $this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
         $response = new TemplateResponse(Application::APP_ID, 'personalSettings');
@@ -61,7 +63,7 @@ class Personal implements ISettings {
     }
 
     public function getSection() {
-        return 'linked-accounts';
+        return 'connected-accounts';
     }
 
     public function getPriority() {

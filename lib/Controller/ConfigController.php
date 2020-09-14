@@ -135,9 +135,14 @@ class ConfigController extends Controller {
                 $this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
                 $refreshToken = $result['refresh_token'];
                 $this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
+                // get user information
+                $info = $this->redditAPIService->request($accessToken, $refreshToken, $clientID, $clientSecret, 'api/v1/me');
+                $this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
+                $this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['name']);
                 return new RedirectResponse(
-                    $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'linked-accounts']) .
-                    '?redditToken=success&scope='.$result['scope'].'&type='.$result['token_type'].'&expires_in='.$result['expires_in']
+                    $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
+                    '?redditToken=success'
+                    //'?redditToken=success&scope='.$result['scope'].'&type='.$result['token_type'].'&expires_in='.$result['expires_in']
                 );
             }
             $result = $this->l->t('Error getting OAuth access token') . ' ' . $result['error'];
@@ -145,7 +150,7 @@ class ConfigController extends Controller {
             $result = $this->l->t('Error during OAuth exchanges');
         }
         return new RedirectResponse(
-            $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'linked-accounts']) .
+            $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
             '?redditToken=error&message=' . urlencode($result)
         );
     }

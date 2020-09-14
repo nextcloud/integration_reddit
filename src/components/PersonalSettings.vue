@@ -4,34 +4,34 @@
 			<a class="icon icon-reddit" />
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
-		<p class="settings-hint">
-			<span v-if="usingCustomApp">
-				{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
-			</span>
-			<span v-else-if="usingDefaultRedditAppInHttp">
-				{{ t('integration_reddit', 'You must access this page with HTTPS to be able to authenticate to Reddit.') }}
-			</span>
-			<span v-else>
-				{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
-			</span>
-		</p>
-		<div class="reddit-grid-form">
-			<label for="reddit-token">
-				<a class="icon icon-category-auth" />
-				{{ t('integration_reddit', 'Reddit access token') }}
-			</label>
-			<input id="reddit-token"
-				v-model="state.token"
-				type="password"
-				:readonly="readonly"
-				:placeholder="t('integration_reddit', 'Get it with OAuth')"
-				@input="onInput"
-				@focus="readonly = false">
-			<button v-if="showOAuth" id="reddit-oauth" @click="onOAuthClick">
-				<span class="icon icon-external" />
-				{{ t('integration_reddit', 'Get access with OAuth') }}
-			</button>
+		<div v-if="showOAuth" class="reddit-content">
+			<div v-if="!state.token">
+				<p class="settings-hint">
+					<span v-if="usingCustomApp">
+						{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
+					</span>
+					<span v-else>
+						{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
+					</span>
+				</p>
+				<button v-if="!state.token" id="reddit-oauth" @click="onOAuthClick">
+					<span class="icon icon-external" />
+					{{ t('integration_reddit', 'Connect to Reddit') }}
+				</button>
+			</div>
+			<div v-else>
+				<label>
+					{{ t('integration_reddit', 'Connected as {user}', { user: userName }) }}
+				</label>
+				<button id="reddit-rm-cred" @click="onLogoutClick">
+					<span class="icon icon-close" />
+					{{ t('integration_reddit', 'Disconnect from Reddit') }}
+				</button>
+			</div>
 		</div>
+		<p v-else class="settings-hint">
+			{{ t('integration_reddit', 'You must access this page with HTTPS to be able to authenticate to Reddit.') }}
+		</p>
 	</div>
 </template>
 
@@ -64,11 +64,11 @@ export default {
 			return this.state.client_id
 				&& (this.state.client_secret || window.location.protocol === 'https:')
 		},
-		usingDefaultRedditAppInHttp() {
-			return !this.state.client_secret && window.location.protocol !== 'https:'
-		},
 		usingCustomApp() {
 			return this.state.client_id && this.state.client_secret
+		},
+		userName() {
+			return this.state.user_name
 		},
 	},
 
@@ -93,6 +93,10 @@ export default {
 	},
 
 	methods: {
+		onLogoutClick() {
+			this.state.token = ''
+			this.saveOptions()
+		},
 		onInput() {
 			const that = this
 			delay(() => {
@@ -159,27 +163,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.reddit-grid-form label {
-	line-height: 38px;
-}
-.reddit-grid-form input {
-	width: 100%;
-}
-.reddit-grid-form {
-	max-width: 900px;
-	display: grid;
-	grid-template: 1fr / 1fr 1fr 1fr;
-	margin-left: 30px;
-	button .icon {
-		margin-bottom: -1px;
-	}
-}
 #reddit_prefs .icon {
 	display: inline-block;
 	width: 32px;
-}
-#reddit_prefs .grid-form .icon {
-	margin-bottom: -3px;
 }
 .icon-reddit {
 	background-image: url(./../../img/app-dark.svg);
@@ -190,5 +176,11 @@ export default {
 
 body.dark .icon-reddit {
 	background-image: url(./../../img/app.svg);
+}
+.reddit-content {
+    margin-left: 40px;
+}
+#reddit-rm-cred {
+	margin-left: 10px;
 }
 </style>

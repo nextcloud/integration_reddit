@@ -55,7 +55,7 @@ export default {
 			locale: getLocale(),
 			loop: null,
 			state: 'loading',
-			settingsUrl: generateUrl('/settings/user/linked-accounts'),
+			settingsUrl: generateUrl('/settings/user/connected-accounts'),
 			darkThemeColor: OCA.Accessibility.theme === 'dark' ? '181818' : 'ffffff',
 			themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
 		}
