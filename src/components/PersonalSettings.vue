@@ -19,8 +19,9 @@
 					{{ t('integration_reddit', 'Connect to Reddit') }}
 				</button>
 			</div>
-			<div v-else>
+			<div v-else class="reddit-grid-form">
 				<label>
+					<a class="icon icon-checkmark-color" />
 					{{ t('integration_reddit', 'Connected as {user}', { user: userName }) }}
 				</label>
 				<button id="reddit-rm-cred" @click="onLogoutClick">
@@ -180,7 +181,15 @@ body.dark .icon-reddit {
 .reddit-content {
     margin-left: 40px;
 }
-#reddit-rm-cred {
-	margin-left: 10px;
+.reddit-grid-form {
+    max-width: 600px;
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    button .icon {
+        margin-bottom: -1px;
+    }
+}
+.reddit-grid-form label {
+    line-height: 38px;
 }
 </style>
