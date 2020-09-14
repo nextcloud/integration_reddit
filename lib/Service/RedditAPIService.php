@@ -143,7 +143,6 @@ class RedditAPIService {
 			if ($respCode >= 400) {
 				return ['error' => $this->l10n->t('Bad credentials')];
 			} else {
-				file_put_contents('/tmp/aa', $body);
 				return json_decode($body, true);
 			}
 		} catch (\Exception $e) {
