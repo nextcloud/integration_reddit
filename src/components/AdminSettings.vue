@@ -5,30 +5,37 @@
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<p class="settings-hint">
-			{{ t('integration_reddit', 'There are 2 ways to allow your Nextcloud users to use OAuth to authenticate to https://reddit.com:') }}
-			<br>
+			{{ t('integration_reddit', 'There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:') }}
+			<br><br>
 			<ul>
 				<li>
-					<b>1. </b>{{ t('integration_reddit', 'Create a Reddit "web application" in your Reddit preferences (https://www.reddit.com/prefs/apps) and set the ID and secret here.') }}
-					<br>
-					{{ t('integration_reddit', 'Make sure you set the "redirect_uri" to') }}
-					<br><b> {{ redirect_uri }} </b>
+					<b>1. </b>{{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}
 					<br><br>
 				</li>
 				<li>
-					<b>2. </b>{{ t('integration_reddit', 'Create a Reddit "mobile application" in your Reddit preferences (https://www.reddit.com/prefs/apps) and set the app ID here. Leave the app secret empty.') }}
-					<br>
-					{{ t('integration_reddit', 'Make sure you set the "redirect_uri" to') }}
-					<br><b> {{ redirect_uri_protocol }} </b>
-					<br>
-					<i>{{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}</i>
+					<b>2. </b>{{ t('integration_reddit', 'Create your own Reddit "web application" in Reddit preferences and put the application ID and secret below.') }}
+					<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
+					<br><br>
+					<span class="icon icon-details" />
+					{{ t('integration_reddit', 'Make sure you set the "Redirection uri" to') }}
+					<b> {{ redirect_uri }} </b>
+					<br><br>
+				</li>
+				<li>
+					<b>3. </b>{{ t('integration_reddit', 'Create your own Reddit "mobile application" in Reddit preferences and put the application ID below. Leave the "Application secret" field empty.') }}
+					<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
+					<br><br>
+					<span class="icon icon-details" />
+					{{ t('integration_reddit', 'Make sure you set the "Redirection uri" to') }}
+					<b> {{ redirect_uri_protocol }} </b>
+					<br><br>
 				</li>
 			</ul>
 		</p>
 		<div class="grid-form">
 			<label for="reddit-client-id">
 				<a class="icon icon-category-auth" />
-				{{ t('integration_reddit', 'Reddit application client ID') }}
+				{{ t('integration_reddit', 'Application ID') }}
 			</label>
 			<input id="reddit-client-id"
 				v-model="state.client_id"
@@ -39,7 +46,7 @@
 				@focus="readonly = false">
 			<label for="reddit-client-secret">
 				<a class="icon icon-category-auth" />
-				{{ t('integration_reddit', 'Reddit application client secret') }}
+				{{ t('integration_reddit', 'Application secret') }}
 			</label>
 			<input id="reddit-client-secret"
 				v-model="state.client_secret"
