@@ -74,7 +74,7 @@ class RedditAPIController extends Controller {
      */
     public function getNotifications($after = null) {
         if ($this->accessToken === '') {
-            return new DataResponse($result, 400);
+            return new DataResponse(null, 400);
         }
         $result = $this->redditAPIService->getNotifications(
             $this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $after
