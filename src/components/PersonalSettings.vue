@@ -175,7 +175,7 @@ export default {
 	margin-bottom: -4px;
 }
 
-body.dark .icon-reddit {
+body.theme--dark .icon-reddit {
 	background-image: url(./../../img/app.svg);
 }
 .reddit-content {
