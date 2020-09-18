@@ -9,13 +9,13 @@
     <author>Julien Veyssier</author>
     <namespace>Reddit</namespace>
     <documentation>
-        <developer>https://github.com/eneiluj/integration_reddit/wikis</developer>
+        <developer>https://github.com/nextcloud/integration_reddit/wikis</developer>
     </documentation>
     <category>integration</category>
     <category>dashboard</category>
-    <website>https://github.com/eneiluj/integration_reddit</website>
-    <bugs>https://github.com/eneiluj/integration_reddit/issues</bugs>
-    <screenshot>https://github.com/eneiluj/integration_reddit/raw/master/img/screenshot1.jpg</screenshot>
+    <website>https://github.com/nextcloud/integration_reddit</website>
+    <bugs>https://github.com/nextcloud/integration_reddit/issues</bugs>
+    <screenshot>https://github.com/nextcloud/integration_reddit/raw/master/img/screenshot1.jpg</screenshot>
     <dependencies>
         <database min-version="9.4">pgsql</database>
         <database>sqlite</database>
