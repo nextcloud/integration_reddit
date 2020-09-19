@@ -7,11 +7,28 @@
 		<div v-if="showOAuth" class="reddit-content">
 			<div v-if="!state.token">
 				<p class="settings-hint">
+					<span class="icon icon-details" />
 					<span v-if="usingCustomApp">
 						{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
 					</span>
 					<span v-else>
 						{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
+						<span v-if="isChromium">
+							<br>
+							{{ t('integration_reddit', 'With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open "web+nextcloudreddit" links.') }}
+							<br>
+							{{ t('integration_reddit', 'If you don\'t see the popup, you can still click on this icon in the address bar.') }}
+							<br>
+							<img :src="chromiumImagePath">
+							<br>
+							{{ t('integration_reddit', 'Then authorize this page to open "web+nextcloudreddit" links.') }}
+						</span>
+						<span v-else-if="isFirefox">
+							<br>
+							{{ t('integration_reddit', 'With Firefox, you should see a bar on top of this page to authorize this page to open "web+nextcloudreddit" links.') }}
+							<br><br>
+							<img :src="firefoxImagePath">
+						</span>
 					</span>
 				</p>
 				<button v-if="!state.token" id="reddit-oauth" @click="onOAuthClick">
@@ -38,9 +55,9 @@
 
 <script>
 import { loadState } from '@nextcloud/initial-state'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, imagePath } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import { delay } from '../utils'
+import { delay, detectBrowser } from '../utils'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
 export default {
@@ -55,6 +72,10 @@ export default {
 		return {
 			state: loadState('integration_reddit', 'user-config'),
 			readonly: true,
+			chromiumImagePath: imagePath('integration_reddit', 'chromium.png'),
+			firefoxImagePath: imagePath('integration_reddit', 'firefox.png'),
+			isChromium: detectBrowser() === 'chrome',
+			isFirefox: detectBrowser() === 'firefox',
 		}
 	},
 
@@ -179,17 +200,17 @@ body.theme--dark .icon-reddit {
 	background-image: url(./../../img/app.svg);
 }
 .reddit-content {
-    margin-left: 40px;
+	margin-left: 40px;
 }
 .reddit-grid-form {
-    max-width: 600px;
-    display: grid;
-    grid-template: 1fr / 1fr 1fr;
-    button .icon {
-        margin-bottom: -1px;
-    }
+	max-width: 600px;
+	display: grid;
+	grid-template: 1fr / 1fr 1fr;
+	button .icon {
+		margin-bottom: -1px;
+	}
 }
 .reddit-grid-form label {
-    line-height: 38px;
+	line-height: 38px;
 }
 </style>
