@@ -83,7 +83,7 @@ export default {
 			} else if (this.state === 'error') {
 				return t('integration_reddit', 'Error connecting to Reddit')
 			} else if (this.state === 'ok') {
-				return t('integration_reddit', 'No Reddit notifications!')
+				return t('integration_reddit', 'No Reddit news!')
 			}
 			return ''
 		},
@@ -125,7 +125,7 @@ export default {
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
 					showError(
-						t('integration_reddit', 'Failed to get Reddit notifications.') + ' '
+						t('integration_reddit', 'Failed to get Reddit news.') + ' '
 						+ error.response.request.responseText
 					)
 					this.state = 'error'
