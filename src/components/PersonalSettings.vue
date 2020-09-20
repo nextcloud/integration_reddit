@@ -138,7 +138,7 @@ export default {
 				})
 				.catch((error) => {
 					showError(
-						t('integration_reddit', 'Failed to save Reddit options')
+						t('integration_reddit', 'Failed to save Reddit options.')
 						+ ': ' + error.response.request.responseText
 					)
 				})
@@ -173,7 +173,7 @@ export default {
 				})
 				.catch((error) => {
 					showError(
-						t('integration_reddit', 'Failed to save Reddit OAuth state')
+						t('integration_reddit', 'Failed to save Reddit OAuth state.')
 						+ ': ' + error.response.request.responseText
 					)
 				})
