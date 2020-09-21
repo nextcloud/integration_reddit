@@ -79,9 +79,9 @@ export default {
 		},
 		emptyContentMessage() {
 			if (this.state === 'no-token') {
-				return t('integration_reddit', 'No Reddit account connected.')
+				return t('integration_reddit', 'No Reddit account connected')
 			} else if (this.state === 'error') {
-				return t('integration_reddit', 'Error connecting to Reddit.')
+				return t('integration_reddit', 'Error connecting to Reddit')
 			} else if (this.state === 'ok') {
 				return t('integration_reddit', 'No Reddit news!')
 			}
