@@ -12,15 +12,12 @@
     "Application ID" : "Identif. aplikace",
     "Application secret" : "Tajemství pro aplikaci",
     "Client secret or your Reddit application" : "Klientské tajemství nebo vaše Reddit aplikace",
-    "Failed to save Reddit admin options" : "Nepodařilo se uložit předvolby správy Reddit",
+    "Reddit admin options saved." : "Předvolby správy Reddit uloženy.",
     "Connect to Reddit" : "Připojit k Reddit",
     "Connected as {user}" : "Připojení jako {user}",
     "Disconnect from Reddit" : "Odpojit od Reddit",
     "Reddit OAuth error:" : "Chyba Reddit OAuth:",
     "Reddit options saved." : "Předvolby pro Reddit uloženy.",
-    "Failed to save Reddit options" : "Nepodařilo se uložit předvolby pro Reddit",
-    "Failed to save Reddit OAuth state" : "Nepodařilo se uložit stav Reddit OAuth",
-    "Error connecting to Reddit" : "Chyba při připojování k Reddit",
     "No Reddit news!" : "Žádné novinky z Reddit!",
     "Failed to get Reddit news." : "Nepodařilo se získat Reddit novinky."
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"

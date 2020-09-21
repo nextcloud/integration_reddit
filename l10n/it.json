@@ -9,11 +9,9 @@
     "Application secret" : "Segreto applicazione",
     "Client secret or your Reddit application" : "Segreto client o la tua applicazione Reddit",
     "Reddit admin options saved." : "Opzioni amministrative di Reddit salvate.",
-    "Failed to save Reddit admin options" : "Salvataggio delle opzioni amministrative di Reddit non riuscito",
     "Connect to Reddit" : "Connetti a Reddit",
     "Connected as {user}" : "Connesso come {user}",
     "Disconnect from Reddit" : "Disconnetti da Reddit",
-    "Reddit options saved." : "Opzioni di Reddit salvate.",
-    "Error connecting to Reddit" : "Errore durante la connessione a Reddit"
+    "Reddit options saved." : "Opzioni di Reddit salvate."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
