@@ -111,7 +111,7 @@ export default {
 				})
 				.catch((error) => {
 					showError(
-						t('integration_reddit', 'Failed to save Reddit admin options.')
+						t('integration_reddit', 'Failed to save Reddit admin options')
 						+ ': ' + error.response.request.responseText
 					)
 					console.debug(error)
