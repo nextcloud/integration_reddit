@@ -99,10 +99,10 @@ class ConfigController extends Controller {
      */
     public function oauthProtocolRedirect(?string $url = ''): RedirectResponse {
         if ($url === '') {
-            $result = $this->l->t('Error during OAuth exchanges');
+            $message = $this->l->t('Error during OAuth exchanges');
             return new RedirectResponse(
                 $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-                '?redditToken=error&message=' . urlencode($result)
+                '?redditToken=error&message=' . urlencode($message)
             );
         }
         $parts = parse_url($url);
@@ -116,6 +116,13 @@ class ConfigController extends Controller {
      * @NoCSRFRequired
      */
     public function oauthRedirect(?string $code = '', ?string $state = '', ?string $error = ''): RedirectResponse {
+        if ($code === '' || $state === '') {
+            $message = $this->l->t('Error during OAuth exchanges');
+            return new RedirectResponse(
+                $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
+                '?redditToken=error&message=' . urlencode($message)
+            );
+        }
         $configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
         $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
         $clientID = $clientID ? $clientID : DEFAULT_REDDIT_CLIENT_ID;
@@ -149,16 +156,15 @@ class ConfigController extends Controller {
                 return new RedirectResponse(
                     $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
                     '?redditToken=success'
-                    //'?redditToken=success&scope='.$result['scope'].'&type='.$result['token_type'].'&expires_in='.$result['expires_in']
                 );
             }
-            $result = $this->l->t('Error getting OAuth access token') . ' ' . $result['error'];
+            $message = $this->l->t('Error getting OAuth access token') . ' ' . $result['error'];
         } else {
-            $result = $this->l->t('Error during OAuth exchanges');
+            $message = $this->l->t('Error during OAuth exchanges');
         }
         return new RedirectResponse(
             $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-            '?redditToken=error&message=' . urlencode($result)
+            '?redditToken=error&message=' . urlencode($message)
         );
     }
 
