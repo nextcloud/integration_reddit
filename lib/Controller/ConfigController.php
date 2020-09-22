@@ -97,7 +97,7 @@ class ConfigController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function oauthProtocolRedirect($url) {
+    public function oauthProtocolRedirect(string $url): RedirectResponse {
         $parts = parse_url($url);
         parse_str($parts['query'], $params);
         return $this->oauthRedirect($params['code'], $params['state'], $params['error']);
