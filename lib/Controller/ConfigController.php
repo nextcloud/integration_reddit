@@ -73,7 +73,7 @@ class ConfigController extends Controller {
      * set config values
      * @NoAdminRequired
      */
-    public function setConfig($values) {
+    public function setConfig(array $values): DataResponse {
         foreach ($values as $key => $value) {
             $this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
         }
@@ -84,7 +84,7 @@ class ConfigController extends Controller {
     /**
      * set admin config values
      */
-    public function setAdminConfig($values) {
+    public function setAdminConfig(array $values): DataResponse {
         foreach ($values as $key => $value) {
             $this->config->setAppValue(Application::APP_ID, $key, $value);
         }
@@ -108,7 +108,7 @@ class ConfigController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function oauthRedirect($code, $state, $error): RedirectResponse {
+    public function oauthRedirect(?string $code = '', ?string $state = '', ?string $error = ''): RedirectResponse {
         $configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
         $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
         $clientID = $clientID ? $clientID : DEFAULT_REDDIT_CLIENT_ID;
