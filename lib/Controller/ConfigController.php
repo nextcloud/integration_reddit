@@ -97,7 +97,14 @@ class ConfigController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function oauthProtocolRedirect(string $url): RedirectResponse {
+    public function oauthProtocolRedirect(?string $url = ''): RedirectResponse {
+        if ($url === '') {
+            $result = $this->l->t('Error during OAuth exchanges');
+            return new RedirectResponse(
+                $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
+                '?redditToken=error&message=' . urlencode($result)
+            );
+        }
         $parts = parse_url($url);
         parse_str($parts['query'], $params);
         return $this->oauthRedirect($params['code'], $params['state'], $params['error']);
