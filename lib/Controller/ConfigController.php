@@ -80,6 +80,11 @@ class ConfigController extends Controller {
         foreach ($values as $key => $value) {
             $this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
         }
+        if (isset($values['token']) && $values['token'] === '') {
+            $this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', '');
+            $this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', '');
+            $this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', '');
+        }
         $response = new DataResponse(1);
         return $response;
     }
