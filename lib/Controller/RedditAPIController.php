@@ -71,8 +71,11 @@ class RedditAPIController extends Controller {
     /**
      * get notification list
      * @NoAdminRequired
+     *
+     * @param ?string $after
+     * @return DataResponse
      */
-    public function getNotifications($after = null) {
+    public function getNotifications(?string $after = null): DataResponse {
         if ($this->accessToken === '') {
             return new DataResponse(null, 400);
         }
@@ -91,8 +94,12 @@ class RedditAPIController extends Controller {
      * get repository avatar
      * @NoAdminRequired
      * @NoCSRFRequired
+     *
+     * @param ?string $username
+     * @param ?string $subreddit
+     * @return DataDisplayResponse
      */
-    public function getAvatar($username = null, $subreddit = null) {
+    public function getAvatar(?string $username = null, string $subreddit = null): DataDisplayResponse {
         $response = new DataDisplayResponse(
             $this->redditAPIService->getAvatar(
                 $this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken,

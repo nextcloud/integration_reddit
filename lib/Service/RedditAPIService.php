@@ -43,21 +43,31 @@ class RedditAPIService {
 		$this->client = $clientService->newClient();
 	}
 
-	public function getAvatar($accessToken, $refreshToken, $clientID, $clientSecret, $username, $subreddit) {
+	/**
+	 * @param string $accessToken
+	 * @param string $refreshToken
+	 * @param string $clientID
+	 * @param string $clientSecret
+	 * @param ?string $username
+	 * @param ?string $subreddit
+	 * @return ?string
+	 */
+	public function getAvatar(string $accessToken, string $refreshToken, string $clientID, string $clientSecret,
+								?string $username, ?string $subreddit): ?string {
 		$url = null;
 		if (!is_null($username)) {
 			$response = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'user/' . urlencode($username) . '/about');
-			if (is_array($response) and isset($response['data']) and isset($response['data']['icon_img']) and $response['data']['icon_img'] !== '') {
+			if (is_array($response) && isset($response['data'], $response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
 				$url = $response['data']['icon_img'];
 			}
 		} else {
 			$response = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'r/' . urlencode($subreddit) . '/about');
-			if (is_array($response) and isset($response['data'])) {
-				if (isset($response['data']['community_icon']) and $response['data']['community_icon'] !== '') {
+			if (isset($response['data'])) {
+				if (isset($response['data']['community_icon']) && $response['data']['community_icon'] !== '') {
 					$url = parse_url($response['data']['community_icon']);
 					$url = $url['scheme'] . '://' . $url['host'] . $url['path'];
 				}
-				else if (isset($response['data']['icon_img']) and $response['data']['icon_img'] !== '') {
+				else if (isset($response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
 					$url = $response['data']['icon_img'];
 				}
 			}
@@ -68,7 +78,16 @@ class RedditAPIService {
 		return '';
 	}
 
-	public function getNotifications($accessToken, $refreshToken, $clientID, $clientSecret, $after = null) {
+	/**
+	 * @param string $accessToken
+	 * @param string $refreshToken
+	 * @param string $clientID
+	 * @param string $clientSecret
+	 * @param ?string $after
+	 * @return array
+	 */
+	public function getNotifications(string $accessToken, string $refreshToken, string $clientID, string $clientSecret,
+									?string $after = null): array {
 		$params = [];
 		if (!is_null($after)) {
 			$params['after'] = $after;
@@ -77,13 +96,13 @@ class RedditAPIService {
 		// get new stuff
 		$posts = [];
 		$result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'new', $params);
-		if (is_array($result) and isset($result['data']) and isset($result['data']['children']) and is_array($result['data']['children'])) {
+		if (isset($result['data'], $result['data']['children']) && is_array($result['data']['children'])) {
 			$posts = [];
 			foreach ($result['data']['children'] as $m) {
-				if (is_array($m) and isset($m['data']) and isset($m['data']['subreddit']) and isset($m['data']['title'])) {
+				if (is_array($m) && isset($m['data'], $m['data']['subreddit'], $m['data']['title'])) {
 					$post = $m['data'];
 					$post['notification_type'] = 'post';
-					array_push($posts, $post);
+					$posts[] = $post;
 				}
 			}
 		} else {
@@ -94,13 +113,13 @@ class RedditAPIService {
 
 		//// private messages
 		//$result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'message/inbox', $params);
-		//if (is_array($result) and isset($result['data']) and isset($result['data']['children']) and is_array($result['data']['children'])) {
+		//if (isset($result['data'], $result['data']['children']) && is_array($result['data']['children'])) {
 		//    $messages = [];
 		//    foreach ($result['data']['children'] as $m) {
-		//        if (is_array($m) and isset($m['data']) and isset($m['data']['author']) and isset($m['data']['subject'])) {
+		//        if (is_array($m) && isset($m['data'], $m['data']['author'], $m['data']['subject'])) {
 		//            $theMessage = $m['data'];
 		//            $theMessage['notification_type'] = 'privatemessage';
-		//            array_push($messages, $theMessage);
+		//            $messages[] = $theMessage;
 		//        }
 		//    }
 		//    return $messages;
@@ -109,7 +128,18 @@ class RedditAPIService {
 		//}
 	}
 
-	public function request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params = [], $method = 'GET'): array {
+	/**
+	 * @param string $accessToken
+	 * @param string $refreshToken
+	 * @param string $clientID
+	 * @param string $clientSecret
+	 * @param string $endPoint
+	 * @param array $params
+	 * @param string $method
+	 * @return array
+	 */
+	public function request(string $accessToken, string $refreshToken, string $clientID, string $clientSecret,
+							string $endPoint, array $params = [], string $method = 'GET'): array {
 		try {
 			$url = 'https://oauth.reddit.com/' . $endPoint;
 			$options = [
@@ -178,7 +208,14 @@ class RedditAPIService {
 		}
 	}
 
-	public function requestOAuthAccessToken($clientID, $clientSecret, $params = [], $method = 'GET'): array {
+	/**
+	 * @param string $clientID
+	 * @param string $clientSecret
+	 * @param array $params
+	 * @param string $method
+	 * @return array
+	 */
+	public function requestOAuthAccessToken(string $clientID, string $clientSecret, array $params = [], string $method = 'GET'): array {
 		try {
 			$url = 'https://www.reddit.com/api/v1/access_token';
 			$options = [

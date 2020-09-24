@@ -72,6 +72,9 @@ class ConfigController extends Controller {
     /**
      * set config values
      * @NoAdminRequired
+     *
+     * @param array $values
+     * @return DataResponse
      */
     public function setConfig(array $values): DataResponse {
         foreach ($values as $key => $value) {
@@ -83,6 +86,9 @@ class ConfigController extends Controller {
 
     /**
      * set admin config values
+     *
+     * @param array $values
+     * @return DataResponse
      */
     public function setAdminConfig(array $values): DataResponse {
         foreach ($values as $key => $value) {
@@ -96,8 +102,11 @@ class ConfigController extends Controller {
      * receive oauth payload with protocol handler redirect
      * @NoAdminRequired
      * @NoCSRFRequired
+     *
+     * @param string $url
+     * @return RedirectResponse
      */
-    public function oauthProtocolRedirect(?string $url = ''): RedirectResponse {
+    public function oauthProtocolRedirect(string $url = ''): RedirectResponse {
         if ($url === '') {
             $message = $this->l->t('Error during OAuth exchanges');
             return new RedirectResponse(
@@ -114,6 +123,11 @@ class ConfigController extends Controller {
      * receive oauth code and get oauth access token
      * @NoAdminRequired
      * @NoCSRFRequired
+     *
+     * @param string $code
+     * @param string $state
+     * @param string $error
+     * @return RedirectResponse
      */
     public function oauthRedirect(?string $code = '', ?string $state = '', ?string $error = ''): RedirectResponse {
         if ($code === '' || $state === '') {
@@ -167,5 +181,4 @@ class ConfigController extends Controller {
             '?redditToken=error&message=' . urlencode($message)
         );
     }
-
 }
