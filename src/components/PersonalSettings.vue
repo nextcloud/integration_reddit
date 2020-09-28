@@ -110,7 +110,14 @@ export default {
 
 		// register protocol handler
 		if (window.isSecureContext && window.navigator.registerProtocolHandler) {
-			window.navigator.registerProtocolHandler('web+nextcloudreddit', generateUrl('/apps/integration_reddit/oauth-protocol-redirect') + '?url=%s', 'Nextcloud Reddit integration')
+			const ncUrl = window.location.protocol
+				+ '//' + window.location.hostname
+				+ window.location.pathname.replace('settings/user/connected-accounts', '').replace('/index.php/', '')
+			window.navigator.registerProtocolHandler(
+				'web+nextcloudreddit',
+				generateUrl('/apps/integration_reddit/oauth-protocol-redirect') + '?url=%s',
+				t('integration_reddit', 'Nextcloud Reddit integration on {ncUrl}', { ncUrl })
+			)
 		}
 	},
 
