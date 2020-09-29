@@ -125,7 +125,7 @@ export default {
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
 					showError(
-						t('integration_reddit', 'Failed to get Reddit news.') + ' '
+						t('integration_reddit', 'Failed to get Reddit news') + ' '
 						+ error.response.request.responseText
 					)
 					this.state = 'error'

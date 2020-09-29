@@ -103,7 +103,7 @@ export default {
 		const urlParams = new URLSearchParams(paramString)
 		const rdToken = urlParams.get('redditToken')
 		if (rdToken === 'success') {
-			showSuccess(t('integration_reddit', 'Reddit OAuth access token successfully retrieved!'))
+			showSuccess(t('integration_reddit', 'Successfully connected to Reddit!'))
 		} else if (rdToken === 'error') {
 			showError(t('integration_reddit', 'Reddit OAuth error:') + ' ' + urlParams.get('message'))
 		}
@@ -141,7 +141,7 @@ export default {
 			const url = generateUrl('/apps/integration_reddit/config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('integration_reddit', 'Reddit options saved.'))
+					showSuccess(t('integration_reddit', 'Reddit options saved'))
 				})
 				.catch((error) => {
 					showError(

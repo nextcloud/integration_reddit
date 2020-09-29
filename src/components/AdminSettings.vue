@@ -107,7 +107,7 @@ export default {
 			const url = generateUrl('/apps/integration_reddit/admin-config')
 			axios.put(url, req)
 				.then((response) => {
-					showSuccess(t('integration_reddit', 'Reddit admin options saved.'))
+					showSuccess(t('integration_reddit', 'Reddit admin options saved'))
 				})
 				.catch((error) => {
 					showError(
