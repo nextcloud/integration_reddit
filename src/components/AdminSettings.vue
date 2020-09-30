@@ -41,7 +41,7 @@
 				v-model="state.client_id"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('integration_reddit', 'Client ID or your Reddit application')"
+				:placeholder="t('integration_reddit', 'Client ID of your Reddit application')"
 				@input="onInput"
 				@focus="readonly = false">
 			<label for="reddit-client-secret">
@@ -52,7 +52,7 @@
 				v-model="state.client_secret"
 				type="password"
 				:readonly="readonly"
-				:placeholder="t('integration_reddit', 'Client secret or your Reddit application')"
+				:placeholder="t('integration_reddit', 'Client secret of your Reddit application')"
 				@input="onInput"
 				@focus="readonly = false">
 		</div>
