@@ -22,6 +22,9 @@
 							<img :src="chromiumImagePath">
 							<br>
 							{{ t('integration_reddit', 'Then authorize this page to open "web+nextcloudreddit" links.') }}
+							<br>
+							{{ t('integration_reddit', 'If you still don\'t manage to get the protocol registered, check your settings on this page:') }}
+							<b>chrome://settings/handlers</b>
 						</span>
 						<span v-else-if="isFirefox">
 							<br>
