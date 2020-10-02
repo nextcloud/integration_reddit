@@ -1,3 +1,3 @@
 # Reddit integration into Nextcloud
 
-🛸 This app adds a dashboard item to see your main Reddit notifications.
+🛸 Reddit integration provides a dashboard widget displaying your recent subscribed news.
