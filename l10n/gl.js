@@ -28,6 +28,7 @@ OC.L10N.register(
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "Con Chrome/Chromium, debería ver unha xanela emerxente na parte superior esquerda do navegador para autorizar a esta páxina a abrir ligazóns «web+nextcloudreddit».",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Se non ve  a xanela emerxente, aínda pode premer nesta icona na barra de enderezos.",
     "Then authorize this page to open \"web+nextcloudreddit\" links." : "Entón autorizar a esta páxina a abrir as ligazóns «web+nextcloudreddit».",
+    "If you still don't manage to get the protocol registered, check your settings on this page:" : "Se aínda non conseguiu rexistrar o protocolo, comprobe a súa configuración nesta páxina:",
     "With Firefox, you should see a bar on top of this page to authorize this page to open \"web+nextcloudreddit\" links." : "Con Firefox, debería ver unha barra na parte superior desta páxina para autorizar a esta páxina a abrir ligazóns «web+nextcloudreddit».",
     "Connect to Reddit" : "Conectar con Reddit",
     "Connected as {user}" : "Conectado como {user}",
