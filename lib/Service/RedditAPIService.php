@@ -12,7 +12,7 @@
 namespace OCA\Reddit\Service;
 
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IConfig;
 use OCP\Http\Client\IClientService;
 
@@ -28,7 +28,7 @@ class RedditAPIService {
 	 */
 	public function __construct (
 		string $appName,
-		ILogger $logger,
+		LoggerInterface $logger,
 		IL10N $l10n,
 		IConfig $config,
 		IClientService $clientService,
