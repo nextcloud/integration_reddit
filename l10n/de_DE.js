@@ -43,6 +43,6 @@ OC.L10N.register(
     "No Reddit account connected" : "Kein Reddit-Konto verbunden",
     "Error connecting to Reddit" : "Fehler bei der Verbindung zu Reddit",
     "No Reddit news!" : "Keine Reddit-News!",
-    "Failed to get Reddit news" : "Fehler beim Laden der Reddit-News"
+    "Failed to get Reddit news" : "Fehler beim Laden der Reddit-Neuigkeiten"
 },
 "nplurals=2; plural=(n != 1);");
