@@ -5,7 +5,7 @@
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<div v-if="showOAuth" class="reddit-content">
-			<div v-if="!state.token">
+			<div v-if="!connected">
 				<p class="settings-hint">
 					<span class="icon icon-details" />
 					<span v-if="usingCustomApp">
@@ -34,7 +34,7 @@
 						</span>
 					</span>
 				</p>
-				<button v-if="!state.token" id="reddit-oauth" @click="onOAuthClick">
+				<button id="reddit-oauth" @click="onOAuthClick">
 					<span class="icon icon-external" />
 					{{ t('integration_reddit', 'Connect to Reddit') }}
 				</button>
@@ -42,7 +42,7 @@
 			<div v-else class="reddit-grid-form">
 				<label>
 					<a class="icon icon-checkmark-color" />
-					{{ t('integration_reddit', 'Connected as {user}', { user: userName }) }}
+					{{ t('integration_reddit', 'Connected as {user}', { user: state.user_name }) }}
 				</label>
 				<button id="reddit-rm-cred" @click="onLogoutClick">
 					<span class="icon icon-close" />
@@ -92,8 +92,8 @@ export default {
 		usingCustomApp() {
 			return this.state.client_id && this.state.client_secret
 		},
-		userName() {
-			return this.state.user_name
+		connected() {
+			return this.state.user_name && this.state.user_name !== ''
 		},
 	},
 
@@ -126,7 +126,7 @@ export default {
 
 	methods: {
 		onLogoutClick() {
-			this.state.token = ''
+			this.state.user_name = ''
 			this.saveOptions()
 		},
 		onInput() {
@@ -138,7 +138,7 @@ export default {
 		saveOptions() {
 			const req = {
 				values: {
-					token: this.state.token,
+					user_name: this.state.user_name,
 				},
 			}
 			const url = generateUrl('/apps/integration_reddit/config')

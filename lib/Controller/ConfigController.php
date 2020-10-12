@@ -80,9 +80,9 @@ class ConfigController extends Controller {
         foreach ($values as $key => $value) {
             $this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
         }
-        if (isset($values['token']) && $values['token'] === '') {
+        if (isset($values['user_name']) && $values['user_name'] === '') {
             $this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', '');
-            $this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', '');
+            $this->config->setUserValue($this->userId, Application::APP_ID, 'token', '');
             $this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', '');
         }
         $response = new DataResponse(1);
@@ -170,8 +170,13 @@ class ConfigController extends Controller {
                 $this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
                 // get user information
                 $info = $this->redditAPIService->request($accessToken, $refreshToken, $clientID, $clientSecret, 'api/v1/me');
-                $this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
-                $this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['name']);
+                if (isset($info['id'], $info['name'])) {
+                    $this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
+                    $this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['name']);
+                } else {
+                    $this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', '??');
+                    $this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', '??');
+                }
                 return new RedirectResponse(
                     $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
                     '?redditToken=success'

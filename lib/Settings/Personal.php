@@ -43,7 +43,6 @@ class Personal implements ISettings {
      * @return TemplateResponse
      */
     public function getForm(): TemplateResponse {
-        $token = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
         $userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name', '');
 
         // for OAuth
@@ -52,7 +51,6 @@ class Personal implements ISettings {
         $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '') !== '';
 
         $userConfig = [
-            'token' => $token,
             'client_id' => $clientID,
             'client_secret' => $clientSecret,
             'user_name' => $userName,
