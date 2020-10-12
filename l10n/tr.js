@@ -28,6 +28,7 @@ OC.L10N.register(
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "Chrome/Chromium ile, bu sayfaya \"web+nextcloudreddit\" bağlantılarını açma izni vermek için tarayıcının sol üst kısmında bir açılır pencere görüyor olmalısınız.",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Açılır pencereyi görmüyorsanız, adres çubuğundaki bu simgeye tıklayabilirsiniz.",
     "Then authorize this page to open \"web+nextcloudreddit\" links." : "Ardından bu sayfaya \"web+nextcloudreddit\" bağlantılarını açma izni verin.",
+    "If you still don't manage to get the protocol registered, check your settings on this page:" : "İletişim kuralını hala kaydettiremiyorsanız, şuradaki ayarlarınızı denetleyin:",
     "With Firefox, you should see a bar on top of this page to authorize this page to open \"web+nextcloudreddit\" links." : "Firefox ile, bu sayfaya \"web+nextcloudreddit\" bağlantılarını açma izni vermek için bu sayfanın üst kısmında bir çubuk görüyor olmalısınız.",
     "Connect to Reddit" : "Reddit ile bağlantı kur",
     "Connected as {user}" : "{user} olarak bağlantı kuruldu",
