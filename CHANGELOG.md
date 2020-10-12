@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.4 – 2020-10-12
+### Fixed
+- don't expose token to settings UI
+
 ## 0.0.3 – 2020-10-02
 ### Added
 - more hints about protocol registration
