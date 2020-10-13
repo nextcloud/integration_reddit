@@ -175,35 +175,27 @@ class RedditAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (\Exception $e) {
-			$this->logger->warning('Reddit API error : '.$e->getMessage(), array('app' => $this->appName));
+		} catch (ServerException | ClientException $e) {
 			$response = $e->getResponse();
-			$headers = $response->getHeaders();
-			if (isset($headers['www-authenticate'])
-				&& is_array($headers['www-authenticate'])
-				&& count(array_keys($headers['www-authenticate']) > 0)
-			) {
-				$keys = array_keys($headers['www-authenticate']);
-				$wwwa = $headers['www-authenticate'][$keys[0]];
-				if (strpos($wwwa, 'invalid_token') !== false) {
-					$this->logger->warning('Trying to REFRESH the access token', array('app' => $this->appName));
-					// try to refresh the token
-					$result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
-						'grant_type' => 'refresh_token',
-						'refresh_token' => $refreshToken,
-					], 'POST');
-					if (isset($result['access_token'])) {
-						$this->logger->warning('Reddit access token successfully refreshed', array('app' => $this->appName));
-						$accessToken = $result['access_token'];
-						$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
-						// retry the request with new access token
-						return $this->request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params, $method);
-					} else {
-						// impossible to refresh the token
-						return ['error' => $this->l10n->t('Token is not valid anymore. Impossible to refresh it.') . ' ' . $result['error']];
-					}
+			if ($response->getStatusCode() === 401) {
+				$this->logger->info('Trying to REFRESH the access token', ['app' => $this->appName]);
+				// try to refresh the token
+				$result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
+					'grant_type' => 'refresh_token',
+					'refresh_token' => $refreshToken,
+				], 'POST');
+				if (isset($result['access_token'])) {
+					$this->logger->info('Reddit access token successfully refreshed', ['app' => $this->appName]);
+					$accessToken = $result['access_token'];
+					$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
+					// retry the request with new access token
+					return $this->request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params, $method);
+				} else {
+					// impossible to refresh the token
+					return ['error' => $this->l10n->t('Token is not valid anymore. Impossible to refresh it.') . ' ' . $result['error']];
 				}
 			}
+			$this->logger->warning('Reddit API error : '.$e->getMessage(), ['app' => $this->appName]);
 			return ['error' => $e->getMessage()];
 		}
 	}
@@ -252,7 +244,7 @@ class RedditAPIService {
 				return json_decode($body, true);
 			}
 		} catch (\Throwable $e) {
-			$this->logger->warning('Reddit OAuth error : '.$e->getMessage(), array('app' => $this->appName));
+			$this->logger->warning('Reddit OAuth error : '.$e->getMessage(), ['app' => $this->appName]);
 			return ['error' => $e->getMessage()];
 		}
 	}
