@@ -15,6 +15,8 @@ use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 use OCP\IConfig;
 use OCP\Http\Client\IClientService;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 use OCA\Reddit\AppInfo\Application;
 
