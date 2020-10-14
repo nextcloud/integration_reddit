@@ -199,6 +199,7 @@ export default {
 	display: inline-block;
 	width: 32px;
 }
+
 .icon-reddit {
 	background-image: url(./../../img/app-dark.svg);
 	background-size: 23px 23px;
@@ -209,9 +210,11 @@ export default {
 body.theme--dark .icon-reddit {
 	background-image: url(./../../img/app.svg);
 }
+
 .reddit-content {
 	margin-left: 40px;
 }
+
 .reddit-grid-form {
 	max-width: 600px;
 	display: grid;
@@ -220,7 +223,9 @@ body.theme--dark .icon-reddit {
 		margin-bottom: -1px;
 	}
 }
+
 .reddit-grid-form label {
 	line-height: 38px;
 }
+
 </style>
