@@ -163,7 +163,7 @@ class ConfigController extends Controller {
                 'code' => $code,
                 'redirect_uri' => $redirect_uri,
             ], 'POST');
-            if (isset($result['access_token'])) {
+            if (isset($result['access_token'], $result['refresh_token'])) {
                 $accessToken = $result['access_token'];
                 $this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
                 $refreshToken = $result['refresh_token'];
@@ -181,8 +181,9 @@ class ConfigController extends Controller {
                     $this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
                     '?redditToken=success'
                 );
+            } else {
+                $message = $this->l->t('Error getting OAuth access token') . ' ' . ($result['error'] ?? 'missing token or refresh token');
             }
-            $message = $this->l->t('Error getting OAuth access token') . ' ' . $result['error'];
         } else {
             $message = $this->l->t('Error during OAuth exchanges');
         }
