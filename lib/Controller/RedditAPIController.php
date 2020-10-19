@@ -109,5 +109,4 @@ class RedditAPIController extends Controller {
         $response->cacheFor(60*60*24);
         return $response;
     }
-
 }

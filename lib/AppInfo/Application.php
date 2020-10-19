@@ -17,7 +17,6 @@ use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 
-use OCA\Reddit\Controller\PageController;
 use OCA\Reddit\Dashboard\RedditWidget;
 
 /**
