@@ -156,15 +156,12 @@ export default {
 				})
 		},
 		onOAuthClick() {
-			let redirectUri
-			if (this.state.client_secret) {
-				const redirectEndpoint = generateUrl('/apps/integration_reddit/oauth-redirect')
-				redirectUri = window.location.protocol + '//' + window.location.protocol + redirectEndpoint
-			} else {
-				redirectUri = 'web+nextcloudreddit://oauth-protocol-redirect'
-			}
+			const redirectUri = this.state.client_secret
+				? this.state.redirect_uri
+				: 'web+nextcloudreddit://oauth-protocol-redirect'
 			const oauthState = Math.random().toString(36).substring(3)
-			const requestUrl = 'https://www.reddit.com/api/v1/authorize?client_id=' + encodeURIComponent(this.state.client_id)
+			const requestUrl = 'https://www.reddit.com/api/v1/authorize'
+				+ '?client_id=' + encodeURIComponent(this.state.client_id)
 				+ '&redirect_uri=' + encodeURIComponent(redirectUri)
 				+ '&state=' + encodeURIComponent(oauthState)
 				+ '&response_type=code'
