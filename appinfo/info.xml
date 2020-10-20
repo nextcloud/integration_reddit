@@ -1,31 +1,31 @@
 <?xml version="1.0"?>
 <info>
-    <id>integration_reddit</id>
-    <name>Reddit integration</name>
-    <summary>Integration of Reddit social news aggregation service</summary>
-    <description><![CDATA[Reddit integration provides a dashboard widget displaying your recent subscribed news.]]></description>
-    <version>0.0.4</version>
-    <licence>agpl</licence>
-    <author>Julien Veyssier</author>
-    <namespace>Reddit</namespace>
-    <documentation>
-        <developer>https://github.com/nextcloud/integration_reddit/wikis</developer>
-    </documentation>
-    <category>integration</category>
-    <category>dashboard</category>
-    <website>https://github.com/nextcloud/integration_reddit</website>
-    <bugs>https://github.com/nextcloud/integration_reddit/issues</bugs>
-    <screenshot>https://github.com/nextcloud/integration_reddit/raw/master/img/screenshot1.jpg</screenshot>
-    <dependencies>
-        <database min-version="9.4">pgsql</database>
-        <database>sqlite</database>
-        <database min-version="5.5">mysql</database>
-        <nextcloud min-version="20" max-version="21"/>
-    </dependencies>
-    <settings>
-        <admin>OCA\Reddit\Settings\Admin</admin>
-        <admin-section>OCA\Reddit\Settings\AdminSection</admin-section>
-        <personal>OCA\Reddit\Settings\Personal</personal>
-        <personal-section>OCA\Reddit\Settings\PersonalSection</personal-section>
-    </settings>
+	<id>integration_reddit</id>
+	<name>Reddit integration</name>
+	<summary>Integration of Reddit social news aggregation service</summary>
+	<description><![CDATA[Reddit integration provides a dashboard widget displaying your recent subscribed news.]]></description>
+	<version>0.0.4</version>
+	<licence>agpl</licence>
+	<author>Julien Veyssier</author>
+	<namespace>Reddit</namespace>
+	<documentation>
+		<developer>https://github.com/nextcloud/integration_reddit/wikis</developer>
+	</documentation>
+	<category>integration</category>
+	<category>dashboard</category>
+	<website>https://github.com/nextcloud/integration_reddit</website>
+	<bugs>https://github.com/nextcloud/integration_reddit/issues</bugs>
+	<screenshot>https://github.com/nextcloud/integration_reddit/raw/master/img/screenshot1.jpg</screenshot>
+	<dependencies>
+		<database min-version="9.4">pgsql</database>
+		<database>sqlite</database>
+		<database min-version="5.5">mysql</database>
+		<nextcloud min-version="20" max-version="21"/>
+	</dependencies>
+	<settings>
+		<admin>OCA\Reddit\Settings\Admin</admin>
+		<admin-section>OCA\Reddit\Settings\AdminSection</admin-section>
+		<personal>OCA\Reddit\Settings\Personal</personal>
+		<personal-section>OCA\Reddit\Settings\PersonalSection</personal-section>
+	</settings>
 </info>

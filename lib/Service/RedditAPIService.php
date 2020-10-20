@@ -28,14 +28,12 @@ class RedditAPIService {
 	/**
 	 * Service to make requests to Reddit API
 	 */
-	public function __construct (
-		string $appName,
-		LoggerInterface $logger,
-		IL10N $l10n,
-		IConfig $config,
-		IClientService $clientService,
-		$userId
-	) {
+	public function __construct (string $appName,
+								LoggerInterface $logger,
+								IL10N $l10n,
+								IConfig $config,
+								IClientService $clientService,
+								string $userId) {
 		$this->appName = $appName;
 		$this->l10n = $l10n;
 		$this->logger = $logger;
@@ -245,7 +243,7 @@ class RedditAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (\Throwable $e) {
+		} catch (ServerException | ClientException  $e) {
 			$this->logger->warning('Reddit OAuth error : '.$e->getMessage(), ['app' => $this->appName]);
 			return ['error' => $e->getMessage()];
 		}

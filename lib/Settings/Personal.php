@@ -22,14 +22,13 @@ class Personal implements ISettings {
     private $urlGenerator;
     private $l;
 
-    public function __construct(
-                        string $appName,
-                        IL10N $l,
-                        IRequest $request,
-                        IConfig $config,
-                        IURLGenerator $urlGenerator,
-                        IInitialStateService $initialStateService,
-                        $userId) {
+    public function __construct(string $appName,
+                                IL10N $l,
+                                IRequest $request,
+                                IConfig $config,
+                                IURLGenerator $urlGenerator,
+                                IInitialStateService $initialStateService,
+                                $userId) {
         $this->appName = $appName;
         $this->urlGenerator = $urlGenerator;
         $this->request = $request;

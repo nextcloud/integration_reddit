@@ -26,33 +26,24 @@ use OCA\Reddit\Dashboard\RedditWidget;
  */
 class Application extends App implements IBootstrap {
 
-    public const APP_ID = 'integration_reddit';
+	public const APP_ID = 'integration_reddit';
 
-    /**
-     * Constructor
-     *
-     * @param array $urlParams
-     */
-    public function __construct(array $urlParams = []) {
-        parent::__construct(self::APP_ID, $urlParams);
+	/**
+	 * Constructor
+	 *
+	 * @param array $urlParams
+	 */
+	public function __construct(array $urlParams = []) {
+		parent::__construct(self::APP_ID, $urlParams);
 
-        $this->container = $this->getContainer();
-    }
+		$this->container = $this->getContainer();
+	}
 
-    public function register(IRegistrationContext $context): void {
-        // WARNING finally found a way to use one single reddit app for everyone everywhere
-        // so we can always enable the widget
-        $context->registerDashboardWidget(RedditWidget::class);
-        //// enable dashboard widget only if client ID and secret were defined by an admin
-        //$config = $this->container->query(\OCP\IConfig::class);
-        //$clientId = $config->getAppValue(self::APP_ID, 'client_id', '');
-        //$clientSecret = $config->getAppValue(self::APP_ID, 'client_secret', '');
-        //if ($clientId !== '' and $clientSecret !== '') {
-        //    $context->registerDashboardWidget(RedditWidget::class);
-        //}
-    }
+	public function register(IRegistrationContext $context): void {
+		$context->registerDashboardWidget(RedditWidget::class);
+	}
 
-    public function boot(IBootContext $context): void {
-    }
+	public function boot(IBootContext $context): void {
+	}
 }
 
