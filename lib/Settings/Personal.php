@@ -48,13 +48,11 @@ class Personal implements ISettings {
         $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
         $clientID = $clientID ? $clientID : DEFAULT_REDDIT_CLIENT_ID;
         $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '') !== '';
-        $redirectUri = $this->urlGenerator->linkToRouteAbsolute('integration_reddit.config.oauthRedirect');
 
         $userConfig = [
             'client_id' => $clientID,
             'client_secret' => $clientSecret,
             'user_name' => $userName,
-            'redirect_uri' => $redirectUri,
         ];
         $this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
         $response = new TemplateResponse(Application::APP_ID, 'personalSettings');

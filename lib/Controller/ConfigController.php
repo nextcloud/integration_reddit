@@ -153,7 +153,7 @@ class ConfigController extends Controller {
 		if ($clientID && $configState !== '' && $configState === $state) {
 			// if there is a client secret, then the app should be a 'classic' one redirecting to a web page
 			if ($clientSecret) {
-				$redirect_uri = $this->urlGenerator->linkToRouteAbsolute('integration_reddit.config.oauthRedirect');
+				$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri', '');
 			} else {
 				// otherwise it's redirecting to the protocol
 				$redirect_uri = 'web+nextcloudreddit://oauth-protocol-redirect';

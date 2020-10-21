@@ -75,6 +75,8 @@ export default {
 		return {
 			state: loadState('integration_reddit', 'user-config'),
 			readonly: true,
+			redirect_uri: window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_reddit/oauth-redirect'),
+			redirect_uri_protocol: 'web+nextcloudreddit://oauth-protocol-redirect',
 			chromiumImagePath: imagePath('integration_reddit', 'chromium.png'),
 			firefoxImagePath: imagePath('integration_reddit', 'firefox.png'),
 			isChromium: detectBrowser() === 'chrome',
@@ -157,8 +159,8 @@ export default {
 		},
 		onOAuthClick() {
 			const redirectUri = this.state.client_secret
-				? this.state.redirect_uri
-				: 'web+nextcloudreddit://oauth-protocol-redirect'
+				? this.redirect_uri
+				: this.redirect_uri_protocol
 			const oauthState = Math.random().toString(36).substring(3)
 			const requestUrl = 'https://www.reddit.com/api/v1/authorize'
 				+ '?client_id=' + encodeURIComponent(this.state.client_id)
@@ -171,6 +173,7 @@ export default {
 			const req = {
 				values: {
 					oauth_state: oauthState,
+					redirect_uri: redirectUri,
 				},
 			}
 			const url = generateUrl('/apps/integration_reddit/config')

@@ -18,7 +18,7 @@
 					<br><br>
 					<span class="icon icon-details" />
 					{{ t('integration_reddit', 'Make sure you set the "Redirection uri" to') }}
-					<b> {{ state.redirect_uri }} </b>
+					<b> {{ redirect_uri }} </b>
 					<br><br>
 				</li>
 				<li>
@@ -79,6 +79,7 @@ export default {
 			state: loadState('integration_reddit', 'admin-config'),
 			// to prevent some browsers to fill fields with remembered passwords
 			readonly: true,
+			redirect_uri: window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_reddit/oauth-redirect'),
 			redirect_uri_protocol: 'web+nextcloudreddit://oauth-protocol-redirect',
 		}
 	},
