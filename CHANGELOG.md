@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.5 – 2020-10-22
+### Added
+- automatic releases
+
+### Changed
+- use Webpack 5 and style lint
+
+### Fixed
+- possible problem with redirect URI when generated on server side
+
 ## 0.0.4 – 2020-10-12
 ### Fixed
 - don't expose token to settings UI

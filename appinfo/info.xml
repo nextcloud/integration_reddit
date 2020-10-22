@@ -4,7 +4,7 @@
 	<name>Reddit integration</name>
 	<summary>Integration of Reddit social news aggregation service</summary>
 	<description><![CDATA[Reddit integration provides a dashboard widget displaying your recent subscribed news.]]></description>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<licence>agpl</licence>
 	<author>Julien Veyssier</author>
 	<namespace>Reddit</namespace>
