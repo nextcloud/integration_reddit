@@ -8,7 +8,7 @@ OC.L10N.register(
     "Token is not valid anymore. Impossible to refresh it." : "Žeton ni več veljaven, zato ga ni mogoče osvežiti.",
     "OAuth access token refused" : "Žeton OAuth za dostop je bil zavrnjen",
     "Connected accounts" : "Povezani računi",
-    "Reddit integration" : "Podpora za Reddit",
+    "Reddit integration" : "Podpora Reddit",
     "Integration of Reddit social news aggregation service" : "Podpora za storitve zbirnika novic Reddit",
     "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Podpora za Reddit omogoča gradnike za prikazovanje pomembnih naročenih novic.",
     "Reddit app settings" : "Nastavitve programa Reddit",
