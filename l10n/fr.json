@@ -26,6 +26,7 @@
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "Avec Chrome / Chromium, vous devriez voir un popup en haut à gauche du navigateur pour autoriser cette page à ouvrir les liens \"web + nextcloudreddit\".",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Si vous ne voyez pas le popup, vous pouvez toujours cliquer sur cette icône dans la barre d'adresse.",
     "Then authorize this page to open \"web+nextcloudreddit\" links." : "Autorisez ensuite cette page à ouvrir les liens \"web + nextcloudreddit\".",
+    "If you still don't manage to get the protocol registered, check your settings on this page:" : "Si vous n'arrivez toujours pas à enregistrer le protocole, vérifiez vos paramètres sur cette page:",
     "With Firefox, you should see a bar on top of this page to authorize this page to open \"web+nextcloudreddit\" links." : "Avec Firefox, vous devriez voir une barre en haut de cette page pour autoriser cette page à ouvrir des liens \"web + nextcloudreddit\".",
     "Connect to Reddit" : "Se connecter à Reddit",
     "Connected as {user}" : "Connecté en tant que {user}",
