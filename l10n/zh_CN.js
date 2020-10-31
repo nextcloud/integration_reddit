@@ -6,7 +6,7 @@ OC.L10N.register(
     "Reddit news" : "Reddit 新闻",
     "Bad credentials" : "不好的证书",
     "OAuth access token refused" : "OAuth 访问令牌拒绝",
-    "Connected accounts" : "账号已连接",
+    "Connected accounts" : "关联账号",
     "Connected as {user}" : "作为 {user} 已连接"
 },
 "nplurals=1; plural=0;");
