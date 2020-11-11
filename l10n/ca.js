@@ -3,10 +3,24 @@ OC.L10N.register(
     {
     "Error during OAuth exchanges" : "Error durant els intercanvis d'OAuth",
     "Error getting OAuth access token" : "S'ha produït un error en obtenir el testimoni d'accés OAuth",
+    "Reddit news" : "Notícies de Reddit",
     "Bad credentials" : "Credencials dolentes",
     "OAuth access token refused" : "S'ha rebutjat el testimoni d'accés oAuth",
     "Connected accounts" : "Comptes connectades",
+    "Reddit integration" : "Integració de Reddit",
+    "Reddit app settings" : "Configuració de l'aplicació Reddit",
+    "Application ID" : "ID de l'aplicació",
+    "Application secret" : "Secret de l'aplicació",
+    "Failed to save Reddit admin options" : "No s'han pogut desar les opcions d'administració de Reddit",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Si no veieu la finestra emergent, encara podeu fer clic en aquesta icona de la barra d'adreces.",
-    "Connected as {user}" : "S'ha connectat com a {usuari}"
+    "Connect to Reddit" : "Connectar-se a Reddit",
+    "Connected as {user}" : "S'ha connectat com a {usuari}",
+    "Disconnect from Reddit" : "Desconnectar-se de Reddit",
+    "Reddit OAuth error:" : "Error de OAuth de Reddit:",
+    "Failed to save Reddit options" : "No s'han pogut desar les opcions de Reddit",
+    "Failed to save Reddit OAuth state" : "No s'ha pogut desar l'estat de Reddit OAuth",
+    "No Reddit account connected" : "No s'ha connectat el compte de Reddit",
+    "Error connecting to Reddit" : "S'ha produït un error en connectar a Reddit",
+    "No Reddit news!" : "No hi ha notícies de Reddit!"
 },
 "nplurals=2; plural=(n != 1);");
