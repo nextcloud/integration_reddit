@@ -10,7 +10,7 @@ OC.L10N.register(
     "Connected accounts" : "Bağlı hesaplar",
     "Reddit integration" : "Reddit bütünleştirmesi",
     "Integration of Reddit social news aggregation service" : "Reddit sosyal ağ haberleri derleme hizmeti bütünleştirmesi",
-    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Reddit bütünleştirmesi abone olduğunuz kanalların son haberlerini görüntüleyen bir pano gereci sağlar.",
+    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Reddit bütünleştirmesi abone olduğunuz kanalların son haberlerini görüntüleyen bir pano bileşeni sağlar.",
     "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "Nextcloud kullanıcılarınızın Reddit üzerinde OAuth ile kimlik doğrulamasına 3 şekilde izin verilebilir:",
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Varsayılan Nextcloud Reddit OAuth uygulamasını kullanmak için tüm alanları boş bırakın.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Reddit ayarlarından kendi Reddit \"web uygulamanızı\" oluşturup uygulama kimliği ve sırrını aşağıya yazabilirsiniz.",
