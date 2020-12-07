@@ -37,7 +37,7 @@
     "Nextcloud Reddit integration on {ncUrl}" : "Nextcloud Reddit-integratie op {ncUrl}",
     "Reddit options saved" : "Reddit opties opgeslagen",
     "Failed to save Reddit options" : "Kon Reddit-opties niet opslaan",
-    "Failed to save Reddit OAuth state" : "Kon Reddit OAuth status niet bewaren",
+    "Failed to save Reddit OAuth state" : "Kon Reddit OAuth-status niet bewaren",
     "No Reddit account connected" : "Geen Reddit-account verbonden",
     "Error connecting to Reddit" : "Fout bij het verbinden met Reddit",
     "No Reddit news!" : "Geen Reddit nieuws!",
