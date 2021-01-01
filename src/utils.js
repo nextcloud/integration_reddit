@@ -30,7 +30,7 @@ export function detectBrowser() {
 
 	// Safari 3.0+ "[object HTMLElementConstructor]"
 	// eslint-disable-next-line
-	if (/constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification))) {
+	if (/constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === '[object SafariRemoteNotification]'; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification))) {
 		return 'safari'
 	}
 
@@ -42,19 +42,22 @@ export function detectBrowser() {
 
 	// Edge 20+
 	// eslint-disable-next-line
-	if (!isIE && !!window.StyleMedia) {
+	if ((typeof isIE === 'undefined' || !isIE) && !!window.StyleMedia) {
 		return 'edge'
 	}
 
 	// Edge (based on chromium) detection
 	// eslint-disable-next-line
-	if (isChrome && (navigator.userAgent.indexOf("Edg") != -1)) {
+	if (typeof isChrome !== 'undefined' && isChrome && (navigator.userAgent.indexOf('Edg') != -1)) {
 		return 'edge-chromium'
 	}
 
 	// Blink engine detection
 	// eslint-disable-next-line
-	if ((isChrome || isOpera) && !!window.CSS) {
+	if (((typeof isChrome !== 'undefined' && isChrome) || (typeof isOpera !== 'undefined' && isOpera))
+		&& !!window.CSS
+	) {
 		return 'blink'
 	}
+	return 'unknown browser'
 }
