@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 0.0.7 – 2021-01-01
+### Changed
+- bump js libs
+
+### Fixed
+- browser detection
+
 ## 0.0.6 – 2020-12-10
 ### Changed
 - bump js libs
