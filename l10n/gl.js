@@ -10,7 +10,7 @@ OC.L10N.register(
     "Connected accounts" : "Contas conectadas",
     "Reddit integration" : "Integración de Reddit",
     "Integration of Reddit social news aggregation service" : "Integración do servizo de agregación de novas sociais de Reddit",
-    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "A integración de Reddit fornece un trebello de panel que amosa as súas novas subscritas recentes.",
+    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "A integración de Reddit fornece un trebello de taboleiro que amosa as súas novas subscritas recentes.",
     "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "Hai 3 xeitos de permitir que os usuarios de Nextcloud usen OAuth para autenticarse no Reddit:",
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Deixe todos os campos baleiros para usar a aplicación Nextcloud Reddit OAuth predeterminada.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Cree a súa propia «aplicación web» de Reddit nas preferencias de Reddit e poña o ID da aplicación a seguir.",
