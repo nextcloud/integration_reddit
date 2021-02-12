@@ -24,6 +24,7 @@
 import axios from '@nextcloud/axios'
 import { generateUrl } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
+import '@nextcloud/dialogs/styles/toast.scss'
 import { getLocale } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'

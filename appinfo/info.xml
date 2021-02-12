@@ -4,7 +4,7 @@
 	<name>Reddit integration</name>
 	<summary>Integration of Reddit social news aggregation service</summary>
 	<description><![CDATA[Reddit integration provides a dashboard widget displaying your recent subscribed news.]]></description>
-	<version>0.0.9</version>
+	<version>0.0.10</version>
 	<licence>agpl</licence>
 	<author>Julien Veyssier</author>
 	<namespace>Reddit</namespace>
@@ -20,7 +20,7 @@
 		<database min-version="9.4">pgsql</database>
 		<database>sqlite</database>
 		<database min-version="5.5">mysql</database>
-		<nextcloud min-version="20" max-version="21"/>
+		<nextcloud min-version="20" max-version="22"/>
 	</dependencies>
 	<settings>
 		<admin>OCA\Reddit\Settings\Admin</admin>

@@ -62,6 +62,7 @@ import { generateUrl, imagePath } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import { delay, detectBrowser } from '../utils'
 import { showSuccess, showError } from '@nextcloud/dialogs'
+import '@nextcloud/dialogs/styles/toast.scss'
 
 export default {
 	name: 'PersonalSettings',
