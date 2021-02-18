@@ -12,4 +12,4 @@ A link to the "Connected accounts" user settings section will be displayed in th
 
 ### Admin settings
 
-There also is a "Connected accounts" **admin** settings section if you want your Nextcloud users to use another OAuth application to authenticate to Dropbox. The Nextcloud Reddit OAuth app is used by default.
+There also is a "Connected accounts" **admin** settings section if you want your Nextcloud users to use another OAuth application to authenticate to Reddit. The Nextcloud Reddit OAuth app is used by default.
