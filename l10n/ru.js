@@ -1,8 +1,11 @@
 OC.L10N.register(
     "integration_reddit",
     {
+    "Error during OAuth exchanges" : "Ошибка во время обмена данными OAuth",
+    "Error getting OAuth access token" : "Ошибка получения токена доступа OAuth",
     "Reddit news" : "Новости Reddit",
     "Bad credentials" : "Неверные учётные данные",
+    "OAuth access token refused" : "Токен доступа OAuth отклонён",
     "Connected accounts" : "Подключённые учётные записи",
     "Reddit integration" : "Интеграция с Reddit",
     "Reddit app settings" : "Параметры приложения Reddit",
