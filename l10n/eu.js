@@ -16,6 +16,7 @@ OC.L10N.register(
     "Connect to Reddit" : "Konektatu Reddit-era",
     "Connected as {user}" : "{user} gisa konektatuta",
     "Disconnect from Reddit" : "Deskonektatu Reddit-etik",
+    "Failed to save Reddit options" : "Reddit aukerak gordetzeak huts egin du",
     "Error connecting to Reddit" : "Errorea Reddit-era konektatzean"
 },
 "nplurals=2; plural=(n != 1);");
