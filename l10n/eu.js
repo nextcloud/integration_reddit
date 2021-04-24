@@ -18,6 +18,7 @@ OC.L10N.register(
     "Disconnect from Reddit" : "Deskonektatu Reddit-etik",
     "Reddit OAuth error:" : "Reddit OAuth errorea:",
     "Failed to save Reddit options" : "Reddit aukerak gordetzeak huts egin du",
-    "Error connecting to Reddit" : "Errorea Reddit-era konektatzean"
+    "Error connecting to Reddit" : "Errorea Reddit-era konektatzean",
+    "No Reddit news!" : "Ez dago Reddit albisterik!"
 },
 "nplurals=2; plural=(n != 1);");
