@@ -9,6 +9,7 @@
     "Reddit app settings" : "Reddit aplikazioaren ezarpenak",
     "Application ID" : "Aplikazio ID",
     "Application secret" : "Aplikazio-sekretua",
+    "Failed to save Reddit admin options" : "Reddit administratzaile aukerak gordetzeak huts egin du",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Popup-a ikusten ez baduzu, ikono honetan klik egin dezakezu helbide-barran.",
     "If you still don't manage to get the protocol registered, check your settings on this page:" : "Protokoloa erregistratzen lortzen ez baduzu, egiaztatu ezarpenak orri honetan:",
     "Connect to Reddit" : "Konektatu Reddit-era",
@@ -16,6 +17,8 @@
     "Disconnect from Reddit" : "Deskonektatu Reddit-etik",
     "Reddit OAuth error:" : "Reddit OAuth errorea:",
     "Failed to save Reddit options" : "Reddit aukerak gordetzeak huts egin du",
+    "Failed to save Reddit OAuth state" : "Reddit OAuth egoera gordetzeak huts egin du",
+    "No Reddit account connected" : "Ez dago Reddit konturik konektatuta",
     "Error connecting to Reddit" : "Errorea Reddit-era konektatzean",
     "No Reddit news!" : "Ez dago Reddit albisterik!"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
