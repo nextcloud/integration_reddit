@@ -17,7 +17,7 @@
 					<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
 					<br><br>
 					<span class="icon icon-details" />
-					{{ t('integration_reddit', 'Make sure you set the "Redirection uri" to') }}
+					{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
 					<b> {{ redirect_uri }} </b>
 					<br><br>
 				</li>
@@ -26,7 +26,7 @@
 					<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
 					<br><br>
 					<span class="icon icon-details" />
-					{{ t('integration_reddit', 'Make sure you set the "Redirection uri" to') }}
+					{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
 					<b> {{ redirect_uri_protocol }} </b>
 					<br><br>
 				</li>
