@@ -15,7 +15,6 @@ OC.L10N.register(
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Αφήστε όλα τα πεδία κενά για να χρησιμοποιήσετε την προεπιλεγμένη εφαρμογή Nextcloud Reddit OAuth.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Δημιουργήστε τη δική σας \"εφαρμογή Ιστότοπου\" Reddit στις προτιμήσεις Reddit και τοποθετήστε το αναγνωριστικό και το μυστικό της εφαρμογής παρακάτω.",
     "Reddit app settings" : "Ρυθμίσεις εφαρμογής Reddit",
-    "Make sure you set the \"Redirection uri\" to" : "Βεβαιωθείτε ότι έχετε ορίσει το \"Redirection uri\" σε",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Δημιουργήστε τη δική σας \"εφαρμογή για κινητά\" Reddit στις προτιμήσεις Reddit και τοποθετήστε το αναγνωριστικό εφαρμογής παρακάτω. Αφήστε το πεδίο \"Μυστικό εφαρμογής\" κενό.",
     "Application ID" : "Αναγνωριστικό εφαρμογής",
     "Client ID of your Reddit application" : "Αναγνωριστικό πελάτη της εφαρμογής Reddit",

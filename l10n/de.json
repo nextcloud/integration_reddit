@@ -13,7 +13,6 @@
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Lasse alle Felder leer, um die standardmäßige Nextcloud Reddit OAuth-App zu verwenden.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Erstelle deine eigene Reddit \"Webanwendung\" in den Reddit-Einstellungen und gib die Anwendungs-ID und das Geheimnis unten ein.",
     "Reddit app settings" : "Reddit-App Einstellungen",
-    "Make sure you set the \"Redirection uri\" to" : "Stelle sicher, dass die \"Weiterleitungs-URI\" gesetzt ist auf",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Erstelle deine eigene Reddit \"mobile Anwendung\" in den Reddit-Einstellungen und gib die unten stehende Anwendungs-ID ein. Lasse das Feld \"Anwendungsgeheimnis\" leer.",
     "Application ID" : "Anwendungs-ID",
     "Client ID of your Reddit application" : "Client-ID von Deiner Reddit-Anwendung",

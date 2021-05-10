@@ -13,7 +13,6 @@
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "將所有字段留空以使用默認的 Nextcloud Reddit OAuth 應用程式。",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "在Reddit首選項中創建您自己的Reddit“ Web應用程序”，並將應用程序ID和密碼放在下面。",
     "Reddit app settings" : "Reddit 應用程式設定",
-    "Make sure you set the \"Redirection uri\" to" : "確保您將「重新導向 URI」設定為",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "在Reddit偏好設置中創建自己的 Reddit “流動應用程序”，並將應用程序ID放在下面。 將“應用程序機密”字段保留為空。",
     "Application ID" : "應用程式 ID",
     "Client ID of your Reddit application" : "您 Reddit 應用程式的客戶端 ID",

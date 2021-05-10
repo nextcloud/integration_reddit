@@ -15,7 +15,6 @@ OC.L10N.register(
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Za uporabo privzetega programa za overitev računa Reddit z OAuth pustite polja prazna.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Ustvarite svoj »spletni program« med nastavitvami Reddit in nato vpišite ID programa in geslo v spodnja polja.",
     "Reddit app settings" : "Nastavitve programa Reddit",
-    "Make sure you set the \"Redirection uri\" to" : "Poskrbite, da bo »preusmeritveni naslov URI« nastavljen na",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Ustvarite svoj »mobilni program« med nastavitvami Reddit in nato vpišite ID programa v spodnje polje. Polje gesla pustite prazno.",
     "Application ID" : "ID Programa",
     "Client ID of your Reddit application" : "ID Odjemalca programa Reddit",

@@ -13,7 +13,6 @@
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Pokud chcete použít výchozí Nextcloud Reddit OAuth aplikaci, ponechte všechny kolonky nevyplněné.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Vytvořte si svou vlastní „webovou aplikaci“ pro Reddit v předvolbách v této službě a níže zadejte identifikátor a tajemství pro tuto aplikaci.",
     "Reddit app settings" : "Nastavení pro Reddit aplikaci",
-    "Make sure you set the \"Redirection uri\" to" : "Ověřte, že jste nastavili „URI přesměrování“ na",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Vytvořte si svou vlastní „mobilní aplikaci“ pro Reddit v předvolbách v této službě a níže zadejte identifikátor této aplikace. Kolonku „Tajemství pro aplikaci“ nevyplňujte.",
     "Application ID" : "Identif. aplikace",
     "Client ID of your Reddit application" : "Identifikátor klienta vaší Reddit aplikace",

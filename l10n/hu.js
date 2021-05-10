@@ -15,7 +15,6 @@ OC.L10N.register(
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Az alapértelmezett Nextcloud Reddit OAuth alkalmazás használatához hagyjon üresen minden mezőt.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Hozzon létre saját Reddit \"webalkalmazást\" a Reddit beállításaiban, és írja be az alkalmazás azonosítóját és titkát alább.",
     "Reddit app settings" : "Reddit alkalmazás beállításai",
-    "Make sure you set the \"Redirection uri\" to" : "Bizonyosodjon meg róla, hogy beállította a \"Redirection URI\" értéket",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Hozzon létre saját Reddit „mobilalkalmazást” a Reddit beállításaiban, és írja be az alkalmazás azonosítóját alább. Hagyja üresen az \"Alkalmazás titka\" mezőt.",
     "Application ID" : "Alkalmazásazonosító",
     "Client ID of your Reddit application" : "Reddit alkalmazás ügyfél azonosítója",

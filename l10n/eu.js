@@ -15,7 +15,6 @@ OC.L10N.register(
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Utzi eremu guztiak hutsik, Nextclouden Reddit OAuth aplikazio lehenetsia erabiltzeko.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Sortu zeure Reddit \"web aplikazioa\" Reddit-eko ezarpenetan eta jarri behean aplikazioaren IDa eta sekretua.",
     "Reddit app settings" : "Reddit aplikazioaren ezarpenak",
-    "Make sure you set the \"Redirection uri\" to" : "Ziurtatu \"Birbideratze URLa\" ezartzen duzula hona:",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Sortu zeure \"mugikorrerako aplikazioa\" Reddit ezarpenetan eta jarri behean aplikazioaren IDa. Utzi \"Aplikazioaren sekretua\" eremua hutsik.",
     "Application ID" : "Aplikazio ID",
     "Client ID of your Reddit application" : "Zure Reddit aplikazioaren IDa",
