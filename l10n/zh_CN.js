@@ -7,6 +7,20 @@ OC.L10N.register(
     "Bad credentials" : "不好的证书",
     "OAuth access token refused" : "OAuth 访问令牌拒绝",
     "Connected accounts" : "关联账号",
-    "Connected as {user}" : "作为 {user} 已连接"
+    "Integration of Reddit social news aggregation service" : "整合Reddit社交新闻聚合服务",
+    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Reddit集成提供了一个仪表板小部件，其显示您最近订阅的新闻。",
+    "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "有3种方法允许你的Nextcloud用户使用OAuth认证到Reddit: ",
+    "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "留空所有字段使用默认的Nextcloud Reddit OAuth应用程序。",
+    "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "在Reddit首选项创建您自己的Reddit“web应用程序”，并把应用程序ID和secret放在下面。",
+    "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "在Reddit首选项创建您自己的Reddit“移动应用程序”，并把应用程序ID放在下面。将“应用程序 secret”字段留空。",
+    "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "如果您有验证困难，请询问您的Nextcloud管理员检查Reddit管理设置。",
+    "Make sure to accept the protocol registration on top of this page to allow authentication to Reddit." : "请确保接受此页面顶部的协议注册，以允许Reddit身份验证 ",
+    "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "如果使用 Chrome/Chromium 浏览器，你应该会在浏览器左上角看到一个弹出窗口，授权本页面打开 “web+nextcloudtwitter” 链接。",
+    "If you don't see the popup, you can still click on this icon in the address bar." : "如果你没有看到弹出窗口，你仍然可以在地址栏点击这个图标。",
+    "Then authorize this page to open \"web+nextcloudreddit\" links." : "然后授权本页面打开“web+ nextcloudredit”链接。 ",
+    "If you still don't manage to get the protocol registered, check your settings on this page:" : "如果您仍然不能成功注册协议，请在此页面检查您的设置:",
+    "With Firefox, you should see a bar on top of this page to authorize this page to open \"web+nextcloudreddit\" links." : "在 Firefox 中，你应该会在页面顶部看到一个授权该页面打开 “web+nextcloudtwitter” 链接的栏。 ",
+    "Connected as {user}" : "作为 {user} 已连接",
+    "You must access this page with HTTPS to be able to authenticate to Reddit." : "您必须使用 HTTPS 访问此页面才能进行 Reddit 身份验证。"
 },
 "nplurals=1; plural=0;");
