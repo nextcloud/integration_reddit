@@ -28,7 +28,7 @@
     "Then authorize this page to open \"web+nextcloudreddit\" links." : "Następnie autoryzuj tę stronę do otwierania linków \"web+nextcloudreddit\".",
     "If you still don't manage to get the protocol registered, check your settings on this page:" : "Jeśli nadal nie możesz zarejestrować protokołu, sprawdź ustawienia na tej stronie:",
     "With Firefox, you should see a bar on top of this page to authorize this page to open \"web+nextcloudreddit\" links." : "W przeglądarce Firefox u góry strony powinien być widoczny pasek, który upoważnia tę stronę do otwierania linków \"web+nextcloudreddit\".",
-    "Connect to Reddit" : "Połącz się z Redditem",
+    "Connect to Reddit" : "Połącz z Redditem",
     "Connected as {user}" : "Połączono jako {user}",
     "Disconnect from Reddit" : "Rozłącz się z Redditem",
     "You must access this page with HTTPS to be able to authenticate to Reddit." : "Musisz uzyskać dostęp do tej strony za pomocą protokołu HTTPS, aby móc uwierzytelnić się w serwisie Reddit.",
@@ -39,7 +39,7 @@
     "Failed to save Reddit options" : "Nie udało się zapisać opcji Reddita",
     "Failed to save Reddit OAuth state" : "Nie udało się zapisać statusu OAuth Reddit",
     "No Reddit account connected" : "Brak połączonego konta Reddit",
-    "Error connecting to Reddit" : "Błąd podczas łączenia się z Redditem",
+    "Error connecting to Reddit" : "Błąd podczas łączenia z Redditem",
     "No Reddit news!" : "Brak wiadomości Reddit!",
     "Failed to get Reddit news" : "Nie udało się pobrać wiadomości Reddit"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
