@@ -56,6 +56,7 @@ export default {
 			state: 'loading',
 			settingsUrl: generateUrl('/settings/user/connected-accounts'),
 			themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
+			windowVisibility: true,
 		}
 	},
 
@@ -99,15 +100,39 @@ export default {
 		},
 	},
 
+	watch: {
+		windowVisibility(newValue) {
+			if (newValue) {
+				this.launchLoop()
+			} else {
+				this.stopLoop()
+			}
+		},
+	},
+
+	beforeDestroy() {
+		document.removeEventListener('visibilitychange', this.changeWindowVisibility)
+	},
+
 	beforeMount() {
-		this.fetchNotifications()
-		this.loop = setInterval(() => this.fetchNotifications(), 60000)
+		this.launchLoop()
+		document.addEventListener('visibilitychange', this.changeWindowVisibility)
 	},
 
 	mounted() {
 	},
 
 	methods: {
+		changeWindowVisibility() {
+			this.windowVisibility = !document.hidden
+		},
+		stopLoop() {
+			clearInterval(this.loop)
+		},
+		launchLoop() {
+			this.fetchNotifications()
+			this.loop = setInterval(() => this.fetchNotifications(), 60000)
+		},
 		fetchNotifications() {
 			const req = {}
 			// dunnow why 'after' param does not work
