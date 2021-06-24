@@ -21,9 +21,30 @@ use GuzzleHttp\Exception\ServerException;
 use OCA\Reddit\AppInfo\Application;
 
 class RedditAPIService {
-
-	private $l10n;
+	/**
+	 * @var string
+	 */
+	private $appName;
+	/**
+	 * @var LoggerInterface
+	 */
 	private $logger;
+	/**
+	 * @var IL10N
+	 */
+	private $l10n;
+	/**
+	 * @var IConfig
+	 */
+	private $config;
+	/**
+	 * @var string
+	 */
+	private $userId;
+	/**
+	 * @var \OCP\Http\Client\IClient
+	 */
+	private $client;
 
 	/**
 	 * Service to make requests to Reddit API
@@ -35,11 +56,10 @@ class RedditAPIService {
 								IClientService $clientService,
 								string $userId) {
 		$this->appName = $appName;
-		$this->l10n = $l10n;
 		$this->logger = $logger;
+		$this->l10n = $l10n;
 		$this->config = $config;
 		$this->userId = $userId;
-		$this->clientService = $clientService;
 		$this->client = $clientService->newClient();
 	}
 
@@ -94,7 +114,6 @@ class RedditAPIService {
 		}
 
 		// get new stuff
-		$posts = [];
 		$result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'new', $params);
 		if (isset($result['data'], $result['data']['children']) && is_array($result['data']['children'])) {
 			$posts = [];
@@ -166,6 +185,8 @@ class RedditAPIService {
 				$response = $this->client->put($url, $options);
 			} else if ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
+			} else {
+				return ['error' => $this->l10n->t('Bad HTTP method')];
 			}
 			$body = $response->getBody();
 			$respCode = $response->getStatusCode();
@@ -234,6 +255,8 @@ class RedditAPIService {
 				$response = $this->client->put($url, $options);
 			} else if ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
+			} else {
+				return ['error' => $this->l10n->t('Bad HTTP method')];
 			}
 			$body = $response->getBody();
 			$respCode = $response->getStatusCode();

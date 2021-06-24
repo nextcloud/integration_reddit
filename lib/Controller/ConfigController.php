@@ -11,62 +11,53 @@
 
 namespace OCA\Reddit\Controller;
 
-use OCP\App\IAppManager;
-use OCP\Files\IAppData;
-
 use OCP\IURLGenerator;
 use OCP\IConfig;
-use OCP\IServerContainer;
 use OCP\IL10N;
-use Psr\Log\LoggerInterface;
-
 use OCP\IRequest;
-use OCP\IDBConnection;
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\ContentSecurityPolicy;
 use OCP\AppFramework\Controller;
-use OCP\Http\Client\IClientService;
 
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
 
-require_once __DIR__ . '/../constants.php';
-
 class ConfigController extends Controller {
 
-
-	private $userId;
+	/**
+	 * @var IConfig
+	 */
 	private $config;
-	private $dbconnection;
-	private $dbtype;
+	/**
+	 * @var IURLGenerator
+	 */
+	private $urlGenerator;
+	/**
+	 * @var IL10N
+	 */
+	private $l;
+	/**
+	 * @var RedditAPIService
+	 */
+	private $redditAPIService;
+	/**
+	 * @var string|null
+	 */
+	private $userId;
 
-	public function __construct($AppName,
+	public function __construct(string $appName,
 								IRequest $request,
-								IServerContainer $serverContainer,
 								IConfig $config,
-								IAppManager $appManager,
-								IAppData $appData,
-								IDBConnection $dbconnection,
 								IURLGenerator $urlGenerator,
 								IL10N $l,
-								LoggerInterface $logger,
-								IClientService $clientService,
 								RedditAPIService $redditAPIService,
-								$userId) {
-		parent::__construct($AppName, $request);
-		$this->l = $l;
-		$this->appName = $AppName;
-		$this->userId = $userId;
-		$this->appData = $appData;
-		$this->serverContainer = $serverContainer;
+								?string $userId) {
+		parent::__construct($appName, $request);
 		$this->config = $config;
-		$this->dbconnection = $dbconnection;
 		$this->urlGenerator = $urlGenerator;
-		$this->logger = $logger;
-		$this->clientService = $clientService;
+		$this->l = $l;
 		$this->redditAPIService = $redditAPIService;
+		$this->userId = $userId;
 	}
 
 	/**
@@ -85,8 +76,7 @@ class ConfigController extends Controller {
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'token', '');
 			$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', '');
 		}
-		$response = new DataResponse(1);
-		return $response;
+		return new DataResponse(1);
 	}
 
 	/**
@@ -99,8 +89,7 @@ class ConfigController extends Controller {
 		foreach ($values as $key => $value) {
 			$this->config->setAppValue(Application::APP_ID, $key, $value);
 		}
-		$response = new DataResponse(1);
-		return $response;
+		return new DataResponse(1);
 	}
 
 	/**
@@ -129,10 +118,11 @@ class ConfigController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
-	 * @param string $code
-	 * @param string $state
-	 * @param string $error
+	 * @param string|null $code
+	 * @param string|null $state
+	 * @param string|null $error
 	 * @return RedirectResponse
+	 * @throws \OCP\PreConditionNotMetException
 	 */
 	public function oauthRedirect(?string $code = '', ?string $state = '', ?string $error = ''): RedirectResponse {
 		if ($code === '' || $state === '') {
@@ -142,10 +132,10 @@ class ConfigController extends Controller {
 				'?redditToken=error&message=' . urlencode($message)
 			);
 		}
-		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
-		$clientID = $clientID ? $clientID : DEFAULT_REDDIT_CLIENT_ID;
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
+		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
+		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID);
+		$clientID = $clientID ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 
 		// anyway, reset state
 		$this->config->setUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
@@ -153,7 +143,7 @@ class ConfigController extends Controller {
 		if ($clientID && $configState !== '' && $configState === $state) {
 			// if there is a client secret, then the app should be a 'classic' one redirecting to a web page
 			if ($clientSecret) {
-				$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri', '');
+				$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri');
 			} else {
 				// otherwise it's redirecting to the protocol
 				$redirect_uri = 'web+nextcloudreddit://oauth-protocol-redirect';

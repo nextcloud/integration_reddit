@@ -9,10 +9,8 @@
 
 namespace OCA\Reddit\AppInfo;
 
-use OCP\IContainer;
 
 use OCP\AppFramework\App;
-use OCP\AppFramework\IAppContainer;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -27,6 +25,7 @@ use OCA\Reddit\Dashboard\RedditWidget;
 class Application extends App implements IBootstrap {
 
 	public const APP_ID = 'integration_reddit';
+	public const DEFAULT_REDDIT_CLIENT_ID = 'Wvd050kRx2lDwg';
 
 	/**
 	 * Constructor
@@ -35,8 +34,6 @@ class Application extends App implements IBootstrap {
 	 */
 	public function __construct(array $urlParams = []) {
 		parent::__construct(self::APP_ID, $urlParams);
-
-		$this->container = $this->getContainer();
 	}
 
 	public function register(IRegistrationContext $context): void {
@@ -46,4 +43,3 @@ class Application extends App implements IBootstrap {
 	public function boot(IBootContext $context): void {
 	}
 }
-

@@ -2,61 +2,54 @@
 namespace OCA\Reddit\Settings;
 
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\IRequest;
-use OCP\IL10N;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\Settings\ISettings;
-use OCP\Util;
-use OCP\IURLGenerator;
-use OCP\IInitialStateService;
 
 use OCA\Reddit\AppInfo\Application;
 
-require_once __DIR__ . '/../constants.php';
-
 class Personal implements ISettings {
 
-    private $request;
-    private $config;
-    private $dataDirPath;
-    private $urlGenerator;
-    private $l;
+	/**
+	 * @var IConfig
+	 */
+	private $config;
+	/**
+	 * @var IInitialState
+	 */
+	private $initialStateService;
+	/**
+	 * @var string|null
+	 */
+	private $userId;
 
-    public function __construct(string $appName,
-                                IL10N $l,
-                                IRequest $request,
+	public function __construct(
                                 IConfig $config,
-                                IURLGenerator $urlGenerator,
-                                IInitialStateService $initialStateService,
-                                $userId) {
-        $this->appName = $appName;
-        $this->urlGenerator = $urlGenerator;
-        $this->request = $request;
-        $this->l = $l;
-        $this->config = $config;
-        $this->initialStateService = $initialStateService;
-        $this->userId = $userId;
-    }
+                                IInitialState $initialStateService,
+                                ?string $userId) {
+		$this->config = $config;
+		$this->initialStateService = $initialStateService;
+		$this->userId = $userId;
+	}
 
     /**
      * @return TemplateResponse
      */
     public function getForm(): TemplateResponse {
-        $userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name', '');
+        $userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 
         // for OAuth
-        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
-        $clientID = $clientID ? $clientID : DEFAULT_REDDIT_CLIENT_ID;
-        $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '') !== '';
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID);
+        $clientID = $clientID ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+        $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret') !== '';
 
         $userConfig = [
             'client_id' => $clientID,
             'client_secret' => $clientSecret,
             'user_name' => $userName,
         ];
-        $this->initialStateService->provideInitialState($this->appName, 'user-config', $userConfig);
-        $response = new TemplateResponse(Application::APP_ID, 'personalSettings');
-        return $response;
+        $this->initialStateService->provideInitialState('user-config', $userConfig);
+        return new TemplateResponse(Application::APP_ID, 'personalSettings');
     }
 
     public function getSection(): string {

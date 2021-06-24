@@ -11,21 +11,8 @@
 
 namespace OCA\Reddit\Controller;
 
-use OCP\App\IAppManager;
-use OCP\Files\IAppData;
 use OCP\AppFramework\Http\DataDisplayResponse;
-
-use OCP\IURLGenerator;
 use OCP\IConfig;
-use OCP\IServerContainer;
-use OCP\IL10N;
-
-use OCP\AppFramework\Http;
-use OCP\AppFramework\Http\RedirectResponse;
-
-use OCP\AppFramework\Http\ContentSecurityPolicy;
-
-use Psr\Log\LoggerInterface;
 use OCP\IRequest;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
@@ -33,39 +20,51 @@ use OCP\AppFramework\Controller;
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
 
-require_once __DIR__ . '/../constants.php';
-
 class RedditAPIController extends Controller {
 
-
-	private $userId;
+	/**
+	 * @var IConfig
+	 */
 	private $config;
-	private $dbconnection;
-	private $dbtype;
+	/**
+	 * @var RedditAPIService
+	 */
+	private $redditAPIService;
+	/**
+	 * @var string|null
+	 */
+	private $userId;
+	/**
+	 * @var string
+	 */
+	private $accessToken;
+	/**
+	 * @var string
+	 */
+	private $refreshToken;
+	/**
+	 * @var string
+	 */
+	private $clientID;
+	/**
+	 * @var string
+	 */
+	private $clientSecret;
 
-	public function __construct($AppName,
+	public function __construct(string $appName,
 								IRequest $request,
-								IServerContainer $serverContainer,
 								IConfig $config,
-								IL10N $l10n,
-								IAppManager $appManager,
-								IAppData $appData,
-								LoggerInterface $logger,
 								RedditAPIService $redditAPIService,
-								$userId) {
-		parent::__construct($AppName, $request);
-		$this->userId = $userId;
-		$this->l10n = $l10n;
-		$this->appData = $appData;
-		$this->serverContainer = $serverContainer;
+								?string $userId) {
+		parent::__construct($appName, $request);
 		$this->config = $config;
-		$this->logger = $logger;
 		$this->redditAPIService = $redditAPIService;
-		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token', '');
-		$this->refreshToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'refresh_token', '');
-		$this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', DEFAULT_REDDIT_CLIENT_ID);
-		$this->clientID = $this->clientID ? $this->clientID : DEFAULT_REDDIT_CLIENT_ID;
-		$this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret', '');
+		$this->userId = $userId;
+		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
+		$this->refreshToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'refresh_token');
+		$this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID);
+		$this->clientID = $this->clientID ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 	}
 
 	/**
