@@ -100,13 +100,16 @@ class RedditAPIController extends Controller {
 	 * @return DataDisplayResponse
 	 */
 	public function getAvatar(?string $username = null, string $subreddit = null): DataDisplayResponse {
-		$response = new DataDisplayResponse(
-			$this->redditAPIService->getAvatar(
-				$this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken,
-				$username, $subreddit
-			)
+		$avatarContent = $this->redditAPIService->getAvatar(
+			$this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken,
+			$username, $subreddit
 		);
-		$response->cacheFor(60*60*24);
-		return $response;
+		if ($avatarContent !== '') {
+			$response = new DataDisplayResponse($avatarContent);
+			$response->cacheFor(60 * 60 * 24);
+			return $response;
+		} else {
+			return new DataDisplayResponse('', 404);
+		}
 	}
 }

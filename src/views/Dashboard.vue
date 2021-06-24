@@ -161,7 +161,7 @@ export default {
 			if (n.notification_type === 'privatemessage') {
 				return (n.author)
 					? generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author)
-					: ''
+					: undefined
 			} else if (n.notification_type === 'post') {
 				return generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('subreddit') + '=' + encodeURIComponent(n.subreddit)
 			}
