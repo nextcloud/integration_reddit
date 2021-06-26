@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "Chyba při výměnách informací v rámci OAuth",
     "Error getting OAuth access token" : "Chyba při získávání přístupového OAuth přístupového tokenu",
     "Reddit news" : "Reddit novinky",
+    "Bad HTTP method" : "Nesprávná HTTP metoda",
     "Bad credentials" : "Nesprávné přihlašovací údaje",
     "Token is not valid anymore. Impossible to refresh it." : "Token už není platný. Není možné ho obnovit.",
     "OAuth access token refused" : "OAuth přístupový token odmítnut",

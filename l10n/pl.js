@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "Błąd podczas wymiany OAuth",
     "Error getting OAuth access token" : "Błąd podczas pobierania tokena dostępu OAuth",
     "Reddit news" : "Wiadomości Reddit",
+    "Bad HTTP method" : "Zła metoda HTTP",
     "Bad credentials" : "Złe poświadczenia",
     "Token is not valid anymore. Impossible to refresh it." : "Token jest już nieważny. Nie można go odświeżyć.",
     "OAuth access token refused" : "Odmowa tokena dostępu OAuth",

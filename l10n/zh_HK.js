@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "OAuth 交換時發生錯誤",
     "Error getting OAuth access token" : "擷取 OAuth 存取權杖時發生錯誤",
     "Reddit news" : "Reddit 新聞",
+    "Bad HTTP method" : "不正確的 HTTP 方法",
     "Bad credentials" : "錯誤的身分驗證",
     "Token is not valid anymore. Impossible to refresh it." : "權杖不再有效。 不可能刷新它。",
     "OAuth access token refused" : "OAuth 存取權杖被拒絕",
