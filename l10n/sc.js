@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "Errore in is cuncàmbios OAuth",
     "Error getting OAuth access token" : "Errore in su recùperu de su token de intrada OAuth",
     "Reddit news" : "Noas de Reddit",
+    "Bad HTTP method" : "Mètodu HTTP malu",
     "Bad credentials" : "Credentziales non bàlidas",
     "Token is not valid anymore. Impossible to refresh it." : "Su token no est prus bàlidu. Non faghet a dd'agiornare.",
     "OAuth access token refused" : "Token de intrada OAuth refudadu",

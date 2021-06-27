@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "OAuth takasında sorun çıktı",
     "Error getting OAuth access token" : "OAuth erişim kodu alınırken sorun çıktı",
     "Reddit news" : "Reddit haberleri",
+    "Bad HTTP method" : "HTTP yöntemi hatalı",
     "Bad credentials" : "Kimlik doğrulama bilgileri hatalı",
     "Token is not valid anymore. Impossible to refresh it." : "Kod artık geçersiz. Yenileme yapılamıyor.",
     "OAuth access token refused" : "OAuth erişim kodu reddedildi",
