@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "Errorea QAuth trukeak egitean",
     "Error getting OAuth access token" : "Errorea OAuth sarbide tokena eskuratzen",
     "Reddit news" : "Reddit albisteak",
+    "Bad HTTP method" : "HTTP metodo okerra",
     "Bad credentials" : "Kredentzial okerrak",
     "Token is not valid anymore. Impossible to refresh it." : "Token honek ez du balio dagoeneko. Ezin izan da freskatu.",
     "OAuth access token refused" : "QAuth sarbide tokena ukatua izan da",
