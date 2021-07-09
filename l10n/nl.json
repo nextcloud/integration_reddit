@@ -2,6 +2,7 @@
     "Error during OAuth exchanges" : "Fout tijdens OAuth uitwisselingen",
     "Error getting OAuth access token" : "Fout bij ophalen OAuth access token",
     "Reddit news" : "Reddit nieuws",
+    "Bad HTTP method" : "Foute HTTP methode",
     "Bad credentials" : "Foute inloggegevens",
     "Token is not valid anymore. Impossible to refresh it." : "Token is niet meer geldig en onmogelijk te verversen.",
     "OAuth access token refused" : "OAuth access token geweigerd",
