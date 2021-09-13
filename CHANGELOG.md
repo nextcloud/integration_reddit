@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.2 – 2021-09-13
+### Changed
+- bump js libs
+
+### Fixed
+- bug when OAuth fails and no error provided in redirection URL
+[#19](https://github.com/nextcloud/integration_reddit/issues/19) @bionicworx
+
 ## 1.0.1 – 2021-06-28
 ### Changed
 - stop polling widget content when document is hidden
