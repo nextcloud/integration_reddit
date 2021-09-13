@@ -110,7 +110,11 @@ class ConfigController extends Controller {
 		}
 		$parts = parse_url($url);
 		parse_str($parts['query'], $params);
-		return $this->oauthRedirect($params['code'], $params['state'], $params['error']);
+		return $this->oauthRedirect(
+			$params['code'] ?? '',
+			$params['state'] ?? '',
+			$params['error'] ?? 'No error returned in OAuth response'
+		);
 	}
 
 	/**
@@ -127,6 +131,7 @@ class ConfigController extends Controller {
 	public function oauthRedirect(?string $code = '', ?string $state = '', ?string $error = ''): RedirectResponse {
 		if ($code === '' || $state === '') {
 			$message = $this->l->t('Error during OAuth exchanges');
+			$message .= ': ' . $error ?? '';
 			return new RedirectResponse(
 				$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
 				'?redditToken=error&message=' . urlencode($message)
