@@ -2,6 +2,7 @@
     "Error during OAuth exchanges" : "Virhe OAuth-tunnistautumisessa",
     "Error getting OAuth access token" : "Virhe OAuth-valtuutuksen haussa",
     "Reddit news" : "Reddit-uutiset",
+    "Bad HTTP method" : "Virheellinen HTTP-metodi",
     "Bad credentials" : "Virheelliset kirjautumistiedot",
     "Token is not valid anymore. Impossible to refresh it." : "Valtuutus ei ole enää käyttökelpoinen. Sitä ei voida päivittää.",
     "OAuth access token refused" : "OAuth-valtuutus hylätty",
