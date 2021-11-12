@@ -4,7 +4,7 @@
 	<name>Reddit integration</name>
 	<summary>Integration of Reddit social news aggregation service</summary>
 	<description><![CDATA[Reddit integration provides a dashboard widget displaying your recent subscribed news.]]></description>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<licence>agpl</licence>
 	<author>Julien Veyssier</author>
 	<namespace>Reddit</namespace>
@@ -17,9 +17,6 @@
 	<bugs>https://github.com/nextcloud/integration_reddit/issues</bugs>
 	<screenshot>https://github.com/nextcloud/integration_reddit/raw/master/img/screenshot1.jpg</screenshot>
 	<dependencies>
-		<database min-version="9.4">pgsql</database>
-		<database>sqlite</database>
-		<database min-version="5.5">mysql</database>
 		<nextcloud min-version="22" max-version="24"/>
 	</dependencies>
 	<settings>
