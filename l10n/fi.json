@@ -22,6 +22,7 @@
     "Reddit admin options saved" : "Redditin ylläpitoasetukset tallennettu",
     "Failed to save Reddit admin options" : "Redditin ylläpitoasetusten tallentaminen epäonnistui",
     "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "Jos todennuksessa on ongelmia, pyydä Nextcloud-ylläpitäjääsi tarkistamaan Redditin ylläpitoasetukset.",
+    "Then authorize this page to open \"web+nextcloudreddit\" links." : "Sen jälkeen valtuuta tämä sivu avaamaan \"web+nextcloudreddit\"-linkit.",
     "Connect to Reddit" : "Yhdistä Redditiin",
     "Connected as {user}" : "Yhdistetty käyttäjänä {user}",
     "Disconnect from Reddit" : "Katkaise yhteys Redditiin",
