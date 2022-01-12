@@ -7,8 +7,14 @@
     "OAuth access token refused" : "OAuth アクセストークンが拒否されました",
     "Connected accounts" : "接続済みアカウント",
     "Reddit integration" : "Reddit の統合",
+    "Reddit app settings" : "Redditアプリ設定",
     "Application ID" : "アプリケーション ID",
     "Application secret" : "アプリケーションシークレット",
-    "Connected as {user}" : "{user} を接続済み"
+    "Connect to Reddit" : "Redditに接続",
+    "Connected as {user}" : "{user} を接続済み",
+    "Disconnect from Reddit" : "Redditから接続を解除",
+    "Successfully connected to Reddit!" : "Redditへの接続に成功しました！",
+    "No Reddit account connected" : "接続済みRedditアカウントがありません",
+    "No Reddit news!" : "Redditニュースがありません！"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
