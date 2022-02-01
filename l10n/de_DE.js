@@ -38,7 +38,7 @@ OC.L10N.register(
     "Successfully connected to Reddit!" : "Erfolgreich mit Reddit verbunden!",
     "Reddit OAuth error:" : "Reddit OAuth-Fehler:",
     "Nextcloud Reddit integration on {ncUrl}" : "Reddit-Einbindung in Nextcloud auf {ncUrl}",
-    "Reddit options saved" : "Reddit Einstellungen gespeichert",
+    "Reddit options saved" : "Reddit-Einstellungen gespeichert",
     "Failed to save Reddit options" : "Fehler beim Speichern der Reddit-Einstellungen",
     "Failed to save Reddit OAuth state" : "Fehler beim Speichern des Reddit OAuth-Status",
     "No Reddit account connected" : "Kein Reddit-Konto verbunden",
