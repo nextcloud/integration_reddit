@@ -12,7 +12,7 @@
     "Failed to save Reddit admin options" : "No s'han pogut desar les opcions d'administració de Reddit",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Si no veieu la finestra emergent, encara podeu fer clic en aquesta icona de la barra d'adreces.",
     "Connect to Reddit" : "Connectar-se a Reddit",
-    "Connected as {user}" : "S'ha connectat com a {usuari}",
+    "Connected as {user}" : "S'ha connectat com a {user}",
     "Disconnect from Reddit" : "Desconnectar-se de Reddit",
     "Reddit OAuth error:" : "Error de OAuth de Reddit:",
     "Failed to save Reddit options" : "No s'han pogut desar les opcions de Reddit",
