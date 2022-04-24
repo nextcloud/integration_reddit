@@ -1,7 +1,9 @@
 OC.L10N.register(
     "integration_reddit",
     {
+    "Error getting OAuth access token" : "Kunde inte hämta OAuth-token",
     "Reddit news" : "Reddit-nyheter",
+    "Bad HTTP method" : "Felaktig HTTP-metod",
     "Bad credentials" : "Ogiltiga inloggningsuppgifter",
     "Connected accounts" : "Anslutna konton",
     "Reddit integration" : "Reddit-integrering",

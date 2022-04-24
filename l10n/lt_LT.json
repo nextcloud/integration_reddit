@@ -8,6 +8,8 @@
     "OAuth access token refused" : "„OAuth“ prieigos raktas atmestas",
     "Connected accounts" : "Prijungtos paskyros",
     "Reddit integration" : "„Reddit“ integracija",
+    "Application ID" : "Programos ID",
+    "Application secret" : "Programos paslaptis",
     "Connect to Reddit" : "Prisijungti prie „Reddit“",
     "Connected as {user}" : "Prisijungta kaip {user}",
     "Disconnect from Reddit" : "Atsijungti nuo „Reddit“",
