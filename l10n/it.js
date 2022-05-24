@@ -46,4 +46,4 @@ OC.L10N.register(
     "No Reddit news!" : "Nessuna notizia di Reddit!",
     "Failed to get Reddit news" : "Recupero delle notizie di Reddit non riuscito"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

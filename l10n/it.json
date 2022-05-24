@@ -43,5 +43,5 @@
     "Error connecting to Reddit" : "Errore durante la connessione a Reddit",
     "No Reddit news!" : "Nessuna notizia di Reddit!",
     "Failed to get Reddit news" : "Recupero delle notizie di Reddit non riuscito"
-},"pluralForm" :"nplurals=2; plural=(n != 1);"
+},"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
