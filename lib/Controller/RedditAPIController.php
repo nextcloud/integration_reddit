@@ -12,6 +12,7 @@
 namespace OCA\Reddit\Controller;
 
 use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\AppFramework\Http\DataResponse;
@@ -19,6 +20,7 @@ use OCP\AppFramework\Controller;
 
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
+use OCP\IURLGenerator;
 
 class RedditAPIController extends Controller {
 
@@ -50,10 +52,15 @@ class RedditAPIController extends Controller {
 	 * @var string
 	 */
 	private $clientSecret;
+	/**
+	 * @var IURLGenerator
+	 */
+	private $urlGenerator;
 
 	public function __construct(string $appName,
 								IRequest $request,
 								IConfig $config,
+								IURLGenerator $urlGenerator,
 								RedditAPIService $redditAPIService,
 								?string $userId) {
 		parent::__construct($appName, $request);
@@ -65,6 +72,7 @@ class RedditAPIController extends Controller {
 		$this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID);
 		$this->clientID = $this->clientID ?: Application::DEFAULT_REDDIT_CLIENT_ID;
 		$this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$this->urlGenerator = $urlGenerator;
 	}
 
 	/**
@@ -96,9 +104,8 @@ class RedditAPIController extends Controller {
 	 *
 	 * @param ?string $username
 	 * @param ?string $subreddit
-	 * @return DataDisplayResponse
 	 */
-	public function getAvatar(?string $username = null, string $subreddit = null): DataDisplayResponse {
+	public function getAvatar(?string $username = null, string $subreddit = null) {
 		$avatarContent = $this->redditAPIService->getAvatar(
 			$this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken,
 			$username, $subreddit
@@ -108,7 +115,8 @@ class RedditAPIController extends Controller {
 			$response->cacheFor(60 * 60 * 24);
 			return $response;
 		} else {
-			return new DataDisplayResponse('', 404);
+			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $username ?? $subreddit, 'size' => 44]);
+			return new RedirectResponse($fallbackAvatarUrl);
 		}
 	}
 }

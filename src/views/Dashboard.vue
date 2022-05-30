@@ -68,6 +68,7 @@ export default {
 					targetUrl: this.getNotificationTarget(n),
 					avatarUrl: this.getAvatarUrl(n),
 					avatarUsername: n.subreddit,
+					avatarIsNoUser: true,
 					overlayIconUrl: this.getNotificationTypeImage(n),
 					mainText: n.title,
 					subText: this.getSubline(n),
