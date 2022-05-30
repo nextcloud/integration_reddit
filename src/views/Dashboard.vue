@@ -22,7 +22,7 @@
 
 <script>
 import axios from '@nextcloud/axios'
-import { generateUrl } from '@nextcloud/router'
+import { generateUrl, imagePath } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 import '@nextcloud/dialogs/styles/toast.scss'
 import { getLocale } from '@nextcloud/l10n'
@@ -199,9 +199,9 @@ export default {
 		},
 		getNotificationTypeImage(n) {
 			if (n.notification_type === 'privatemessage') {
-				return generateUrl('/svg/integration_reddit/message?color=ffffff')
+				return imagePath('integration_reddit', 'message.svg')
 			} else if (n.notification_type === 'post') {
-				return generateUrl('/svg/integration_reddit/post?color=ffffff')
+				return imagePath('integration_reddit', 'post.svg')
 			}
 			return ''
 		},
