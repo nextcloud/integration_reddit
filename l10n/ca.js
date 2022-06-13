@@ -7,7 +7,7 @@ OC.L10N.register(
     "Bad HTTP method" : "Mètode HTTP incorrecte",
     "Bad credentials" : "Credencials dolentes",
     "OAuth access token refused" : "S'ha rebutjat el testimoni d'accés oAuth",
-    "Connected accounts" : "Comptes connectades",
+    "Connected accounts" : "Comptes connectats",
     "Reddit integration" : "Integració de Reddit",
     "Reddit app settings" : "Configuració de l'aplicació Reddit",
     "Application ID" : "ID de l'aplicació",
