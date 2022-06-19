@@ -39,8 +39,7 @@ class Personal implements ISettings {
         $userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 
         // for OAuth
-        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID);
-        $clientID = $clientID ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+        $clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
         $clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret') !== '';
 
         $userConfig = [

@@ -69,8 +69,7 @@ class RedditAPIController extends Controller {
 		$this->userId = $userId;
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
 		$this->refreshToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'refresh_token');
-		$this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID);
-		$this->clientID = $this->clientID ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
 		$this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$this->urlGenerator = $urlGenerator;
 	}
@@ -86,9 +85,7 @@ class RedditAPIController extends Controller {
 		if ($this->accessToken === '') {
 			return new DataResponse(null, 400);
 		}
-		$result = $this->redditAPIService->getNotifications(
-			$this->accessToken, $this->refreshToken, $this->clientID, $this->clientSecret, $after
-		);
+		$result = $this->redditAPIService->getNotifications($this->userId, $after);
 		if (!isset($result['error'])) {
 			$response = new DataResponse($result);
 		} else {
@@ -106,10 +103,7 @@ class RedditAPIController extends Controller {
 	 * @param ?string $subreddit
 	 */
 	public function getAvatar(?string $username = null, string $subreddit = null) {
-		$avatarContent = $this->redditAPIService->getAvatar(
-			$this->accessToken, $this->clientID, $this->clientSecret, $this->refreshToken,
-			$username, $subreddit
-		);
+		$avatarContent = $this->redditAPIService->getAvatar($this->userId, $username, $subreddit);
 		if ($avatarContent !== '') {
 			$response = new DataDisplayResponse($avatarContent);
 			$response->cacheFor(60 * 60 * 24);

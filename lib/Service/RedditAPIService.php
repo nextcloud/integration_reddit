@@ -11,6 +11,7 @@
 
 namespace OCA\Reddit\Service;
 
+use DateTime;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 use OCP\IConfig;
@@ -64,24 +65,21 @@ class RedditAPIService {
 	}
 
 	/**
-	 * @param string $accessToken
-	 * @param string $refreshToken
-	 * @param string $clientID
-	 * @param string $clientSecret
+	 * @param string $userId
 	 * @param ?string $username
 	 * @param ?string $subreddit
 	 * @return ?string
+	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function getAvatar(string $accessToken, string $refreshToken, string $clientID, string $clientSecret,
-								?string $username, ?string $subreddit): ?string {
+	public function getAvatar(string $userId, ?string $username, ?string $subreddit): ?string {
 		$url = null;
 		if (!is_null($username)) {
-			$response = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'user/' . urlencode($username) . '/about');
+			$response = $this->request($userId, 'user/' . urlencode($username) . '/about');
 			if (is_array($response) && isset($response['data'], $response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
 				$url = $response['data']['icon_img'];
 			}
 		} else {
-			$response = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'r/' . urlencode($subreddit) . '/about');
+			$response = $this->request($userId, 'r/' . urlencode($subreddit) . '/about');
 			if (isset($response['data'])) {
 				if (isset($response['data']['community_icon']) && $response['data']['community_icon'] !== '') {
 					$url = parse_url($response['data']['community_icon']);
@@ -99,22 +97,19 @@ class RedditAPIService {
 	}
 
 	/**
-	 * @param string $accessToken
-	 * @param string $refreshToken
-	 * @param string $clientID
-	 * @param string $clientSecret
+	 * @param string $userId
 	 * @param ?string $after
 	 * @return array
+	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function getNotifications(string $accessToken, string $refreshToken, string $clientID, string $clientSecret,
-									?string $after = null): array {
+	public function getNotifications(string $userId, ?string $after = null): array {
 		$params = [];
 		if (!is_null($after)) {
 			$params['after'] = $after;
 		}
 
 		// get new stuff
-		$result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'new', $params);
+		$result = $this->request($userId, 'new', $params);
 		if (isset($result['data'], $result['data']['children']) && is_array($result['data']['children'])) {
 			$posts = [];
 			foreach ($result['data']['children'] as $m) {
@@ -148,17 +143,16 @@ class RedditAPIService {
 	}
 
 	/**
-	 * @param string $accessToken
-	 * @param string $refreshToken
-	 * @param string $clientID
-	 * @param string $clientSecret
+	 * @param string $userId
 	 * @param string $endPoint
 	 * @param array $params
 	 * @param string $method
 	 * @return array
+	 * @throws \OCP\PreConditionNotMetException
 	 */
-	public function request(string $accessToken, string $refreshToken, string $clientID, string $clientSecret,
-							string $endPoint, array $params = [], string $method = 'GET'): array {
+	public function request(string $userId, string $endPoint, array $params = [], string $method = 'GET'): array {
+		$this->checkTokenExpiration($userId);
+		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
 		try {
 			$url = 'https://oauth.reddit.com/' . $endPoint;
 			$options = [
@@ -197,27 +191,65 @@ class RedditAPIService {
 				return json_decode($body, true);
 			}
 		} catch (ServerException | ClientException $e) {
-			$response = $e->getResponse();
-			if ($response->getStatusCode() === 401) {
-				$this->logger->info('Trying to REFRESH the access token', ['app' => $this->appName]);
-				// try to refresh the token
-				$result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
-					'grant_type' => 'refresh_token',
-					'refresh_token' => $refreshToken,
-				], 'POST');
-				if (isset($result['access_token'])) {
-					$this->logger->info('Reddit access token successfully refreshed', ['app' => $this->appName]);
-					$accessToken = $result['access_token'];
-					$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
-					// retry the request with new access token
-					return $this->request($accessToken, $refreshToken, $clientID, $clientSecret, $endPoint, $params, $method);
-				} else {
-					// impossible to refresh the token
-					return ['error' => $this->l10n->t('Token is not valid anymore. Impossible to refresh it.') . ' ' . $result['error']];
-				}
-			}
 			$this->logger->warning('Reddit API error : '.$e->getMessage(), ['app' => $this->appName]);
 			return ['error' => $e->getMessage()];
+		}
+	}
+
+	/**
+	 * @param string $userId
+	 * @return void
+	 * @throws \OCP\PreConditionNotMetException
+	 */
+	private function checkTokenExpiration(string $userId): void {
+		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
+		$expireAt = $this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
+		if ($refreshToken !== '' && $expireAt !== '') {
+			$nowTs = (new Datetime())->getTimestamp();
+			$expireAt = (int) $expireAt;
+			// if token expires in less than a minute or is already expired
+			if ($nowTs > $expireAt - 60) {
+				$this->refreshToken($userId);
+			}
+		}
+	}
+
+	/**
+	 * @param string $userId
+	 * @return bool
+	 * @throws \OCP\PreConditionNotMetException
+	 */
+	private function refreshToken(string $userId): bool {
+		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
+		if (!$refreshToken) {
+			$this->logger->error('No Reddit refresh token found', ['app' => $this->appName]);
+			return false;
+		}
+		$result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
+			'grant_type' => 'refresh_token',
+			'refresh_token' => $refreshToken,
+		], 'POST');
+		if (isset($result['access_token'])) {
+			$this->logger->info('Reddit access token successfully refreshed', ['app' => $this->appName]);
+			$accessToken = $result['access_token'];
+			$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
+			if (isset($result['expires_in'])) {
+				$nowTs = (new Datetime())->getTimestamp();
+				$expiresAt = $nowTs + (int) $result['expires_in'];
+				$this->config->setUserValue($userId, Application::APP_ID, 'token_expires_at', $expiresAt);
+			}
+			return true;
+		} else {
+			// impossible to refresh the token
+			$this->logger->error(
+				'Token is not valid anymore. Impossible to refresh it. '
+					. $result['error'] . ' '
+					. $result['error_description'] ?? '[no error description]',
+				['app' => $this->appName]
+			);
+			return false;
 		}
 	}
 

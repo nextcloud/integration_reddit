@@ -11,6 +11,7 @@
 
 namespace OCA\Reddit\Controller;
 
+use DateTime;
 use OCP\IURLGenerator;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -138,8 +139,7 @@ class ConfigController extends Controller {
 			);
 		}
 		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID);
-		$clientID = $clientID ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 
 		// anyway, reset state
@@ -163,8 +163,13 @@ class ConfigController extends Controller {
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
 				$refreshToken = $result['refresh_token'];
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
+				if (isset($result['expires_in'])) {
+					$nowTs = (new Datetime())->getTimestamp();
+					$expiresAt = $nowTs + (int) $result['expires_in'];
+					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_expires_at', $expiresAt);
+				}
 				// get user information
-				$info = $this->redditAPIService->request($accessToken, $refreshToken, $clientID, $clientSecret, 'api/v1/me');
+				$info = $this->redditAPIService->request($this->userId, 'api/v1/me');
 				if (isset($info['id'], $info['name'])) {
 					$this->config->setUserValue($this->userId, Application::APP_ID, 'user_id', $info['id']);
 					$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', $info['name']);
