@@ -5,7 +5,6 @@ OC.L10N.register(
     "Error getting OAuth access token" : "שגיאה בקבלת אסימון גישה עם OAuth",
     "Reddit news" : "חדשות Reddit",
     "Bad credentials" : "פרטי גישה שגויים",
-    "Token is not valid anymore. Impossible to refresh it." : "האסימון אינו תקף עוד. אי אפשר לרענן אותו.",
     "OAuth access token refused" : "אסימון הגישה ב־OAuth סורב",
     "Connected accounts" : "חשבונות מקוונים",
     "Reddit integration" : "שילוב Reddit",

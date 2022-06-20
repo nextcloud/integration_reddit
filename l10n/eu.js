@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit albisteak",
     "Bad HTTP method" : "HTTP metodo okerra",
     "Bad credentials" : "Kredentzial okerrak",
-    "Token is not valid anymore. Impossible to refresh it." : "Token honek ez du balio dagoeneko. Ezin izan da freskatu.",
     "OAuth access token refused" : "QAuth sarbide tokena ukatua izan da",
     "Connected accounts" : "Konektaturiko kontuak",
     "Reddit integration" : "Reddit integrazioa",

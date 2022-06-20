@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit haberleri",
     "Bad HTTP method" : "HTTP yöntemi hatalı",
     "Bad credentials" : "Kimlik doğrulama bilgileri hatalı",
-    "Token is not valid anymore. Impossible to refresh it." : "Kod artık geçersiz. Yenileme yapılamıyor.",
     "OAuth access token refused" : "OAuth erişim kodu reddedildi",
     "Connected accounts" : "Bağlı hesaplar",
     "Reddit integration" : "Reddit bütünleştirmesi",

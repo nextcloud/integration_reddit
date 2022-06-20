@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit новини",
     "Bad HTTP method" : "Лош HTTP метод",
     "Bad credentials" : "Лоши идентификационни данни",
-    "Token is not valid anymore. Impossible to refresh it." : "Маркерът вече не е валиден. Не е възможно да го обновите.",
     "OAuth access token refused" : " Маркерът за достъп OAuth е отказан",
     "Connected accounts" : "Свързани профили",
     "Reddit integration" : "Reddit интеграция",

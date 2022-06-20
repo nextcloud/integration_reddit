@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Новости Reddit",
     "Bad HTTP method" : "Неверный метод HTTP",
     "Bad credentials" : "Неверные учётные данные",
-    "Token is not valid anymore. Impossible to refresh it." : "Токен больше не действителен. Невозможно обновить его.",
     "OAuth access token refused" : "Токен доступа OAuth отклонён",
     "Connected accounts" : "Подключённые учётные записи",
     "Reddit integration" : "Интеграция с Reddit",

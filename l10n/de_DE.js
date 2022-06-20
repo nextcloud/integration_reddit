@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit-News",
     "Bad HTTP method" : "Ungültige HTTP-Methode",
     "Bad credentials" : "Falsche Anmeldeinformationen",
-    "Token is not valid anymore. Impossible to refresh it." : "Token ist nicht mehr gültig. Es ist unmöglich, diesen zu aktualisieren.",
     "OAuth access token refused" : "OAuth-Zugriffstoken abgelehnt",
     "Connected accounts" : "Verbundene Konten",
     "Reddit integration" : "Reddit-Einbindung",

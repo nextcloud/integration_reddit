@@ -5,7 +5,6 @@ OC.L10N.register(
     "Error getting OAuth access token" : "Produciuse un erro ao obter o testemuño de acceso OAuth",
     "Reddit news" : "Novas de Reddit",
     "Bad credentials" : "Credenciais incorrectas",
-    "Token is not valid anymore. Impossible to refresh it." : "O token xa non é válido. Non é posíbel actualizalo.",
     "OAuth access token refused" : "Foi rexeitado o testemuño de acceso de OAuth",
     "Connected accounts" : "Contas conectadas",
     "Reddit integration" : "Integración de Reddit",

@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Nouvelles de Reddit",
     "Bad HTTP method" : "Mauvaise méthode HTTP",
     "Bad credentials" : "Identifiants incorrects",
-    "Token is not valid anymore. Impossible to refresh it." : "Le jeton d'accès n'est plus valide. Impossible de le renouveler.",
     "OAuth access token refused" : "Jeton d'accès OAuth refusé",
     "Connected accounts" : "Comptes connectés",
     "Reddit integration" : "Intégration de Reddit",

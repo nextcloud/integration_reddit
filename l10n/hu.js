@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit hírek",
     "Bad HTTP method" : "Hibás HTTP metódus",
     "Bad credentials" : "Hibás hitelesítő adatok",
-    "Token is not valid anymore. Impossible to refresh it." : "A token már nem érvényes. Lehetetlen frissíteni.",
     "OAuth access token refused" : "OAuth hozzáférési token elutasítva",
     "Connected accounts" : "Kapcsolt fiókok",
     "Reddit integration" : "Reddit integráció",

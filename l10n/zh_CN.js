@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit 新闻",
     "Bad HTTP method" : "错误的HTTP方法",
     "Bad credentials" : "不好的证书",
-    "Token is not valid anymore. Impossible to refresh it." : "令牌已不再有效。无法刷新。",
     "OAuth access token refused" : "OAuth 访问令牌拒绝",
     "Connected accounts" : "关联账号",
     "Reddit integration" : "Reddit 集成",

@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit novinky",
     "Bad HTTP method" : "Nesprávná HTTP metoda",
     "Bad credentials" : "Nesprávné přihlašovací údaje",
-    "Token is not valid anymore. Impossible to refresh it." : "Token už není platný. Není možné ho obnovit.",
     "OAuth access token refused" : "OAuth přístupový token odmítnut",
     "Connected accounts" : "Propojené účty",
     "Reddit integration" : "Napojení na Reddit",

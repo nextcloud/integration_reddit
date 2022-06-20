@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Novice Reddit",
     "Bad HTTP method" : "Neustrezna metoda HTTP",
     "Bad credentials" : "Neustrezna poverila",
-    "Token is not valid anymore. Impossible to refresh it." : "Žeton ni več veljaven, zato ga ni mogoče osvežiti.",
     "OAuth access token refused" : "Žeton OAuth za dostop je bil zavrnjen",
     "Connected accounts" : "Povezani računi",
     "Reddit integration" : "Združevalnik Reddit",

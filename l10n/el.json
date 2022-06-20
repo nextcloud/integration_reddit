@@ -4,7 +4,6 @@
     "Reddit news" : "Νέα Reddit",
     "Bad HTTP method" : "Κακή μέθοδος HTTP",
     "Bad credentials" : "Εσφαλμένα διαπιστευτήρια",
-    "Token is not valid anymore. Impossible to refresh it." : "Το κουπόνι δεν είναι πλέον έγκυρο. Αδύνατο να το ανανεώσετε.",
     "OAuth access token refused" : "Το διακριτικό πρόσβασης OAuth απορρίφθηκε",
     "Connected accounts" : "Συνδεδεμένοι λογαριασμοί",
     "Reddit integration" : "Ενσωμάτωση Reddit",

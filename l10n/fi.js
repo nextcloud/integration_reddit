@@ -6,7 +6,6 @@ OC.L10N.register(
     "Reddit news" : "Reddit-uutiset",
     "Bad HTTP method" : "Virheellinen HTTP-metodi",
     "Bad credentials" : "Virheelliset kirjautumistiedot",
-    "Token is not valid anymore. Impossible to refresh it." : "Valtuutus ei ole enää käyttökelpoinen. Sitä ei voida päivittää.",
     "OAuth access token refused" : "OAuth-valtuutus hylätty",
     "Connected accounts" : "Yhdistetyt tilit",
     "Reddit integration" : "Reddit-integraatio",
