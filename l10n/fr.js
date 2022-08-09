@@ -15,6 +15,7 @@ OC.L10N.register(
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Laissez tous les champs vides pour utiliser l'application OAuth Reddit Nextcloud par défaut.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Créez votre propre \"application web\" Reddit dans les préférences de Reddit et renseignez votre ID et secret application ci-dessous.",
     "Reddit app settings" : "Paramètres d'applications Reddit",
+    "Make sure you set the \"Redirection URI\" to" : "Assurez-vous d'avoir renseigné l'\"URI de redirection\" à ",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Créez votre propre \"application mobile\" Reddit dans les préférences de Reddit et renseignez l'ID application ci-dessous. Laissez le champs \"secret application\" vide.",
     "Application ID" : "ID Application",
     "Client ID of your Reddit application" : "ID client de votre application Reddit",
