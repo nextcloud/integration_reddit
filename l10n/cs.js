@@ -10,7 +10,7 @@ OC.L10N.register(
     "Connected accounts" : "Propojené účty",
     "Reddit integration" : "Napojení na Reddit",
     "Integration of Reddit social news aggregation service" : "Napojení na službu Reddit – sociální síť pro agregování vydaných článků",
-    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Napojení na Reddit poskytuje ovládací prvek na přehled, zobrazující nedávné novinky, k jejichž odběru jste přihlášení.",
+    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Napojení na Reddit poskytuje ovládací prvek na nástěnku, zobrazující nedávné novinky, k jejichž odběru jste přihlášení.",
     "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "Jsou tři možnosti, jak svým Nextcloud uživatelům můžete umožnit používat OAuth pro ověření pomocí Reddit:",
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Pokud chcete použít výchozí Nextcloud Reddit OAuth aplikaci, ponechte všechny kolonky nevyplněné.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Vytvořte si svou vlastní „webovou aplikaci“ pro Reddit v předvolbách v této službě a níže zadejte identifikátor a tajemství pro tuto aplikaci.",
