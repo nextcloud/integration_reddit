@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.5 – 2022-08-29
+### Changed
+- implement proper token refresh based on expiration date
+- use material icons everywhere
+- make the app ready for NC 25 style changes
+- bump js libs, asjut to new eslint config
+
 ## 1.0.2 – 2021-09-13
 ### Changed
 - bump js libs
