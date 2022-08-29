@@ -9,7 +9,6 @@
 
 namespace OCA\Reddit\AppInfo;
 
-
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Bootstrap\IBootContext;
