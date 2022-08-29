@@ -5,8 +5,10 @@
 		:loading="state === 'loading'">
 		<template #empty-content>
 			<EmptyContent
-				v-if="emptyContentMessage"
-				:icon="emptyContentIcon">
+				v-if="emptyContentMessage">
+				<template #icon>
+					<component :is="emptyContentIcon" />
+				</template>
 				<template #desc>
 					{{ emptyContentMessage }}
 					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
@@ -27,6 +29,10 @@
 
 <script>
 import LoginVariantIcon from 'vue-material-design-icons/LoginVariant.vue'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+
+import RedditIcon from '../components/icons/RedditIcon.vue'
 
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
@@ -43,8 +49,11 @@ export default {
 	components: {
 		DashboardWidget,
 		EmptyContent,
+		RedditIcon,
 		NcButton,
 		LoginVariantIcon,
+		CloseIcon,
+		CheckIcon,
 	},
 
 	props: {
@@ -101,13 +110,13 @@ export default {
 		},
 		emptyContentIcon() {
 			if (this.state === 'no-token') {
-				return 'icon-reddit'
+				return RedditIcon
 			} else if (this.state === 'error') {
-				return 'icon-close'
+				return CloseIcon
 			} else if (this.state === 'ok') {
-				return 'icon-checkmark'
+				return CheckIcon
 			}
-			return 'icon-checkmark'
+			return CheckIcon
 		},
 	},
 
