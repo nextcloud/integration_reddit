@@ -11,12 +11,12 @@
 					{{ emptyContentMessage }}
 					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
 						<a :href="settingsUrl">
-							<Button>
+							<NcButton>
 								<template #icon>
 									<LoginVariantIcon />
 								</template>
 								{{ t('integration_reddit', 'Connect to Reddit') }}
-							</Button>
+							</NcButton>
 						</a>
 					</div>
 				</template>
@@ -26,16 +26,16 @@
 </template>
 
 <script>
-import LoginVariantIcon from 'vue-material-design-icons/LoginVariant'
-import Button from '@nextcloud/vue/dist/Components/Button'
+import LoginVariantIcon from 'vue-material-design-icons/LoginVariant.vue'
+
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/styles/toast.scss'
 import { getLocale } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent.js'
+import NcButton from '@nextcloud/vue/dist/Components/Button.js'
 
 export default {
 	name: 'Dashboard',
@@ -43,7 +43,7 @@ export default {
 	components: {
 		DashboardWidget,
 		EmptyContent,
-		Button,
+		NcButton,
 		LoginVariantIcon,
 	},
 

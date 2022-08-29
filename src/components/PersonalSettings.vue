@@ -1,73 +1,101 @@
 <template>
 	<div v-if="state.client_id" id="reddit_prefs" class="section">
 		<h2>
-			<a class="icon icon-reddit" />
+			<RedditIcon class="icon" />
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
-		<div v-if="showOAuth" class="reddit-content">
+		<div v-if="showOAuth">
 			<div v-if="!connected">
-				<p class="settings-hint">
-					<span class="icon icon-details" />
-					<span v-if="usingCustomApp">
-						{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
-					</span>
-					<span v-else>
-						{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
-						<span v-if="isChromium">
-							<br>
-							{{ t('integration_reddit', 'With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open "web+nextcloudreddit" links.') }}
-							<br>
-							{{ t('integration_reddit', 'If you don\'t see the popup, you can still click on this icon in the address bar.') }}
-							<br>
-							<img :src="chromiumImagePath">
-							<br>
-							{{ t('integration_reddit', 'Then authorize this page to open "web+nextcloudreddit" links.') }}
-							<br>
-							{{ t('integration_reddit', 'If you still don\'t manage to get the protocol registered, check your settings on this page:') }}
-							<b>chrome://settings/handlers</b>
-						</span>
-						<span v-else-if="isFirefox">
-							<br>
-							{{ t('integration_reddit', 'With Firefox, you should see a bar on top of this page to authorize this page to open "web+nextcloudreddit" links.') }}
-							<br><br>
-							<img :src="firefoxImagePath">
-						</span>
-					</span>
+				<p v-if="usingCustomApp" class="settings-hint">
+					<InformationOutlineIcon :size="20" class="icon" />
+					{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
 				</p>
-				<button id="reddit-oauth" @click="onOAuthClick">
-					<span class="icon icon-external" />
-					{{ t('integration_reddit', 'Connect to Reddit') }}
-				</button>
+				<div v-else>
+					<p class="settings-hint">
+						{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
+					</p>
+					<span v-if="isChromium">
+						<p class="settings-hint">
+							{{ t('integration_reddit', 'With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open "web+nextcloudreddit" links.') }}
+						</p>
+						<p class="settings-hint">
+							{{ t('integration_reddit', 'If you don\'t see the popup, you can still click on this icon in the address bar.') }}
+						</p>
+						<img :src="chromiumImagePath">
+						<br><br>
+						<p class="settings-hint">
+							{{ t('integration_reddit', 'Then authorize this page to open "web+nextcloudreddit" links.') }}
+						</p>
+						<p class="settings-hint">
+							{{ t('integration_reddit', 'If you still don\'t manage to get the protocol registered, check your settings on this page:') }}
+						</p>
+						<strong>chrome://settings/handlers</strong>
+					</span>
+					<span v-else-if="isFirefox">
+						<p class="settings-hint">
+							{{ t('integration_reddit', 'With Firefox, you should see a bar on top of this page to authorize this page to open "web+nextcloudreddit" links.') }}
+						</p>
+						<img :src="firefoxImagePath">
+					</span>
+				</div>
+				<br>
 			</div>
-			<div v-else class="reddit-grid-form">
-				<label>
-					<a class="icon icon-checkmark-color" />
-					{{ t('integration_reddit', 'Connected as {user}', { user: state.user_name }) }}
-				</label>
-				<button id="reddit-rm-cred" @click="onLogoutClick">
-					<span class="icon icon-close" />
-					{{ t('integration_reddit', 'Disconnect from Reddit') }}
-				</button>
+			<div id="reddit-content">
+				<NcButton v-if="!connected"
+					@click="onOAuthClick">
+					<template #icon>
+						<OpenInNewIcon :size="20" />
+					</template>
+					{{ t('integration_reddit', 'Connect to Reddit') }}
+				</NcButton>
+				<div v-else
+					class="line">
+					<label>
+						<CheckIcon :size="20" class="icon" />
+						{{ t('integration_reddit', 'Connected as {user}', { user: state.user_name }) }}
+					</label>
+					<NcButton @click="onLogoutClick">
+						<template #icon>
+							<CloseIcon :size="20" />
+						</template>
+						{{ t('integration_reddit', 'Disconnect from Reddit') }}
+					</NcButton>
+				</div>
 			</div>
 		</div>
-		<p v-else class="settings-hint">
+		<p v-else
+			class="settings-hint">
 			{{ t('integration_reddit', 'You must access this page with HTTPS to be able to authenticate to Reddit.') }}
 		</p>
 	</div>
 </template>
 
 <script>
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
+import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+
+import RedditIcon from './icons/RedditIcon.vue'
+
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import { delay, detectBrowser } from '../utils'
+import { delay, detectBrowser } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/styles/toast.scss'
+
+import NcButton from '@nextcloud/vue/dist/Components/Button.js'
 
 export default {
 	name: 'PersonalSettings',
 
 	components: {
+		RedditIcon,
+		NcButton,
+		CheckIcon,
+		OpenInNewIcon,
+		CloseIcon,
+		InformationOutlineIcon,
 	},
 
 	props: [],
@@ -196,39 +224,33 @@ export default {
 </script>
 
 <style scoped lang="scss">
-#reddit_prefs .icon {
-	display: inline-block;
-	width: 32px;
-}
+#reddit_prefs {
+	#reddit-content {
+		margin-left: 40px;
+	}
+	h2,
+	.line,
+	.settings-hint {
+		display: flex;
+		align-items: center;
+		.icon {
+			margin-right: 4px;
+		}
+	}
 
-.icon-reddit {
-	background-image: url(./../../img/app-dark.svg);
-	background-size: 23px 23px;
-	height: 23px;
-	margin-bottom: -4px;
-	filter: var(--background-invert-if-dark);
-}
+	h2 .icon {
+		margin-right: 8px;
+	}
 
-// for NC <= 24
-body.theme--dark .icon-reddit {
-	background-image: url(./../../img/app.svg);
-}
-
-.reddit-content {
-	margin-left: 40px;
-}
-
-.reddit-grid-form {
-	max-width: 600px;
-	display: grid;
-	grid-template: 1fr / 1fr 1fr;
-	button .icon {
-		margin-bottom: -1px;
+	.line {
+		> label {
+			width: 300px;
+			display: flex;
+			align-items: center;
+		}
+		> input {
+			width: 250px;
+		}
 	}
 }
-
-.reddit-grid-form label {
-	line-height: 38px;
-}
-
 </style>

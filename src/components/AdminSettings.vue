@@ -1,76 +1,87 @@
 <template>
 	<div id="reddit_prefs" class="section">
 		<h2>
-			<a class="icon icon-reddit" />
+			<RedditIcon class="icon" />
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<p class="settings-hint">
 			{{ t('integration_reddit', 'There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:') }}
-			<br><br>
-			<ul>
-				<li>
-					<b>1. </b>{{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}
-					<br><br>
-				</li>
-				<li>
-					<b>2. </b>{{ t('integration_reddit', 'Create your own Reddit "web application" in Reddit preferences and put the application ID and secret below.') }}
-					<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
-					<br><br>
-					<span class="icon icon-details" />
-					{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
-					<b> {{ redirect_uri }} </b>
-					<br><br>
-				</li>
-				<li>
-					<b>3. </b>{{ t('integration_reddit', 'Create your own Reddit "mobile application" in Reddit preferences and put the application ID below. Leave the "Application secret" field empty.') }}
-					<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
-					<br><br>
-					<span class="icon icon-details" />
-					{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
-					<b> {{ redirect_uri_protocol }} </b>
-					<br><br>
-				</li>
-			</ul>
 		</p>
-		<div class="grid-form">
-			<label for="reddit-client-id">
-				<a class="icon icon-category-auth" />
-				{{ t('integration_reddit', 'Application ID') }}
-			</label>
-			<input id="reddit-client-id"
-				v-model="state.client_id"
-				type="password"
-				:readonly="readonly"
-				:placeholder="t('integration_reddit', 'Client ID of your Reddit application')"
-				@input="onInput"
-				@focus="readonly = false">
-			<label for="reddit-client-secret">
-				<a class="icon icon-category-auth" />
-				{{ t('integration_reddit', 'Application secret') }}
-			</label>
-			<input id="reddit-client-secret"
-				v-model="state.client_secret"
-				type="password"
-				:readonly="readonly"
-				:placeholder="t('integration_reddit', 'Client secret of your Reddit application')"
-				@input="onInput"
-				@focus="readonly = false">
+		<p class="settings-hint">
+			1. {{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}
+		</p>
+		<p class="settings-hint">
+			2. {{ t('integration_reddit', 'Create your own Reddit "web application" in Reddit preferences and put the application ID and secret below.') }}
+		</p>
+		<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
+		<br><br>
+		<p class="settings-hint">
+			<InformationOutlineIcon :size="20" class="icon" />
+			{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
+		</p>
+		<strong>{{ redirect_uri }}</strong>
+		<br><br>
+		<p class="settings-hint">
+			3. {{ t('integration_reddit', 'Create your own Reddit "mobile application" in Reddit preferences and put the application ID below. Leave the "Application secret" field empty.') }}
+		</p>
+		<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
+		<br><br>
+		<p class="settings-hint">
+			<InformationOutlineIcon :size="20" class="icon" />
+			{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
+		</p>
+		<strong>{{ redirect_uri_protocol }}</strong>
+		<br><br>
+		<div id="reddit-content">
+			<div class="line">
+				<label for="reddit-client-id">
+					<KeyIcon :size="20" class="icon" />
+					{{ t('integration_reddit', 'Application ID') }}
+				</label>
+				<input id="reddit-client-id"
+					v-model="state.client_id"
+					type="password"
+					:readonly="readonly"
+					:placeholder="t('integration_reddit', 'Client ID of your Reddit application')"
+					@input="onInput"
+					@focus="readonly = false">
+			</div>
+			<div class="line">
+				<label for="reddit-client-secret">
+					<KeyIcon :size="20" class="icon" />
+					{{ t('integration_reddit', 'Application secret') }}
+				</label>
+				<input id="reddit-client-secret"
+					v-model="state.client_secret"
+					type="password"
+					:readonly="readonly"
+					:placeholder="t('integration_reddit', 'Client secret of your Reddit application')"
+					@input="onInput"
+					@focus="readonly = false">
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
+import KeyIcon from 'vue-material-design-icons/Key.vue'
+
+import RedditIcon from './icons/RedditIcon.vue'
+
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
-import { delay } from '../utils'
+import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/styles/toast.scss'
 
 export default {
 	name: 'AdminSettings',
 
 	components: {
+		RedditIcon,
+		KeyIcon,
+		InformationOutlineIcon,
 	},
 
 	props: [],
@@ -125,41 +136,34 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.grid-form label {
-	line-height: 38px;
-}
+#reddit_prefs {
+	#reddit-content{
+		margin-left: 40px;
+	}
 
-.grid-form input {
-	width: 100%;
-}
+	h2,
+	.line,
+	.settings-hint {
+		display: flex;
+		align-items: center;
+		.icon {
+			margin-right: 4px;
+		}
+	}
 
-.grid-form {
-	max-width: 500px;
-	display: grid;
-	grid-template: 1fr / 1fr 1fr;
-	margin-left: 30px;
-}
+	h2 .icon {
+		margin-right: 8px;
+	}
 
-#reddit_prefs .icon {
-	display: inline-block;
-	width: 32px;
+	.line {
+		> label {
+			width: 300px;
+			display: flex;
+			align-items: center;
+		}
+		> input {
+			width: 300px;
+		}
+	}
 }
-
-#reddit_prefs .grid-form .icon {
-	margin-bottom: -3px;
-}
-
-.icon-reddit {
-	background-image: url(./../../img/app-dark.svg);
-	background-size: 23px 23px;
-	height: 23px;
-	margin-bottom: -4px;
-	filter: var(--background-invert-if-dark);
-}
-
-// for NC <= 24
-body.theme--dark .icon-reddit {
-	background-image: url(./../../img/app.svg);
-}
-
 </style>
