@@ -17,7 +17,7 @@ OC.L10N.register(
     "Reddit app settings" : "Reddit uygulama ayarları",
     "Make sure you set the \"Redirection URI\" to" : "\"Yönlendirme adresini\" şuna ayarladığınızdan emin olun",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Reddit ayarlarından kendi Reddit \"mobil uygulamanızı\" oluşturup Uygulama kimliğini aşağıya yazabilirsiniz. \"Uygulama sırrı\" alanını boş bırakın.",
-    "Application ID" : "Uygulama kodu",
+    "Application ID" : "Uygulama kimliği",
     "Client ID of your Reddit application" : "Reddit uygulamanızın istemci kimliği",
     "Application secret" : "Uygulama sırrı",
     "Client secret of your Reddit application" : "Reddit uygulamanızın istemci sırrı",
