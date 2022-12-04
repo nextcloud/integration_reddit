@@ -31,6 +31,8 @@ OC.L10N.register(
     "You must access this page with HTTPS to be able to authenticate to Reddit." : "您必须使用 HTTPS 访问此页面才能进行 Reddit 身份验证。",
     "Reddit OAuth error:" : "Reddit OAuth 错误：",
     "Failed to save Reddit options" : "保存 Reddit 选项失败",
+    "No Reddit account connected" : "未连接至 Reddit 账号",
+    "Error connecting to Reddit" : "连接到 Reddit 时出错",
     "No Reddit news!" : "无 Reddit 新闻"
 },
 "nplurals=1; plural=0;");
