@@ -7,7 +7,7 @@
     "OAuth access token refused" : "OAuth erişim kodu reddedildi",
     "Connected accounts" : "Bağlı hesaplar",
     "Reddit integration" : "Reddit bütünleştirmesi",
-    "Integration of Reddit social news aggregation service" : "Reddit sosyal ağ haberleri derleme hizmeti bütünleştirmesi",
+    "Integration of Reddit social news aggregation service" : "Reddit sosyal ağ haberleri birleştirme hizmeti bütünleştirmesi",
     "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Reddit bütünleştirmesi abone olduğunuz kanalların son haberlerini görüntüleyen bir pano bileşeni sağlar.",
     "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "Nextcloud kullanıcılarınızın Reddit üzerinde OAuth ile kimlik doğrulamasına 3 şekilde izin verilebilir:",
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Varsayılan Nextcloud Reddit OAuth uygulamasını kullanmak için tüm alanları boş bırakın.",
