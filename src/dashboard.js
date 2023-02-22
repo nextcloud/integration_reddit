@@ -1,5 +1,3 @@
-/* jshint esversion: 6 */
-
 /**
  * Nextcloud - reddit
  *
@@ -11,17 +9,15 @@
  * @copyright Julien Veyssier 2020
  */
 
-import Vue from 'vue'
-import './bootstrap.js'
-import Dashboard from './views/Dashboard.vue'
+__webpack_nonce__ = btoa(OC.requestToken) // eslint-disable-line
+__webpack_public_path__ = OC.linkTo('integration_reddit', 'js/') // eslint-disable-line
 
-document.addEventListener('DOMContentLoaded', function() {
-
-	OCA.Dashboard.register('reddit_news', (el, { widget }) => {
-		const View = Vue.extend(Dashboard)
-		new View({
-			propsData: { title: widget.title },
-		}).$mount(el)
-	})
-
+OCA.Dashboard.register('reddit_news', async (el, { widget }) => {
+	const { default: Vue } = await import(/* webpackChunkName: "dashboard-lazy" */'vue')
+	const { default: Dashboard } = await import(/* webpackChunkName: "dashboard-lazy" */'./views/Dashboard.vue')
+	Vue.mixin({ methods: { t, n } })
+	const View = Vue.extend(Dashboard)
+	new View({
+		propsData: { title: widget.title },
+	}).$mount(el)
 })
