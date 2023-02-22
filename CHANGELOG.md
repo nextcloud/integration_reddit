@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 1.0.6 – 2023-02-22
+### Changed
+- add 26 compat
+- lazy load dashboard widget
+- use @nextcloud/vue 7.6.1
+
 ## 1.0.5 – 2022-08-29
 ### Changed
 - implement proper token refresh based on expiration date
