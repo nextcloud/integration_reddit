@@ -4,13 +4,13 @@
 		:show-more-text="title"
 		:loading="state === 'loading'">
 		<template #empty-content>
-			<EmptyContent
-				v-if="emptyContentMessage">
+			<NcEmptyContent
+				v-if="emptyContentMessage"
+				:description="emptyContentMessage">
 				<template #icon>
 					<component :is="emptyContentIcon" />
 				</template>
-				<template #desc>
-					{{ emptyContentMessage }}
+				<template #action>
 					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
 						<a :href="settingsUrl">
 							<NcButton>
@@ -22,7 +22,7 @@
 						</a>
 					</div>
 				</template>
-			</EmptyContent>
+			</NcEmptyContent>
 		</template>
 	</DashboardWidget>
 </template>
@@ -40,15 +40,15 @@ import { showError } from '@nextcloud/dialogs'
 import { getLocale } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent.js'
-import NcButton from '@nextcloud/vue/dist/Components/Button.js'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 export default {
 	name: 'Dashboard',
 
 	components: {
 		DashboardWidget,
-		EmptyContent,
+		NcEmptyContent,
 		RedditIcon,
 		NcButton,
 		LoginVariantIcon,

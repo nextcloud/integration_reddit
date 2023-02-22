@@ -84,7 +84,7 @@ import axios from '@nextcloud/axios'
 import { delay, detectBrowser } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
 
-import NcButton from '@nextcloud/vue/dist/Components/Button.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 export default {
 	name: 'PersonalSettings',
