@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## 1.0.6 – 2023-02-22
+## 1.0.7 – 2023-02-22
 ### Changed
 - add 26 compat
 - lazy load dashboard widget
