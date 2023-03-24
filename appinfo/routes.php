@@ -17,5 +17,6 @@ return [
 		['name' => 'config#setAdminConfig', 'url' => '/admin-config', 'verb' => 'PUT'],
 		['name' => 'redditAPI#getNotifications', 'url' => '/notifications', 'verb' => 'GET'],
 		['name' => 'redditAPI#getAvatar', 'url' => '/avatar', 'verb' => 'GET'],
+		['name' => 'redditAPI#getThumbnail', 'url' => '/thumbnail', 'verb' => 'GET'],
 	]
 ];

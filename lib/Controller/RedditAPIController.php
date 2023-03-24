@@ -11,6 +11,7 @@
 
 namespace OCA\Reddit\Controller;
 
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
@@ -82,7 +83,7 @@ class RedditAPIController extends Controller {
 	}
 
 	/**
-	 * get repository avatar
+	 * get user avatar
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
@@ -99,6 +100,31 @@ class RedditAPIController extends Controller {
 			return $response;
 		} else {
 			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $username ?? $subreddit, 'size' => 44]);
+			return new RedirectResponse($fallbackAvatarUrl);
+		}
+	}
+
+	/**
+	 * get subreddit thumbnail
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 *
+	 * @param string|null $url
+	 * @param string $subreddit
+	 * @return DataDisplayResponse|RedirectResponse
+	 */
+	public function getThumbnail(string $url = null, string $subreddit = '??'): DataDisplayResponse|RedirectResponse {
+		$thumbnailResponse = $this->redditAPIService->getThumbnail($url);
+		if (isset($thumbnailResponse['body'], $thumbnailResponse['headers'])) {
+			$response = new DataDisplayResponse(
+				$thumbnailResponse['body'],
+				Http::STATUS_OK,
+				['Content-Type' => $thumbnailResponse['headers']['Content-Type'][0] ?? 'image/jpeg']
+			);
+			$response->cacheFor(60 * 60 * 24);
+			return $response;
+		} else {
+			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $subreddit, 'size' => 44]);
 			return new RedirectResponse($fallbackAvatarUrl);
 		}
 	}

@@ -208,7 +208,9 @@ export default {
 					? generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author)
 					: undefined
 			} else if (n.notification_type === 'post') {
-				return generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('subreddit') + '=' + encodeURIComponent(n.subreddit)
+				return n.thumbnail === 'self' || n.thumbnail === 'spoiler'
+					? generateUrl('/apps/integration_reddit/avatar?subreddit={subreddit}', { subreddit: n.subreddit })
+					: generateUrl('/apps/integration_reddit/thumbnail?url={url}', { url: n.thumbnail })
 			}
 		},
 		getNotificationTarget(n) {

@@ -12,7 +12,9 @@
 namespace OCA\Reddit\Service;
 
 use DateTime;
+use Exception;
 use OCP\IL10N;
+use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCP\IConfig;
 use OCP\Http\Client\IClientService;
@@ -20,6 +22,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 
 use OCA\Reddit\AppInfo\Application;
+use Throwable;
 
 class RedditAPIService {
 	/**
@@ -91,7 +94,11 @@ class RedditAPIService {
 			}
 		}
 		if ($url !== null) {
-			return $this->client->get($url)->getBody();
+			try {
+				return $this->client->get($url)->getBody();
+			} catch (Exception | Throwable $e) {
+				$this->logger->debug('Reddit avatar request error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			}
 		}
 		return '';
 	}
@@ -140,6 +147,67 @@ class RedditAPIService {
 		//} else {
 		//    return $result;
 		//}
+	}
+
+	/**
+	 * @param string $userId
+	 * @param string $query
+	 * @param string|null $after
+	 * @param int $limit
+	 * @return array
+	 * @throws PreConditionNotMetException
+	 */
+	public function searchSubreddits(string $userId, string $query, ?string $after = null, int $limit = 5): array {
+		$params = [
+			'q' => $query,
+			'sort' => 'relevance',
+			'limit' => $limit,
+		];
+		if ($after !== null && $after !== '') {
+			$params['after'] = $after;
+		}
+		return $this->request($userId, 'search', $params);
+	}
+
+	/**
+	 * Request a thumbnail image
+	 * @param string $url
+	 * @return array|null Avatar image data
+	 */
+	public function getThumbnail(string $url): ?array {
+		try {
+			$domain = parse_url($url, PHP_URL_HOST);
+			if (preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1) {
+				$thumbnailResponse = $this->client->get($url);
+				return [
+					'body' => $thumbnailResponse->getBody(),
+					'headers' => $thumbnailResponse->getHeaders(),
+				];
+			}
+		} catch (Exception | Throwable $e) {
+			$this->logger->debug('Reddit thumbnail request error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+		}
+		return null;
+	}
+
+	/**
+	 * @param string $userId
+	 * @param string $postId
+	 * @return array
+	 * @throws PreConditionNotMetException
+	 */
+	public function getPostInfo(string $userId, string $postId): array {
+		$params = [
+			'id' => 't3_' . $postId,
+		];
+		$redditResponse = $this->request($userId, 'api/info', $params);
+		if (isset($redditResponse['data'], $redditResponse['data']['children'])
+			&& is_array($redditResponse['data']['children'])
+			&& count($redditResponse['data']['children']) > 0
+			&& isset($redditResponse['data']['children'][0]['data'])) {
+			return $redditResponse['data']['children'][0]['data'];
+		}
+		return $redditResponse;
 	}
 
 	/**
