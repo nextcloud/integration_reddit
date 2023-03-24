@@ -34,9 +34,9 @@ use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
-class SubredditReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
+class PublicationReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
 
-	private const RICH_OBJECT_TYPE = Application::APP_ID . '_subreddit';
+	private const RICH_OBJECT_TYPE = Application::APP_ID . '_publication';
 
 	private ?string $userId;
 	private IConfig $config;
@@ -63,14 +63,14 @@ class SubredditReferenceProvider extends ADiscoverableReferenceProvider implemen
 	 * @inheritDoc
 	 */
 	public function getId(): string	{
-		return 'reddit-subreddit';
+		return 'reddit-publication';
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getTitle(): string {
-		return $this->l10n->t('Subreddits');
+		return $this->l10n->t('Reddit publications');
 	}
 
 	/**
@@ -97,11 +97,11 @@ class SubredditReferenceProvider extends ADiscoverableReferenceProvider implemen
 			$ids = [];
 			$searchSubredditsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_subreddits_enabled', '1') === '1';
 			if ($searchSubredditsEnabled) {
-				$ids[] = 'reddit-subreddit-search';
+				$ids[] = Application::PUBLICATION_SEARCH_PROVIDER_ID;
 			}
 			return $ids;
 		}
-		return ['reddit-subreddit-search'];
+		return [Application::PUBLICATION_SEARCH_PROVIDER_ID];
 
 	}
 

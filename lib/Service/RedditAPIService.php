@@ -157,7 +157,7 @@ class RedditAPIService {
 	 * @return array
 	 * @throws PreConditionNotMetException
 	 */
-	public function searchSubreddits(string $userId, string $query, ?string $after = null, int $limit = 5): array {
+	public function searchPublications(string $userId, string $query, ?string $after = null, int $limit = 5): array {
 		$params = [
 			'q' => $query,
 			'sort' => 'relevance',

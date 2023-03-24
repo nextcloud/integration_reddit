@@ -25,6 +25,7 @@ declare(strict_types=1);
 namespace OCA\Reddit\Search;
 
 use DateTime;
+use Exception;
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
 use OCP\App\IAppManager;
@@ -37,8 +38,9 @@ use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
+use Throwable;
 
-class SubredditSearchProvider implements IProvider {
+class PublicationSearchProvider implements IProvider {
 	private IAppManager $appManager;
 	private IL10N $l10n;
 	private IConfig $config;
@@ -64,7 +66,7 @@ class SubredditSearchProvider implements IProvider {
 	 * @inheritDoc
 	 */
 	public function getId(): string {
-		return 'reddit-subreddit-search';
+		return Application::PUBLICATION_SEARCH_PROVIDER_ID;
 	}
 
 	/**
@@ -78,7 +80,6 @@ class SubredditSearchProvider implements IProvider {
 	 * @inheritDoc
 	 */
 	public function getOrder(string $route, array $routeParameters): int {
-		return -1;
 		if (strpos($route, Application::APP_ID . '.') === 0) {
 			// Active app, prefer Zammad results
 			return -1;
@@ -105,7 +106,7 @@ class SubredditSearchProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$searchResults = $this->service->searchSubreddits($user->getUID(), $term, $after, $limit);
+		$searchResults = $this->service->searchPublications($user->getUID(), $term, $after, $limit);
 
 		if (isset($searchResults['error'])) {
 			return SearchResult::paginated($this->getName(), [], 0);
@@ -144,7 +145,11 @@ class SubredditSearchProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getSubline(array $entry): string {
-		return $entry['data']['subreddit_name_prefixed'] ?? '??';
+		try {
+			return $this->l10n->t('By @%1$s in %2$s', [$entry['data']['author'], $entry['data']['subreddit_name_prefixed']]);
+		} catch (Exception | Throwable $e) {
+		}
+		return '??';
 	}
 
 	/**
