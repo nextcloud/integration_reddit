@@ -170,6 +170,26 @@ class RedditAPIService {
 	}
 
 	/**
+	 * @param string $userId
+	 * @param string $query
+	 * @param string|null $after
+	 * @param int $limit
+	 * @return array
+	 * @throws PreConditionNotMetException
+	 */
+	public function searchSubreddits(string $userId, string $query, ?string $after = null, int $limit = 5): array {
+		$params = [
+			'q' => $query,
+			'sort' => 'relevance',
+			'limit' => $limit,
+		];
+		if ($after !== null && $after !== '') {
+			$params['after'] = $after;
+		}
+		return $this->request($userId, 'subreddits/search', $params);
+	}
+
+	/**
 	 * Request a thumbnail image
 	 * @param string $url
 	 * @return array|null Avatar image data
@@ -206,6 +226,20 @@ class RedditAPIService {
 			&& count($redditResponse['data']['children']) > 0
 			&& isset($redditResponse['data']['children'][0]['data'])) {
 			return $redditResponse['data']['children'][0]['data'];
+		}
+		return $redditResponse;
+	}
+
+	/**
+	 * @param string $userId
+	 * @param string $subreddit
+	 * @return array
+	 * @throws PreConditionNotMetException
+	 */
+	public function getSubredditInfo(string $userId, string $subreddit): array {
+		$redditResponse = $this->request($userId, 'r/' . urlencode($subreddit) . '/about');
+		if (isset($redditResponse['data']) && is_array($redditResponse['data'])) {
+			return $redditResponse['data'];
 		}
 		return $redditResponse;
 	}

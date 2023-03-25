@@ -22,8 +22,7 @@
 
 namespace OCA\Reddit\Reference;
 
-use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
-use OCP\Collaboration\Reference\ISearchableReferenceProvider;
+use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Reddit\AppInfo\Application;
@@ -34,9 +33,9 @@ use OCP\IL10N;
 
 use OCP\IURLGenerator;
 
-class PublicationReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {
+class SubredditReferenceProvider implements IReferenceProvider {
 
-	private const RICH_OBJECT_TYPE = Application::APP_ID . '_publication';
+	private const RICH_OBJECT_TYPE = Application::APP_ID . '_subreddit';
 
 	private ?string $userId;
 	private IConfig $config;
@@ -57,58 +56,6 @@ class PublicationReferenceProvider extends ADiscoverableReferenceProvider implem
 		$this->l10n = $l10n;
 		$this->urlGenerator = $urlGenerator;
 		$this->redditAPIService = $redditAPIService;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getId(): string	{
-		return 'reddit-publication';
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getTitle(): string {
-		return $this->l10n->t('Reddit publications and subreddits');
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getOrder(): int	{
-		return 10;
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getIconUrl(): string {
-		return $this->urlGenerator->getAbsoluteURL(
-			$this->urlGenerator->imagePath(Application::APP_ID, 'app-dark.svg')
-		);
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getSupportedSearchProviderIds(): array {
-		if ($this->userId !== null) {
-			$ids = [];
-			$searchSubredditsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_subreddits_enabled', '1') === '1';
-			if ($searchSubredditsEnabled) {
-				$ids[] = Application::SUBREDDIT_SEARCH_PROVIDER_ID;
-			}
-			$searchPublicationsEnabled = $this->config->getUserValue($this->userId, Application::APP_ID, 'search_publications_enabled', '1') === '1';
-			if ($searchPublicationsEnabled) {
-				$ids[] = Application::PUBLICATION_SEARCH_PROVIDER_ID;
-			}
-			return $ids;
-		}
-		return [
-			Application::PUBLICATION_SEARCH_PROVIDER_ID,
-			Application::SUBREDDIT_SEARCH_PROVIDER_ID,
-		];
 	}
 
 	/**
@@ -136,16 +83,14 @@ class PublicationReferenceProvider extends ADiscoverableReferenceProvider implem
 		if ($this->matchReference($referenceText)) {
 			$urlInfo = $this->getUrlInfo($referenceText);
 			if ($urlInfo !== null) {
-				$postId = $urlInfo['post_id'];
 				$subreddit = $urlInfo['subreddit'];
-				$postInfo = $this->redditAPIService->getPostInfo($this->userId, $postId);
+				$subredditInfo = $this->redditAPIService->getSubredditInfo($this->userId, $subreddit);
 				$reference = new Reference($referenceText);
-				$reference->setTitle($postInfo['title']);
-				$description = $this->l10n->t('By @%1$s in %2$s', [$postInfo['author'], $postInfo['subreddit_name_prefixed']]);
+				$title = '/' . $subredditInfo['display_name_prefixed'] . ' [' . $subredditInfo['title'] . ']';
+				$reference->setTitle($title);
+				$description = $subredditInfo['public_description'];
 				$reference->setDescription($description);
-				$thumbnailUrl = ($postInfo['thumbnail'] === 'self' || $postInfo['thumbnail'] === 'spoiler')
-					? $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit])
-					: $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $postInfo['thumbnail']]);
+				$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit]);
 				$reference->setImageUrl($thumbnailUrl);
 				/*
 				$reference->setRichObject(
@@ -166,12 +111,11 @@ class PublicationReferenceProvider extends ADiscoverableReferenceProvider implem
 	 */
 	private function getUrlInfo(string $url): ?array {
 		// example url
-		// https://www.reddit.com/r/television/comments/11yw1jj/rick_and_morty_blabla/
-		preg_match('/^(?:https?:\/\/)?(?:www\.)?reddit\.com\/r\/([^\/\?]+)\/comments\/([0-9a-z]+)\/[^\/\?]+\/$/i', $url, $matches);
-		return count($matches) > 2
+		// https://www.reddit.com/r/television/
+		preg_match('/^(?:https?:\/\/)?(?:www\.)?reddit\.com\/r\/([^\/\?]+)\/?$/i', $url, $matches);
+		return count($matches) > 1
 			? [
 				'subreddit' => $matches[1],
-				'post_id' => $matches[2],
 			]
 			: null;
 	}

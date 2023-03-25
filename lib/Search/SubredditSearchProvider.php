@@ -40,7 +40,7 @@ use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 use Throwable;
 
-class PublicationSearchProvider implements IProvider {
+class SubredditSearchProvider implements IProvider {
 	private IAppManager $appManager;
 	private IL10N $l10n;
 	private IConfig $config;
@@ -66,14 +66,14 @@ class PublicationSearchProvider implements IProvider {
 	 * @inheritDoc
 	 */
 	public function getId(): string {
-		return Application::PUBLICATION_SEARCH_PROVIDER_ID;
+		return Application::SUBREDDIT_SEARCH_PROVIDER_ID;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	public function getName(): string {
-		return $this->l10n->t('Reddit posts');
+		return $this->l10n->t('Subreddits');
 	}
 
 	/**
@@ -106,7 +106,7 @@ class PublicationSearchProvider implements IProvider {
 			return SearchResult::paginated($this->getName(), [], 0);
 		}
 
-		$searchResults = $this->service->searchPublications($user->getUID(), $term, $after, $limit);
+		$searchResults = $this->service->searchSubreddits($user->getUID(), $term, $after, $limit);
 
 		if (isset($searchResults['error'])) {
 			return SearchResult::paginated($this->getName(), [], 0);
@@ -137,17 +137,8 @@ class PublicationSearchProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getMainText(array $entry): string {
-		return $entry['data']['title'] ?? '??';
-	}
-
-	/**
-	 * @param array $entry
-	 * @return string
-	 */
-	protected function getSubline(array $entry): string {
-		try {
-			return $this->l10n->t('By @%1$s in %2$s', [$entry['data']['author'], $entry['data']['subreddit_name_prefixed']]);
-		} catch (Exception | Throwable $e) {
+		if (isset($entry['data']['title'], $entry['data']['display_name_prefixed'])) {
+			return '/' . $entry['data']['display_name_prefixed'] . ' [' . $entry['data']['title'] . ']';
 		}
 		return '??';
 	}
@@ -156,8 +147,16 @@ class PublicationSearchProvider implements IProvider {
 	 * @param array $entry
 	 * @return string
 	 */
+	protected function getSubline(array $entry): string {
+		return $entry['data']['public_description'] ?? '??';
+	}
+
+	/**
+	 * @param array $entry
+	 * @return string
+	 */
 	protected function getLink(array $entry): string {
-		return Application::REDDIT_BASE_WEB_URL . $entry['data']['permalink'];
+		return Application::REDDIT_BASE_WEB_URL . '/' . $entry['data']['display_name_prefixed'];
 	}
 
 	/**
@@ -165,10 +164,6 @@ class PublicationSearchProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getThumbnailUrl(array $entry): string {
-		return isset($entry['data']['thumbnail'])
-			? (($entry['data']['thumbnail'] === 'self' || $entry['data']['thumbnail'] === 'spoiler')
-				? $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $entry['data']['subreddit']])
-				: $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $entry['data']['thumbnail']]))
-			: '';
+		return $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $entry['data']['display_name']]);
 	}
 }
