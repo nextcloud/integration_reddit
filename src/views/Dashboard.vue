@@ -205,7 +205,7 @@ export default {
 		getAvatarUrl(n) {
 			if (n.notification_type === 'privatemessage') {
 				return (n.author)
-					? generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author)
+					? generateUrl('/apps/integration_reddit/avatar?username={username}', { username: n.author })
 					: undefined
 			} else if (n.notification_type === 'post') {
 				return n.thumbnail === 'self' || n.thumbnail === 'spoiler'

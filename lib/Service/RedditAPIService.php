@@ -79,7 +79,7 @@ class RedditAPIService {
 		if (!is_null($username)) {
 			$response = $this->request($userId, 'user/' . urlencode($username) . '/about');
 			if (is_array($response) && isset($response['data'], $response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
-				$url = $response['data']['icon_img'];
+				$url = str_replace('&amp;', '&', $response['data']['icon_img']);
 			}
 		} else {
 			$response = $this->request($userId, 'r/' . urlencode($subreddit) . '/about');
@@ -97,7 +97,7 @@ class RedditAPIService {
 			try {
 				return $this->client->get($url)->getBody();
 			} catch (Exception | Throwable $e) {
-				$this->logger->debug('Reddit avatar request error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+				$this->logger->warning('Reddit avatar request error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			}
 		}
 		return '';
@@ -219,6 +219,26 @@ class RedditAPIService {
 	public function getPostInfo(string $userId, string $postId): array {
 		$params = [
 			'id' => 't3_' . $postId,
+		];
+		$redditResponse = $this->request($userId, 'api/info', $params);
+		if (isset($redditResponse['data'], $redditResponse['data']['children'])
+			&& is_array($redditResponse['data']['children'])
+			&& count($redditResponse['data']['children']) > 0
+			&& isset($redditResponse['data']['children'][0]['data'])) {
+			return $redditResponse['data']['children'][0]['data'];
+		}
+		return $redditResponse;
+	}
+
+	/**
+	 * @param string $userId
+	 * @param string $postId
+	 * @return array
+	 * @throws PreConditionNotMetException
+	 */
+	public function getCommentInfo(string $userId, string $commentId): array {
+		$params = [
+			'id' => 't1_' . $commentId,
 		];
 		$redditResponse = $this->request($userId, 'api/info', $params);
 		if (isset($redditResponse['data'], $redditResponse['data']['children'])

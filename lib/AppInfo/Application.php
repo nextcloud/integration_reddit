@@ -9,6 +9,7 @@
 
 namespace OCA\Reddit\AppInfo;
 
+use OCA\Reddit\Reference\CommentReferenceProvider;
 use OCA\Reddit\Reference\PublicationReferenceProvider;
 use OCA\Reddit\Reference\SubredditReferenceProvider;
 use OCA\Reddit\Search\PublicationSearchProvider;
@@ -38,6 +39,7 @@ class Application extends App implements IBootstrap {
 		$context->registerSearchProvider(SubredditSearchProvider::class);
 		$context->registerReferenceProvider(PublicationReferenceProvider::class);
 		$context->registerReferenceProvider(SubredditReferenceProvider::class);
+		$context->registerReferenceProvider(CommentReferenceProvider::class);
 	}
 
 	public function boot(IBootContext $context): void {
