@@ -141,6 +141,7 @@ class PublicationReferenceProvider extends ADiscoverableReferenceProvider implem
 				$postInfo = $this->redditAPIService->getPostInfo($this->userId, $postId);
 				$reference = new Reference($referenceText);
 				$reference->setTitle($postInfo['title']);
+				// TRANSLATORS By @$author in $subreddit_name_prefixed
 				$description = $this->l10n->t('By @%1$s in %2$s', [$postInfo['author'], $postInfo['subreddit_name_prefixed']]);
 				$reference->setDescription($description);
 				$thumbnailUrl = ($postInfo['thumbnail'] === 'self' || $postInfo['thumbnail'] === 'spoiler')

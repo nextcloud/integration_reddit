@@ -146,6 +146,7 @@ class PublicationSearchProvider implements IProvider {
 	 */
 	protected function getSubline(array $entry): string {
 		try {
+			// TRANSLATORS By @$author in $subreddit_name_prefixed
 			return $this->l10n->t('By @%1$s in %2$s', [$entry['data']['author'], $entry['data']['subreddit_name_prefixed']]);
 		} catch (Exception | Throwable $e) {
 		}
