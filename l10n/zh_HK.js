@@ -6,6 +6,7 @@ OC.L10N.register(
     "Reddit news" : "Reddit 新聞",
     "Comment from %1$s in %2$s" : "於 %2$s 來自 %1$s 的評論",
     "Reddit publications and subreddits" : "Reddit 出版與子版塊",
+    "By @%1$s in %2$s" : "由 @%1$s 在 %2$s 中",
     "Reddit posts" : "Reddit 帖文",
     "Subreddits" : "Reddits 子版塊",
     "Bad HTTP method" : "不正確的 HTTP 方法",
