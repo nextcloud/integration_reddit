@@ -8,7 +8,7 @@
     "Connected accounts" : "Konektaturiko kontuak",
     "Reddit integration" : "Reddit integrazioa",
     "Integration of Reddit social news aggregation service" : "Reddit albiste sozialen agregatze zerbitzuaren integrazioa",
-    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Reddit integrazioak zure harpidetzetako argitalpen berriak erakusten dituen panel-widgeta  eskaintzen du.",
+    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Reddit integrazioak zure harpidetzetako argitalpen berriak erakusten dituen panel-trepeta  eskaintzen du.",
     "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "3 modu daude zure Nextcloud erabiltzaileek Reddit-era autentifikatzeko OAuth erabil dezaten:",
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Utzi eremu guztiak hutsik, Nextclouden Reddit OAuth aplikazio lehenetsia erabiltzeko.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Sortu zeure Reddit \"web aplikazioa\" Reddit-eko ezarpenetan eta jarri behean aplikazioaren IDa eta sekretua.",

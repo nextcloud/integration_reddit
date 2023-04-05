@@ -11,6 +11,7 @@
 
 namespace OCA\Reddit\Controller;
 
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
@@ -21,6 +22,7 @@ use OCP\AppFramework\Controller;
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
 use OCP\IURLGenerator;
+use OCP\PreConditionNotMetException;
 
 class RedditAPIController extends Controller {
 
@@ -41,18 +43,6 @@ class RedditAPIController extends Controller {
 	 */
 	private $accessToken;
 	/**
-	 * @var string
-	 */
-	private $refreshToken;
-	/**
-	 * @var string
-	 */
-	private $clientID;
-	/**
-	 * @var string
-	 */
-	private $clientSecret;
-	/**
 	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
@@ -68,9 +58,6 @@ class RedditAPIController extends Controller {
 		$this->redditAPIService = $redditAPIService;
 		$this->userId = $userId;
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
-		$this->refreshToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'refresh_token');
-		$this->clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$this->clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$this->urlGenerator = $urlGenerator;
 	}
 
@@ -78,8 +65,9 @@ class RedditAPIController extends Controller {
 	 * get notification list
 	 * @NoAdminRequired
 	 *
-	 * @param ?string $after
+	 * @param string|null $after
 	 * @return DataResponse
+	 * @throws PreConditionNotMetException
 	 */
 	public function getNotifications(?string $after = null): DataResponse {
 		if ($this->accessToken === '') {
@@ -95,12 +83,14 @@ class RedditAPIController extends Controller {
 	}
 
 	/**
-	 * get repository avatar
+	 * get user avatar
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 *
 	 * @param ?string $username
-	 * @param ?string $subreddit
+	 * @param string|null $subreddit
+	 * @return DataDisplayResponse|RedirectResponse
+	 * @throws PreConditionNotMetException
 	 */
 	public function getAvatar(?string $username = null, string $subreddit = null) {
 		$avatarContent = $this->redditAPIService->getAvatar($this->userId, $username, $subreddit);
@@ -110,6 +100,31 @@ class RedditAPIController extends Controller {
 			return $response;
 		} else {
 			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $username ?? $subreddit, 'size' => 44]);
+			return new RedirectResponse($fallbackAvatarUrl);
+		}
+	}
+
+	/**
+	 * get subreddit thumbnail
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 *
+	 * @param string|null $url
+	 * @param string $subreddit
+	 * @return DataDisplayResponse|RedirectResponse
+	 */
+	public function getThumbnail(string $url = null, string $subreddit = '??'): DataDisplayResponse|RedirectResponse {
+		$thumbnailResponse = $this->redditAPIService->getThumbnail($url);
+		if (isset($thumbnailResponse['body'], $thumbnailResponse['headers'])) {
+			$response = new DataDisplayResponse(
+				$thumbnailResponse['body'],
+				Http::STATUS_OK,
+				['Content-Type' => $thumbnailResponse['headers']['Content-Type'][0] ?? 'image/jpeg']
+			);
+			$response->cacheFor(60 * 60 * 24);
+			return $response;
+		} else {
+			$fallbackAvatarUrl = $this->urlGenerator->linkToRouteAbsolute('core.GuestAvatar.getAvatar', ['guestName' => $subreddit, 'size' => 44]);
 			return new RedirectResponse($fallbackAvatarUrl);
 		}
 	}

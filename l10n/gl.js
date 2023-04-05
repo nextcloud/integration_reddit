@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "Produciuse un erro durante os intercambios de OAuth",
     "Error getting OAuth access token" : "Produciuse un erro ao obter o testemuño de acceso OAuth",
     "Reddit news" : "Novas de Reddit",
+    "Bad HTTP method" : "Método HTTP incorrecto",
     "Bad credentials" : "Credenciais incorrectas",
     "OAuth access token refused" : "Foi rexeitado o testemuño de acceso de OAuth",
     "Connected accounts" : "Contas conectadas",

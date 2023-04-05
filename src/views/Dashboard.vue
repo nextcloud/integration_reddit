@@ -4,47 +4,56 @@
 		:show-more-text="title"
 		:loading="state === 'loading'">
 		<template #empty-content>
-			<EmptyContent
+			<NcEmptyContent
 				v-if="emptyContentMessage"
-				:icon="emptyContentIcon">
-				<template #desc>
-					{{ emptyContentMessage }}
+				:description="emptyContentMessage">
+				<template #icon>
+					<component :is="emptyContentIcon" />
+				</template>
+				<template #action>
 					<div v-if="state === 'no-token' || state === 'error'" class="connect-button">
 						<a :href="settingsUrl">
-							<Button>
+							<NcButton>
 								<template #icon>
 									<LoginVariantIcon />
 								</template>
 								{{ t('integration_reddit', 'Connect to Reddit') }}
-							</Button>
+							</NcButton>
 						</a>
 					</div>
 				</template>
-			</EmptyContent>
+			</NcEmptyContent>
 		</template>
 	</DashboardWidget>
 </template>
 
 <script>
-import LoginVariantIcon from 'vue-material-design-icons/LoginVariant'
-import Button from '@nextcloud/vue/dist/Components/Button'
+import LoginVariantIcon from 'vue-material-design-icons/LoginVariant.vue'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+
+import RedditIcon from '../components/icons/RedditIcon.vue'
+
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
-import '@nextcloud/dialogs/styles/toast.scss'
 import { getLocale } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
 import { DashboardWidget } from '@nextcloud/vue-dashboard'
-import EmptyContent from '@nextcloud/vue/dist/Components/EmptyContent'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 export default {
 	name: 'Dashboard',
 
 	components: {
 		DashboardWidget,
-		EmptyContent,
-		Button,
+		NcEmptyContent,
+		RedditIcon,
+		NcButton,
 		LoginVariantIcon,
+		CloseIcon,
+		CheckIcon,
 	},
 
 	props: {
@@ -101,13 +110,13 @@ export default {
 		},
 		emptyContentIcon() {
 			if (this.state === 'no-token') {
-				return 'icon-reddit'
+				return RedditIcon
 			} else if (this.state === 'error') {
-				return 'icon-close'
+				return CloseIcon
 			} else if (this.state === 'ok') {
-				return 'icon-checkmark'
+				return CheckIcon
 			}
-			return 'icon-checkmark'
+			return CheckIcon
 		},
 	},
 
@@ -196,10 +205,12 @@ export default {
 		getAvatarUrl(n) {
 			if (n.notification_type === 'privatemessage') {
 				return (n.author)
-					? generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('username') + '=' + encodeURIComponent(n.author)
+					? generateUrl('/apps/integration_reddit/avatar?username={username}', { username: n.author })
 					: undefined
 			} else if (n.notification_type === 'post') {
-				return generateUrl('/apps/integration_reddit/avatar?') + encodeURIComponent('subreddit') + '=' + encodeURIComponent(n.subreddit)
+				return n.thumbnail === 'self' || n.thumbnail === 'spoiler'
+					? generateUrl('/apps/integration_reddit/avatar?subreddit={subreddit}', { subreddit: n.subreddit })
+					: generateUrl('/apps/integration_reddit/thumbnail?url={url}', { url: n.thumbnail })
 			}
 		},
 		getNotificationTarget(n) {

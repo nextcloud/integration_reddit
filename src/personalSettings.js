@@ -1,5 +1,3 @@
-/* jshint esversion: 6 */
-
 /**
  * Nextcloud - reddit
  *
@@ -12,14 +10,8 @@
  */
 
 import Vue from 'vue'
-import './bootstrap'
-import PersonalSettings from './components/PersonalSettings'
+import PersonalSettings from './components/PersonalSettings.vue'
+Vue.mixin({ methods: { t, n } })
 
-// eslint-disable-next-line
-'use strict'
-
-// eslint-disable-next-line
-new Vue({
-	el: '#reddit_prefs',
-	render: h => h(PersonalSettings),
-})
+const View = Vue.extend(PersonalSettings)
+new View().$mount('#reddit_prefs')
