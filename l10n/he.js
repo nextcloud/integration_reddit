@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "שגיאה במהלך החלפות OAuth",
     "Error getting OAuth access token" : "שגיאה בקבלת אסימון גישה עם OAuth",
     "Reddit news" : "חדשות Reddit",
+    "Bad HTTP method" : "שגיאה במתודת HTTP",
     "Bad credentials" : "פרטי גישה שגויים",
     "OAuth access token refused" : "אסימון הגישה ב־OAuth סורב",
     "Connected accounts" : "חשבונות מקוונים",
