@@ -5,9 +5,9 @@
 
 name: Build and publish app release
 
-# on:
-#   release:
-#     types: [published]
+on:
+  release:
+    types: [published]
 
 env:
   PHP_VERSION: 8.1
