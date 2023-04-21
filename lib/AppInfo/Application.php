@@ -3,7 +3,7 @@
  * Nextcloud - Reddit
  *
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  * @copyright Julien Veyssier 2020
  */
 
@@ -35,8 +35,10 @@ class Application extends App implements IBootstrap {
 
 	public function register(IRegistrationContext $context): void {
 		$context->registerDashboardWidget(RedditWidget::class);
+
 		$context->registerSearchProvider(PublicationSearchProvider::class);
 		$context->registerSearchProvider(SubredditSearchProvider::class);
+
 		$context->registerReferenceProvider(PublicationReferenceProvider::class);
 		$context->registerReferenceProvider(SubredditReferenceProvider::class);
 		$context->registerReferenceProvider(CommentReferenceProvider::class);

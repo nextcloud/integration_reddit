@@ -37,25 +37,12 @@ class CommentReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_comment';
 
-	private ?string $userId;
-	private IConfig $config;
-	private ReferenceManager $referenceManager;
-	private IL10N $l10n;
-	private IURLGenerator $urlGenerator;
-	private RedditAPIService $redditAPIService;
-
-	public function __construct(IConfig $config,
-								IL10N $l10n,
-								IURLGenerator $urlGenerator,
-								ReferenceManager $referenceManager,
-								RedditAPIService $redditAPIService,
-								?string $userId) {
-		$this->userId = $userId;
-		$this->config = $config;
-		$this->referenceManager = $referenceManager;
-		$this->l10n = $l10n;
-		$this->urlGenerator = $urlGenerator;
-		$this->redditAPIService = $redditAPIService;
+	public function __construct(private IConfig $config,
+								private IL10N $l10n,
+								private IURLGenerator $urlGenerator,
+								private ReferenceManager $referenceManager,
+								private RedditAPIService $redditAPIService,
+								private ?string $userId) {
 	}
 
 	/**
