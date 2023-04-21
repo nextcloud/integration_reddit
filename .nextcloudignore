@@ -34,5 +34,5 @@
 /pyproject.toml
 /renovate.json
 /stylelint.config.js
-/webpack.config.js
+/webpack.*
 tests
