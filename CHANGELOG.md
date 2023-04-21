@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.0.0 – 2023-04-21
+### Changed
+- dependency update and maintenance
+- supported php>=8.0
+
 ## 1.0.7 – 2023-02-22
 ### Changed
 - add 26 compat
