@@ -5,7 +5,7 @@
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  * @copyright Julien Veyssier 2020
  */
 
@@ -22,43 +22,18 @@ use OCP\AppFramework\Controller;
 
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
+use OCP\PreConditionNotMetException;
 
 class ConfigController extends Controller {
 
-	/**
-	 * @var IConfig
-	 */
-	private $config;
-	/**
-	 * @var IURLGenerator
-	 */
-	private $urlGenerator;
-	/**
-	 * @var IL10N
-	 */
-	private $l;
-	/**
-	 * @var RedditAPIService
-	 */
-	private $redditAPIService;
-	/**
-	 * @var string|null
-	 */
-	private $userId;
-
 	public function __construct(string $appName,
 								IRequest $request,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								IL10N $l,
-								RedditAPIService $redditAPIService,
-								?string $userId) {
+								private IConfig $config,
+								private IURLGenerator $urlGenerator,
+								private IL10N $l,
+								private RedditAPIService $redditAPIService,
+								private ?string $userId) {
 		parent::__construct($appName, $request);
-		$this->config = $config;
-		$this->urlGenerator = $urlGenerator;
-		$this->l = $l;
-		$this->redditAPIService = $redditAPIService;
-		$this->userId = $userId;
 	}
 
 	/**
@@ -67,6 +42,7 @@ class ConfigController extends Controller {
 	 *
 	 * @param array $values
 	 * @return DataResponse
+	 * @throws PreConditionNotMetException
 	 */
 	public function setConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
@@ -100,6 +76,7 @@ class ConfigController extends Controller {
 	 *
 	 * @param string $url
 	 * @return RedirectResponse
+	 * @throws PreConditionNotMetException
 	 */
 	public function oauthProtocolRedirect(string $url = ''): RedirectResponse {
 		if ($url === '') {

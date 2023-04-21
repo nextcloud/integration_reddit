@@ -5,7 +5,7 @@
  * This file is licensed under the Affero General Public License version 3 or
  * later. See the COPYING file.
  *
- * @author Julien Veyssier <eneiluj@posteo.net>
+ * @author Julien Veyssier <julien-nc@posteo.net>
  * @copyright Julien Veyssier 2020
  */
 
@@ -26,39 +26,16 @@ use OCP\PreConditionNotMetException;
 
 class RedditAPIController extends Controller {
 
-	/**
-	 * @var IConfig
-	 */
-	private $config;
-	/**
-	 * @var RedditAPIService
-	 */
-	private $redditAPIService;
-	/**
-	 * @var string|null
-	 */
-	private $userId;
-	/**
-	 * @var string
-	 */
-	private $accessToken;
-	/**
-	 * @var IURLGenerator
-	 */
-	private $urlGenerator;
+	private string $accessToken;
 
-	public function __construct(string $appName,
-								IRequest $request,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								RedditAPIService $redditAPIService,
-								?string $userId) {
+	public function __construct(string                   $appName,
+								IRequest                 $request,
+								private IConfig          $config,
+								private IURLGenerator    $urlGenerator,
+								private RedditAPIService $redditAPIService,
+								private ?string          $userId) {
 		parent::__construct($appName, $request);
-		$this->config = $config;
-		$this->redditAPIService = $redditAPIService;
-		$this->userId = $userId;
 		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
-		$this->urlGenerator = $urlGenerator;
 	}
 
 	/**
