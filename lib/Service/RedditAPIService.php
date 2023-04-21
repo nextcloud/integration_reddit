@@ -13,6 +13,7 @@ namespace OCA\Reddit\Service;
 
 use DateTime;
 use Exception;
+use OCP\Http\Client\IClient;
 use OCP\IL10N;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
@@ -24,46 +25,18 @@ use GuzzleHttp\Exception\ServerException;
 use OCA\Reddit\AppInfo\Application;
 use Throwable;
 
+/**
+ * Service to make requests to Reddit API
+ */
 class RedditAPIService {
-	/**
-	 * @var string
-	 */
-	private $appName;
-	/**
-	 * @var LoggerInterface
-	 */
-	private $logger;
-	/**
-	 * @var IL10N
-	 */
-	private $l10n;
-	/**
-	 * @var IConfig
-	 */
-	private $config;
-	/**
-	 * @var string
-	 */
-	private $userId;
-	/**
-	 * @var \OCP\Http\Client\IClient
-	 */
-	private $client;
 
-	/**
-	 * Service to make requests to Reddit API
-	 */
-	public function __construct (string $appName,
-								LoggerInterface $logger,
-								IL10N $l10n,
-								IConfig $config,
-								IClientService $clientService,
-								string $userId) {
-		$this->appName = $appName;
-		$this->logger = $logger;
-		$this->l10n = $l10n;
-		$this->config = $config;
-		$this->userId = $userId;
+	private IClient $client;
+
+	public function __construct (string                  $appName,
+								 IClientService          $clientService,
+								 private LoggerInterface $logger,
+								 private IL10N           $l10n,
+								 private IConfig         $config) {
 		$this->client = $clientService->newClient();
 	}
 
@@ -313,7 +286,7 @@ class RedditAPIService {
 				return json_decode($body, true);
 			}
 		} catch (ServerException | ClientException $e) {
-			$this->logger->warning('Reddit API error : '.$e->getMessage(), ['app' => $this->appName]);
+			$this->logger->warning('Reddit API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}
@@ -346,7 +319,7 @@ class RedditAPIService {
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 		if (!$refreshToken) {
-			$this->logger->error('No Reddit refresh token found', ['app' => $this->appName]);
+			$this->logger->error('No Reddit refresh token found', ['app' => Application::APP_ID]);
 			return false;
 		}
 		$result = $this->requestOAuthAccessToken($clientID, $clientSecret, [
@@ -354,9 +327,9 @@ class RedditAPIService {
 			'refresh_token' => $refreshToken,
 		], 'POST');
 		if (isset($result['access_token'])) {
-			$this->logger->info('Reddit access token successfully refreshed', ['app' => $this->appName]);
+			$this->logger->info('Reddit access token successfully refreshed', ['app' => Application::APP_ID]);
 			$accessToken = $result['access_token'];
-			$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
+			$this->config->setUserValue($userId, Application::APP_ID, 'token', $accessToken);
 			if (isset($result['expires_in'])) {
 				$nowTs = (new Datetime())->getTimestamp();
 				$expiresAt = $nowTs + (int) $result['expires_in'];
@@ -369,7 +342,7 @@ class RedditAPIService {
 				'Token is not valid anymore. Impossible to refresh it. '
 					. $result['error'] . ' '
 					. $result['error_description'] ?? '[no error description]',
-				['app' => $this->appName]
+				['app' => Application::APP_ID]
 			);
 			return false;
 		}
@@ -421,7 +394,7 @@ class RedditAPIService {
 				return json_decode($body, true);
 			}
 		} catch (ServerException | ClientException  $e) {
-			$this->logger->warning('Reddit OAuth error : '.$e->getMessage(), ['app' => $this->appName]);
+			$this->logger->warning('Reddit OAuth error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}

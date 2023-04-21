@@ -1,4 +1,4 @@
 # Authors
 
-* Julien Veyssier <eneiluj@posteo.net> (developer)
+* Julien Veyssier <julien-nc@posteo.net> (Developper)
 * Alexander Piskun <bigcat88@icloud.com> (maintainer)

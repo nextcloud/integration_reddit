@@ -24,12 +24,9 @@ declare(strict_types=1);
  */
 namespace OCA\Reddit\Search;
 
-use DateTime;
-use Exception;
 use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
 use OCP\App\IAppManager;
-use OCP\IDateTimeFormatter;
 use OCP\IL10N;
 use OCP\IConfig;
 use OCP\IURLGenerator;
@@ -38,28 +35,14 @@ use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
-use Throwable;
 
 class SubredditSearchProvider implements IProvider {
-	private IAppManager $appManager;
-	private IL10N $l10n;
-	private IConfig $config;
-	private IURLGenerator $urlGenerator;
-	private IDateTimeFormatter $dateTimeFormatter;
-	private RedditAPIService $service;
 
-	public function __construct(IAppManager $appManager,
-								IL10N $l10n,
-								IConfig $config,
-								IURLGenerator $urlGenerator,
-								IDateTimeFormatter $dateTimeFormatter,
-								RedditAPIService $service) {
-		$this->appManager = $appManager;
-		$this->l10n = $l10n;
-		$this->config = $config;
-		$this->urlGenerator = $urlGenerator;
-		$this->dateTimeFormatter = $dateTimeFormatter;
-		$this->service = $service;
+	public function __construct(private IAppManager $appManager,
+								private IL10N $l10n,
+								private IConfig $config,
+								private IURLGenerator $urlGenerator,
+								private RedditAPIService $service) {
 	}
 
 	/**
