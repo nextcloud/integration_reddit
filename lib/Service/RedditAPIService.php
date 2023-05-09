@@ -346,8 +346,8 @@ class RedditAPIService {
 			// impossible to refresh the token
 			$this->logger->error(
 				'Token is not valid anymore. Impossible to refresh it. '
-				. $result['error'] . ' '
-				. $result['error_description'] ?? '[no error description]',
+					. $result['error'] . ' '
+					. $result['error_description'] ?? '[no error description]',
 				['app' => Application::APP_ID]
 			);
 			return false;
