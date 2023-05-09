@@ -282,12 +282,14 @@ class RedditAPIService {
 
 			if ($respCode >= 400) {
 				return ['error' => $this->l10n->t('Bad credentials')];
-			} else if (isset($body)) {
-				return json_decode($body, true);
-			} else {
-				$this->logger->warning('Reddit API error: code='.$respCode.' , url='.$url, ['app' => Application::APP_ID]);
-				return ['error' => $this->l10n->t('Failed to get Reddit news')];
 			}
+			$result = json_decode($body, true);
+			$json_decode_code = json_last_error();
+			if ($json_decode_code == JSON_ERROR_NONE) {
+				return $result;
+			}
+			$this->logger->warning('Reddit API error: js_decode='.$json_decode_code.' , url='.$url, ['app' => Application::APP_ID]);
+			return ['error' => $this->l10n->t('Failed to get Reddit news')];
 		} catch (ServerException | ClientException $e) {
 			$this->logger->warning('Reddit API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
