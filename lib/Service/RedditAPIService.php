@@ -170,7 +170,8 @@ class RedditAPIService {
 	public function getThumbnail(string $url): ?array {
 		try {
 			$domain = parse_url($url, PHP_URL_HOST);
-			if (preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1) {
+			if ((preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1) ||
+				(preg_match('/i\.redd\..*/i', $domain) === 1)) {
 				$thumbnailResponse = $this->client->get($url);
 				return [
 					'body' => $thumbnailResponse->getBody(),
@@ -282,9 +283,14 @@ class RedditAPIService {
 
 			if ($respCode >= 400) {
 				return ['error' => $this->l10n->t('Bad credentials')];
-			} else {
-				return json_decode($body, true);
 			}
+			$result = json_decode($body, true);
+			$json_decode_code = json_last_error();
+			if ($json_decode_code == JSON_ERROR_NONE) {
+				return $result;
+			}
+			$this->logger->warning('Reddit API error: js_decode='.$json_decode_code.' , url='.$url, ['app' => Application::APP_ID]);
+			return ['error' => $this->l10n->t('Failed to get Reddit news')];
 		} catch (ServerException | ClientException $e) {
 			$this->logger->warning('Reddit API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
