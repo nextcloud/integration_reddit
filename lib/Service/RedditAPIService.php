@@ -170,7 +170,8 @@ class RedditAPIService {
 	public function getThumbnail(string $url): ?array {
 		try {
 			$domain = parse_url($url, PHP_URL_HOST);
-			if (preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1) {
+			if ((preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1) ||
+				(preg_match('/i\.redd\..*/i', $domain) === 1)) {
 				$thumbnailResponse = $this->client->get($url);
 				return [
 					'body' => $thumbnailResponse->getBody(),
@@ -345,8 +346,8 @@ class RedditAPIService {
 			// impossible to refresh the token
 			$this->logger->error(
 				'Token is not valid anymore. Impossible to refresh it. '
-					. $result['error'] . ' '
-					. $result['error_description'] ?? '[no error description]',
+				. $result['error'] . ' '
+				. $result['error_description'] ?? '[no error description]',
 				['app' => Application::APP_ID]
 			);
 			return false;
