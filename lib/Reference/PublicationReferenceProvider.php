@@ -131,13 +131,11 @@ class PublicationReferenceProvider extends ADiscoverableReferenceProvider implem
 				// TRANSLATORS By @$author in $subreddit_name_prefixed
 				$description = $this->l10n->t('By @%1$s in %2$s', [$postInfo['author'], $postInfo['subreddit_name_prefixed']]);
 				$reference->setDescription($description);
-				if ($postInfo['thumbnail'] == 'image') {
+				if ($postInfo['thumbnail'] === 'image') {
 					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $postInfo['url_overridden_by_dest']]);
-				}
-				else if ($postInfo['thumbnail'] === 'self' || $postInfo['thumbnail'] === 'spoiler') {
+				} elseif ($postInfo['thumbnail'] === 'self' || $postInfo['thumbnail'] === 'spoiler') {
 					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit]);
-				}
-				else {
+				} else {
 					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $postInfo['thumbnail']]);
 				}
 				$reference->setImageUrl($thumbnailUrl);
