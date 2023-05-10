@@ -11,6 +11,7 @@ OC.L10N.register(
     "Subreddits" : "子版塊",
     "Bad HTTP method" : "錯誤的 HTTP 方法",
     "Bad credentials" : "錯誤的憑證",
+    "Failed to get Reddit news" : "取得 Reddit 新聞失敗",
     "OAuth access token refused" : "OAuth 存取權杖被拒絕",
     "Connected accounts" : "已連線的帳號",
     "Reddit integration" : "Reddit 整合",
@@ -47,7 +48,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "儲存 Reddit OAuth 狀態失敗",
     "No Reddit account connected" : "未連結至 Reddit 帳號",
     "Error connecting to Reddit" : "連結至 Reddit 時發生錯誤",
-    "No Reddit news!" : "無 Reddit 新聞！",
-    "Failed to get Reddit news" : "取得 Reddit 新聞失敗"
+    "No Reddit news!" : "無 Reddit 新聞！"
 },
 "nplurals=1; plural=0;");

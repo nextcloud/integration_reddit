@@ -11,6 +11,7 @@ OC.L10N.register(
     "Subreddits" : "Subredditek",
     "Bad HTTP method" : "Hibás HTTP metódus",
     "Bad credentials" : "Hibás hitelesítő adatok",
+    "Failed to get Reddit news" : "Nem sikerült betölteni a Reddit híreket",
     "OAuth access token refused" : "OAuth hozzáférési token elutasítva",
     "Connected accounts" : "Kapcsolt fiókok",
     "Reddit integration" : "Reddit integráció",
@@ -47,7 +48,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Nem sikerült menteni a Reddit OAuth állapotot",
     "No Reddit account connected" : "Nincs Reddit-fiók csatlakoztatva",
     "Error connecting to Reddit" : "Hiba történt a Reddithez való csatlakozáskor",
-    "No Reddit news!" : "Nincsenek Reddit hírek.",
-    "Failed to get Reddit news" : "Nem sikerült betölteni a Reddit híreket"
+    "No Reddit news!" : "Nincsenek Reddit hírek."
 },
 "nplurals=2; plural=(n != 1);");

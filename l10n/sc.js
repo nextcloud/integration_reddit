@@ -6,6 +6,7 @@ OC.L10N.register(
     "Reddit news" : "Noas de Reddit",
     "Bad HTTP method" : "Mètodu HTTP malu",
     "Bad credentials" : "Credentziales non bàlidas",
+    "Failed to get Reddit news" : "No at fatu a recuperare is noas de Reddit",
     "OAuth access token refused" : "Token de intrada OAuth refudadu",
     "Connected accounts" : "Contos connètidos",
     "Reddit integration" : "Integratzione Reddit",
@@ -42,7 +43,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "No at fatu a sarvare s'istadu de Reddit OAuth",
     "No Reddit account connected" : "Perunu contu de Reddit connètidu",
     "Error connecting to Reddit" : "Errore in sa connessione a Reddit",
-    "No Reddit news!" : "Peruna noa de Reddit!",
-    "Failed to get Reddit news" : "No at fatu a recuperare is noas de Reddit"
+    "No Reddit news!" : "Peruna noa de Reddit!"
 },
 "nplurals=2; plural=(n != 1);");

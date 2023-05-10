@@ -6,6 +6,7 @@ OC.L10N.register(
     "Reddit news" : "Reddit nieuws",
     "Bad HTTP method" : "Foute HTTP methode",
     "Bad credentials" : "Foute inloggegevens",
+    "Failed to get Reddit news" : "Kon Reddit nieuws niet ophalen",
     "OAuth access token refused" : "OAuth access token geweigerd",
     "Connected accounts" : "Verbonden accounts",
     "Reddit integration" : "Reddit integratie",
@@ -42,7 +43,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Kon Reddit OAuth-status niet bewaren",
     "No Reddit account connected" : "Geen Reddit-account verbonden",
     "Error connecting to Reddit" : "Fout bij het verbinden met Reddit",
-    "No Reddit news!" : "Geen Reddit nieuws!",
-    "Failed to get Reddit news" : "Kon Reddit nieuws niet ophalen"
+    "No Reddit news!" : "Geen Reddit nieuws!"
 },
 "nplurals=2; plural=(n != 1);");

@@ -11,6 +11,7 @@ OC.L10N.register(
     "Subreddits" : "Форуми",
     "Bad HTTP method" : "Лош HTTP метод",
     "Bad credentials" : "Лоши идентификационни данни",
+    "Failed to get Reddit news" : "Неуспешно получаване на новини от Reddit",
     "OAuth access token refused" : " Маркерът за достъп OAuth е отказан",
     "Connected accounts" : "Свързани профили",
     "Reddit integration" : "Reddit интеграция",
@@ -47,7 +48,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Неуспешно записване на състоянието на Reddit OAuth",
     "No Reddit account connected" : "Няма свързан профил в Reddit",
     "Error connecting to Reddit" : "Грешка при свързване с Reddit",
-    "No Reddit news!" : "Няма Reddit новини",
-    "Failed to get Reddit news" : "Неуспешно получаване на новини от Reddit"
+    "No Reddit news!" : "Няма Reddit новини"
 },
 "nplurals=2; plural=(n != 1);");

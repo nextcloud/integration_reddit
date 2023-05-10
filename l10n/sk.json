@@ -4,6 +4,7 @@
     "Reddit news" : "Správy na Reddite",
     "Bad HTTP method" : "Zlá metóda HTTP",
     "Bad credentials" : "Nesprávne prihlasovacie údaje",
+    "Failed to get Reddit news" : "Nepodarilo sa získať novinky z Redditu",
     "OAuth access token refused" : "Prístupový token OAuth bol zamietnutý",
     "Connected accounts" : "Prepojené účty",
     "Reddit integration" : "Reddit integrácia",
@@ -40,7 +41,6 @@
     "Failed to save Reddit OAuth state" : "Nepodarilo sa uložiť stav OAuth Redditu",
     "No Reddit account connected" : "Nie je pripojený žiadny Reddit účet",
     "Error connecting to Reddit" : "Chyba pri pripájaní k Redditu",
-    "No Reddit news!" : "Žiadne novinky na Reddite!",
-    "Failed to get Reddit news" : "Nepodarilo sa získať novinky z Redditu"
+    "No Reddit news!" : "Žiadne novinky na Reddite!"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"
 }

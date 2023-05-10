@@ -6,6 +6,7 @@ OC.L10N.register(
     "Reddit news" : "Novice Reddit",
     "Bad HTTP method" : "Neustrezna metoda HTTP",
     "Bad credentials" : "Neustrezna poverila",
+    "Failed to get Reddit news" : "Pridobivanje novic Reddit je spodletelo",
     "OAuth access token refused" : "Žeton OAuth za dostop je bil zavrnjen",
     "Connected accounts" : "Povezani računi",
     "Reddit integration" : "Združevalnik Reddit",
@@ -42,7 +43,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Shranjevanje stanja Reddit OAuth je spodletelo",
     "No Reddit account connected" : "Ni še povezanega računa Reddit",
     "Error connecting to Reddit" : "Napaka povezovanja z računom Reddit",
-    "No Reddit news!" : "NiI novic Reddit!",
-    "Failed to get Reddit news" : "Pridobivanje novic Reddit je spodletelo"
+    "No Reddit news!" : "NiI novic Reddit!"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

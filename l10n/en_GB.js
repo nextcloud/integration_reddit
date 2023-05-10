@@ -11,6 +11,7 @@ OC.L10N.register(
     "Subreddits" : "Subreddits",
     "Bad HTTP method" : "Bad HTTP method",
     "Bad credentials" : "Bad credentials",
+    "Failed to get Reddit news" : "Failed to get Reddit news",
     "OAuth access token refused" : "OAuth access token refused",
     "Connected accounts" : "Connected accounts",
     "Reddit integration" : "Reddit integration",
@@ -47,7 +48,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Failed to save Reddit OAuth state",
     "No Reddit account connected" : "No Reddit account connected",
     "Error connecting to Reddit" : "Error connecting to Reddit",
-    "No Reddit news!" : "No Reddit news!",
-    "Failed to get Reddit news" : "Failed to get Reddit news"
+    "No Reddit news!" : "No Reddit news!"
 },
 "nplurals=2; plural=(n != 1);");

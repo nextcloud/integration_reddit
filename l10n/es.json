@@ -9,6 +9,7 @@
     "Subreddits" : "Subreddits",
     "Bad HTTP method" : "Método HTTP incorrecto",
     "Bad credentials" : "Credenciales incorrectas",
+    "Failed to get Reddit news" : "Fallo al obtener las novedades de Reddit",
     "OAuth access token refused" : "Token de acceso OAuth rechazado",
     "Connected accounts" : "Cuentas conectadas",
     "Reddit integration" : "Integración con Reddit",
@@ -45,7 +46,6 @@
     "Failed to save Reddit OAuth state" : "Fallo al guardar el estado de OAuth de Reddit",
     "No Reddit account connected" : "No hay cuentas de Reddit conectadas",
     "Error connecting to Reddit" : "Error al conectar con Reddit",
-    "No Reddit news!" : "¡No hay novedades de Reddit!",
-    "Failed to get Reddit news" : "Fallo al obtener las novedades de Reddit"
+    "No Reddit news!" : "¡No hay novedades de Reddit!"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

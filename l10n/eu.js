@@ -8,6 +8,7 @@ OC.L10N.register(
     "Subreddits" : "Subredditak",
     "Bad HTTP method" : "HTTP metodo okerra",
     "Bad credentials" : "Kredentzial okerrak",
+    "Failed to get Reddit news" : "Ezin izan dira Reddit albisteak jaso",
     "OAuth access token refused" : "QAuth sarbide tokena ukatua izan da",
     "Connected accounts" : "Konektaturiko kontuak",
     "Reddit integration" : "Reddit integrazioa",
@@ -44,7 +45,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Reddit OAuth egoera gordetzeak huts egin du",
     "No Reddit account connected" : "Ez dago Reddit konturik konektatuta",
     "Error connecting to Reddit" : "Errorea Reddit-era konektatzean",
-    "No Reddit news!" : "Ez dago Reddit albisterik!",
-    "Failed to get Reddit news" : "Ezin izan dira Reddit albisteak jaso"
+    "No Reddit news!" : "Ez dago Reddit albisterik!"
 },
 "nplurals=2; plural=(n != 1);");

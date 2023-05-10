@@ -11,6 +11,7 @@ OC.L10N.register(
     "Subreddits" : "Subreddity",
     "Bad HTTP method" : "Nesprávná HTTP metoda",
     "Bad credentials" : "Nesprávné přihlašovací údaje",
+    "Failed to get Reddit news" : "Nepodařilo se získat Reddit novinky",
     "OAuth access token refused" : "OAuth přístupový token odmítnut",
     "Connected accounts" : "Propojené účty",
     "Reddit integration" : "Napojení na Reddit",
@@ -47,7 +48,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Nepodařilo se uložit stav Reddit OAuth",
     "No Reddit account connected" : "Nepřipojen žádný Reddit účet",
     "Error connecting to Reddit" : "Chyba při připojování k Reddit",
-    "No Reddit news!" : "Žádné novinky z Reddit!",
-    "Failed to get Reddit news" : "Nepodařilo se získat Reddit novinky"
+    "No Reddit news!" : "Žádné novinky z Reddit!"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

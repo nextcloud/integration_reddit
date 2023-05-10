@@ -4,6 +4,7 @@
     "Reddit news" : "Reddit vijesti",
     "Bad HTTP method" : "Pogrešna metoda HTTP-a",
     "Bad credentials" : "Pogrešne vjerodajnice",
+    "Failed to get Reddit news" : "Dohvaćanje Reddit vijesti nije uspjelo",
     "OAuth access token refused" : "Odbijen token za pristup OAuth",
     "Connected accounts" : "Povezani računi",
     "Reddit integration" : "Reddit integracija",
@@ -40,7 +41,6 @@
     "Failed to save Reddit OAuth state" : "Spremanje stanja Reddit OAuth nije uspjelo",
     "No Reddit account connected" : "Nema povezanih Reddit računa",
     "Error connecting to Reddit" : "Pogreška pri povezivanju s Redditom",
-    "No Reddit news!" : "Nema Reddit vijesti!",
-    "Failed to get Reddit news" : "Dohvaćanje Reddit vijesti nije uspjelo"
+    "No Reddit news!" : "Nema Reddit vijesti!"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }

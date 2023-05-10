@@ -6,6 +6,7 @@ OC.L10N.register(
     "Reddit news" : "Νέα Reddit",
     "Bad HTTP method" : "Κακή μέθοδος HTTP",
     "Bad credentials" : "Εσφαλμένα διαπιστευτήρια",
+    "Failed to get Reddit news" : "Αποτυχία λήψης νέων Reddit",
     "OAuth access token refused" : "Το διακριτικό πρόσβασης OAuth απορρίφθηκε",
     "Connected accounts" : "Συνδεδεμένοι λογαριασμοί",
     "Reddit integration" : "Ενσωμάτωση Reddit",
@@ -42,7 +43,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Αποτυχία αποθήκευσης της κατάστασης του Reddit OAuth",
     "No Reddit account connected" : "Κανένας συνδεδεμένος λογαριασμός Reddit",
     "Error connecting to Reddit" : "Σφάλμα σύνδεσης στο Reddit",
-    "No Reddit news!" : "Κανένα νέο Reddit!",
-    "Failed to get Reddit news" : "Αποτυχία λήψης νέων Reddit"
+    "No Reddit news!" : "Κανένα νέο Reddit!"
 },
 "nplurals=2; plural=(n != 1);");

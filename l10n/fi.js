@@ -6,6 +6,7 @@ OC.L10N.register(
     "Reddit news" : "Reddit-uutiset",
     "Bad HTTP method" : "Virheellinen HTTP-metodi",
     "Bad credentials" : "Virheelliset kirjautumistiedot",
+    "Failed to get Reddit news" : "Reddit-uutisten haku epäonnistui",
     "OAuth access token refused" : "OAuth-valtuutus hylätty",
     "Connected accounts" : "Yhdistetyt tilit",
     "Reddit integration" : "Reddit-integraatio",
@@ -36,7 +37,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Redditin OAuth-tilan tallennus epäonnistui",
     "No Reddit account connected" : "Reddit-tiliä ei ole yhdistetty",
     "Error connecting to Reddit" : "Virhe yhdistäessä Redditiin",
-    "No Reddit news!" : "Ei Reddit-uutisia!",
-    "Failed to get Reddit news" : "Reddit-uutisten haku epäonnistui"
+    "No Reddit news!" : "Ei Reddit-uutisia!"
 },
 "nplurals=2; plural=(n != 1);");

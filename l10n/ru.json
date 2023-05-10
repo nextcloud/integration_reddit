@@ -4,6 +4,7 @@
     "Reddit news" : "Новости Reddit",
     "Bad HTTP method" : "Неверный метод HTTP",
     "Bad credentials" : "Неверные учётные данные",
+    "Failed to get Reddit news" : "Не удалось получить новости Reddit",
     "OAuth access token refused" : "Токен доступа OAuth отклонён",
     "Connected accounts" : "Подключённые учётные записи",
     "Reddit integration" : "Интеграция с Reddit",
@@ -40,7 +41,6 @@
     "Failed to save Reddit OAuth state" : "Не удалось сохранить состояние Reddit OAuth",
     "No Reddit account connected" : "Учетная запись Reddit не подключена",
     "Error connecting to Reddit" : "Ошибка подключения к Reddit",
-    "No Reddit news!" : "Нет новостей Reddit!",
-    "Failed to get Reddit news" : "Не удалось получить новости Reddit"
+    "No Reddit news!" : "Нет новостей Reddit!"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

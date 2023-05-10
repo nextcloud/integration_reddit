@@ -11,6 +11,7 @@ OC.L10N.register(
     "Subreddits" : "Subreddit grupları",
     "Bad HTTP method" : "HTTP yöntemi hatalı",
     "Bad credentials" : "Kimlik doğrulama bilgileri hatalı",
+    "Failed to get Reddit news" : "Reddit haberleri alınamadı",
     "OAuth access token refused" : "OAuth erişim kodu reddedildi",
     "Connected accounts" : "Bağlı hesaplar",
     "Reddit integration" : "Reddit bütünleştirmesi",
@@ -47,7 +48,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Reddit OAuth durumu kaydedilemedi",
     "No Reddit account connected" : "Bağlı bir Reddit hesabı yok",
     "Error connecting to Reddit" : "Reddit bağlantısı kurulurken sorun çıktı",
-    "No Reddit news!" : "Herhangi bir Reddit haberi yok!",
-    "Failed to get Reddit news" : "Reddit haberleri alınamadı"
+    "No Reddit news!" : "Herhangi bir Reddit haberi yok!"
 },
 "nplurals=2; plural=(n > 1);");

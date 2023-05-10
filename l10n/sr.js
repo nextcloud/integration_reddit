@@ -11,6 +11,7 @@ OC.L10N.register(
     "Subreddits" : "Subreddits",
     "Bad HTTP method" : "Лоша HTTP метода",
     "Bad credentials" : "Лоши креденцијали",
+    "Failed to get Reddit news" : "Није успело добављање Reddit новости",
     "OAuth access token refused" : "Одбијен је OAuth приступни жетон",
     "Connected accounts" : "Повезани налози",
     "Reddit integration" : "Reddit интеграција",
@@ -47,7 +48,6 @@ OC.L10N.register(
     "Failed to save Reddit OAuth state" : "Није успело чување Reddit OAuth стања",
     "No Reddit account connected" : "Није повезан ниједан Reddit налог",
     "Error connecting to Reddit" : "Грешка приликом повезивања са Reddit",
-    "No Reddit news!" : "Нема Reddit новости!",
-    "Failed to get Reddit news" : "Није успело добављање Reddit новости"
+    "No Reddit news!" : "Нема Reddit новости!"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
