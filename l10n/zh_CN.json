@@ -2,6 +2,7 @@
     "Error during OAuth exchanges" : "交换 OAuth 时出错",
     "Error getting OAuth access token" : "获取 OAuth 访问令牌时出错",
     "Reddit news" : "Reddit 新闻",
+    "Reddit publications and subreddits" : "Reddit发布和subreddit",
     "Bad HTTP method" : "错误的HTTP方法",
     "Bad credentials" : "不好的证书",
     "OAuth access token refused" : "OAuth 访问令牌拒绝",
