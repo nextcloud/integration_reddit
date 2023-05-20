@@ -2,6 +2,7 @@
     "Error during OAuth exchanges" : "Napaka med izmenjavo podatkov OAuth",
     "Error getting OAuth access token" : "Napaka med pridobivanjem žetona OAuth za dostop",
     "Reddit news" : "Novice Reddit",
+    "Reddit posts" : "Objave Reddit",
     "Bad HTTP method" : "Neustrezna metoda HTTP",
     "Bad credentials" : "Neustrezna poverila",
     "Failed to get Reddit news" : "Pridobivanje novic Reddit je spodletelo",
