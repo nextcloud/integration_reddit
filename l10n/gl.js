@@ -18,7 +18,7 @@ OC.L10N.register(
     "Reddit app settings" : "Axustes da aplicación Reddit",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Cree a súa propia «aplicación móbil» de Reddit nas preferencias de Reddit e poña o ID da aplicación a seguir. Deixe o campo «Segredo da aplicación» baleiro.",
     "Application ID" : "ID da aplicación",
-    "Client ID of your Reddit application" : "ID do cliente da súa aplicación de Reddit",
+    "Client ID of your Reddit application" : "ID de cliente da súa aplicación de Reddit",
     "Application secret" : "Segredo da aplicación",
     "Client secret of your Reddit application" : "Segredo do cliente da súa aplicación de Reddit",
     "Reddit admin options saved" : "Gardáronse as opcións de administración de Reddit",
