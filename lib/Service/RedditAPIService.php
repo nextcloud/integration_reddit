@@ -286,7 +286,7 @@ class RedditAPIService {
 			}
 			$result = json_decode($body, true);
 			$json_decode_code = json_last_error();
-			if ($json_decode_code == JSON_ERROR_NONE) {
+			if ($json_decode_code === JSON_ERROR_NONE) {
 				return $result;
 			}
 			$this->logger->warning('Reddit API error: js_decode='.$json_decode_code.' , url='.$url, ['app' => Application::APP_ID]);
