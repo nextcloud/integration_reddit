@@ -22,6 +22,7 @@
 
 namespace OCA\Reddit\Reference;
 
+use OC\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
@@ -38,12 +39,15 @@ class PublicationReferenceProvider extends ADiscoverableReferenceProvider implem
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_publication';
 
-	public function __construct(private IConfig $config,
-								private IL10N $l10n,
-								private IURLGenerator $urlGenerator,
-								private ReferenceManager $referenceManager,
-								private RedditAPIService $redditAPIService,
-								private ?string $userId) {
+	public function __construct(
+		private IConfig $config,
+		private IL10N $l10n,
+		private IURLGenerator $urlGenerator,
+		private ReferenceManager $referenceManager,
+		private RedditAPIService $redditAPIService,
+		private LinkReferenceProvider $linkReferenceProvider,
+		private ?string $userId
+	) {
 	}
 
 	/**
@@ -126,26 +130,30 @@ class PublicationReferenceProvider extends ADiscoverableReferenceProvider implem
 				$postId = $urlInfo['post_id'];
 				$subreddit = $urlInfo['subreddit'];
 				$postInfo = $this->redditAPIService->getPostInfo($this->userId, $postId);
-				$reference = new Reference($referenceText);
-				$reference->setTitle($postInfo['title']);
-				// TRANSLATORS By @$author in $subreddit_name_prefixed
-				$description = $this->l10n->t('By @%1$s in %2$s', [$postInfo['author'], $postInfo['subreddit_name_prefixed']]);
-				$reference->setDescription($description);
-				if ($postInfo['thumbnail'] === 'image') {
-					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $postInfo['url_overridden_by_dest']]);
-				} elseif ($postInfo['thumbnail'] === 'self' || $postInfo['thumbnail'] === 'spoiler') {
-					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit]);
-				} else {
-					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $postInfo['thumbnail']]);
+				if (isset($postInfo['title'])) {
+					$reference = new Reference($referenceText);
+					$reference->setTitle($postInfo['title']);
+					// TRANSLATORS By @$author in $subreddit_name_prefixed
+					$description = $this->l10n->t('By @%1$s in %2$s', [$postInfo['author'], $postInfo['subreddit_name_prefixed']]);
+					$reference->setDescription($description);
+					if ($postInfo['thumbnail'] === 'image') {
+						$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $postInfo['url_overridden_by_dest']]);
+					} elseif ($postInfo['thumbnail'] === 'self' || $postInfo['thumbnail'] === 'spoiler') {
+						$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit]);
+					} else {
+						$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $postInfo['thumbnail']]);
+					}
+					$reference->setImageUrl($thumbnailUrl);
+					/*
+					$reference->setRichObject(
+						self::RICH_OBJECT_TYPE,
+						$postInfo
+					);
+					*/
+					return $reference;
 				}
-				$reference->setImageUrl($thumbnailUrl);
-				/*
-				$reference->setRichObject(
-					self::RICH_OBJECT_TYPE,
-					$postInfo
-				);
-				*/
-				return $reference;
+				// fallback to opengraph
+				return $this->linkReferenceProvider->resolveReference($referenceText);
 			}
 		}
 

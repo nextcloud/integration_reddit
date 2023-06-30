@@ -22,6 +22,7 @@
 
 namespace OCA\Reddit\Reference;
 
+use OC\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
@@ -36,11 +37,14 @@ class SubredditReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_subreddit';
 
-	public function __construct(private IConfig $config,
-								private IURLGenerator $urlGenerator,
-								private ReferenceManager $referenceManager,
-								private RedditAPIService $redditAPIService,
-								private ?string $userId) {
+	public function __construct(
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
+		private ReferenceManager $referenceManager,
+		private RedditAPIService $redditAPIService,
+		private LinkReferenceProvider $linkReferenceProvider,
+		private ?string $userId
+	) {
 	}
 
 	/**
@@ -70,20 +74,24 @@ class SubredditReferenceProvider implements IReferenceProvider {
 			if ($urlInfo !== null) {
 				$subreddit = $urlInfo['subreddit'];
 				$subredditInfo = $this->redditAPIService->getSubredditInfo($this->userId, $subreddit);
-				$reference = new Reference($referenceText);
-				$title = '/' . $subredditInfo['display_name_prefixed'] . ' [' . $subredditInfo['title'] . ']';
-				$reference->setTitle($title);
-				$description = $subredditInfo['public_description'];
-				$reference->setDescription($description);
-				$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit]);
-				$reference->setImageUrl($thumbnailUrl);
-				/*
-				$reference->setRichObject(
-					self::RICH_OBJECT_TYPE,
-					$postInfo
-				);
-				*/
-				return $reference;
+				if (isset($subredditInfo['title'], $subredditInfo['display_name_prefixed'], $subredditInfo['public_description'])) {
+					$reference = new Reference($referenceText);
+					$title = '/' . $subredditInfo['display_name_prefixed'] . ' [' . $subredditInfo['title'] . ']';
+					$reference->setTitle($title);
+					$description = $subredditInfo['public_description'];
+					$reference->setDescription($description);
+					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit]);
+					$reference->setImageUrl($thumbnailUrl);
+					/*
+					$reference->setRichObject(
+						self::RICH_OBJECT_TYPE,
+						$postInfo
+					);
+					*/
+					return $reference;
+				}
+				// fallback to opengraph
+				return $this->linkReferenceProvider->resolveReference($referenceText);
 			}
 		}
 

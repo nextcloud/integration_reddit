@@ -22,6 +22,7 @@
 
 namespace OCA\Reddit\Reference;
 
+use OC\Collaboration\Reference\LinkReferenceProvider;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OC\Collaboration\Reference\ReferenceManager;
@@ -37,12 +38,15 @@ class CommentReferenceProvider implements IReferenceProvider {
 
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_comment';
 
-	public function __construct(private IConfig $config,
-								private IL10N $l10n,
-								private IURLGenerator $urlGenerator,
-								private ReferenceManager $referenceManager,
-								private RedditAPIService $redditAPIService,
-								private ?string $userId) {
+	public function __construct(
+		private IConfig $config,
+		private IL10N $l10n,
+		private IURLGenerator $urlGenerator,
+		private ReferenceManager $referenceManager,
+		private RedditAPIService $redditAPIService,
+		private LinkReferenceProvider $linkReferenceProvider,
+		private ?string $userId
+	) {
 	}
 
 	/**
@@ -75,20 +79,24 @@ class CommentReferenceProvider implements IReferenceProvider {
 				$commentId = $urlInfo['comment_id'];
 				$commentInfo = $this->redditAPIService->getCommentInfo($this->userId, $commentId);
 				$postInfo = $this->redditAPIService->getPostInfo($this->userId, $postId);
-				$reference = new Reference($referenceText);
-				$title = $this->l10n->t('Comment from %1$s in %2$s', [$commentInfo['author'], 'r/' . $subreddit . '/' . $postInfo['title']]);
-				$reference->setTitle($title);
-				$description = $commentInfo['body'];
-				$reference->setDescription($description);
-				$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['username' => $commentInfo['author']]);
-				$reference->setImageUrl($thumbnailUrl);
-				/*
-				$reference->setRichObject(
-					self::RICH_OBJECT_TYPE,
-					$postInfo
-				);
-				*/
-				return $reference;
+				if (isset($commentInfo['author'], $commentInfo['body'], $postInfo['title'])) {
+					$reference = new Reference($referenceText);
+					$title = $this->l10n->t('Comment from %1$s in %2$s', [$commentInfo['author'], 'r/' . $subreddit . '/' . $postInfo['title']]);
+					$reference->setTitle($title);
+					$description = $commentInfo['body'];
+					$reference->setDescription($description);
+					$thumbnailUrl = $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['username' => $commentInfo['author']]);
+					$reference->setImageUrl($thumbnailUrl);
+					/*
+					$reference->setRichObject(
+						self::RICH_OBJECT_TYPE,
+						$postInfo
+					);
+					*/
+					return $reference;
+				}
+				// fallback to opengraph
+				return $this->linkReferenceProvider->resolveReference($referenceText);
 			}
 		}
 
