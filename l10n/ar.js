@@ -2,6 +2,7 @@ OC.L10N.register(
     "integration_reddit",
     {
     "Error during OAuth exchanges" : "خطأ أثناء تبادل OAuth.",
+    "Error getting OAuth access token" : "حدث خطأ أثناء محاولة الحصول على أَمَارَة token للتصديق المفتوح OAuth",
     "Bad HTTP method" : "دالة HTTP  غير صحيحة",
     "Bad credentials" : "معلومات تسجيل الدخول غير صحيحة",
     "OAuth access token refused" : "أمارة token مرفوضة",
