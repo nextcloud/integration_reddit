@@ -29,6 +29,7 @@
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "عند استخدام متصفح كروم/كروميوم، من المفترض أن ترى نافذة منبثقة في أعلى يسار المتصفح للسماح لهذه الصفحة بفتح روابط \"web+nextcloudreddit\".",
     "If you don't see the popup, you can still click on this icon in the address bar." : "إذا كنت لا ترى النافذة المنبثقة، فلا يزال بإمكانك النقر فوق هذه الأيقونة في شريط العناوين.",
     "Then authorize this page to open \"web+nextcloudreddit\" links." : "بعد ذلك قم بإعطاء الاذن لهذة الصفحة لفتح روابط \"web+nextcloudreddit\".",
+    "If you still don't manage to get the protocol registered, check your settings on this page:" : "إذا كنت لا تزال غير قادر على تسجيل البروتوكول، قم بالتحقق من إعداداتك في هذه الصفحة:",
     "With Firefox, you should see a bar on top of this page to authorize this page to open \"web+nextcloudreddit\" links." : "عند استخدام متصفح فايرفوكس يجب أن ترى شريطًا أعلى هذه الصفحة للسماح لهذه الصفحة بفتح روابط \"web+nextcloudreddit\".",
     "Connect to Reddit" : "الاتصال بـ ريديت",
     "Connected as {user}" : "متصل بصفته {user}",

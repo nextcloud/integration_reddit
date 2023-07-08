@@ -21,7 +21,7 @@
     "Client secret of your Reddit application" : "Segredo do cliente da súa aplicación de Reddit",
     "Reddit admin options saved" : "Gardáronse as opcións de administración de Reddit",
     "Failed to save Reddit admin options" : "Produciuse un fallo ao gardar as opcións de administración de Reddit.",
-    "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "Se ten problemas na autenticación, pídalle ao administrador de Nextcloud que verifique os axustes de administración de Reddit.",
+    "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "Se ten problemas na autenticación, pídalle á administración de Nextcloud que verifique os axustes de administración de Reddit.",
     "Make sure to accept the protocol registration on top of this page to allow authentication to Reddit." : "Asegúrese de aceptar o rexistro do protocolo na parte superior desta páxina para permitir a autenticación no Reddit.",
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "Con Chrome/Chromium, debería ver unha xanela emerxente na parte superior esquerda do navegador para autorizar a esta páxina a abrir ligazóns «web+nextcloudreddit».",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Se non ve  a xanela emerxente, aínda pode premer nesta icona na barra de enderezos.",
