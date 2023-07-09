@@ -17,6 +17,7 @@
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "اترك كل الحقول فارغة لاستخدام تطبيق Nextcloud Reddit OAuth الافتراضي.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "قم بإنشاء \"تطبيق ويب\" ريديت الخاص بك في تفضيلات ريديت ووضع معرف التطبيق والسر أدناه.",
     "Reddit app settings" : "إعدادات تطبيق ريديت",
+    "Make sure you set the \"Redirection URI\" to" : "تأكد من تعيين \"إعادة توجيه عنوان URI\" على",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "قم بإنشاء \"تطبيق جوال\" ريديت الخاص بك في تفضيلات ريديت ووضع معرف التطبيق أدناه. اترك حقل \"سر التطبيق\" فارغًا.",
     "Application ID" : "الرقم المُعرّف للتطبيق ",
     "Client ID of your Reddit application" : "معرف العميل لتطبيق ريديت ‏الخاص بك",
