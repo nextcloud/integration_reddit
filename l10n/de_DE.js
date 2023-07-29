@@ -26,7 +26,7 @@ OC.L10N.register(
     "Application ID" : "Anwendungs-ID",
     "Client ID of your Reddit application" : "Client-ID von Ihrer Reddit-Anwendung",
     "Application secret" : "Anwendungsgeheimnis",
-    "Client secret of your Reddit application" : "Client-Geheimnis von Ihrer Reddit-Anwendung",
+    "Client secret of your Reddit application" : "Geheime Zeichenkette des Clients von Ihrer Reddit-Anwendung",
     "Reddit admin options saved" : "Reddit-Administrator-Einstellungen gespeichert",
     "Failed to save Reddit admin options" : "Fehler beim Speichern der Reddit-Administrator-Einstellungen",
     "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "Wenn Sie Probleme bei der Authentifizierung haben, bitten Sie Ihren Nextcloud-Administrator, die Reddit-Administratoreinstellungen zu überprüfen.",
