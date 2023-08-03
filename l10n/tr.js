@@ -47,7 +47,7 @@ OC.L10N.register(
     "Failed to save Reddit options" : "Reddit ayarları kaydedilemedi",
     "Failed to save Reddit OAuth state" : "Reddit OAuth durumu kaydedilemedi",
     "No Reddit account connected" : "Bağlı bir Reddit hesabı yok",
-    "Error connecting to Reddit" : "Reddit bağlantısı kurulurken sorun çıktı",
+    "Error connecting to Reddit" : "Reddit ile bağlantı kurulurken sorun çıktı",
     "No Reddit news!" : "Herhangi bir Reddit haberi yok!"
 },
 "nplurals=2; plural=(n > 1);");
