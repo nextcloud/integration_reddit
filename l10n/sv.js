@@ -9,6 +9,7 @@ OC.L10N.register(
     "OAuth access token refused" : "OAuth-token avvisades",
     "Connected accounts" : "Anslutna konton",
     "Reddit integration" : "Reddit-integrering",
+    "Application secret" : "Applikationshemlighet",
     "Connect to Reddit" : "Anslut till Reddit",
     "Connected as {user}" : "Ansluten som {user}",
     "Disconnect from Reddit" : "Koppla ner från Reddit",
