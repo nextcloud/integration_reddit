@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.0.2 - 2023-10-24
+### Changed
+- bump js libs
+
 ## 2.0.1 – 2023-06-30
-
 ### Fixed
-
-- Fallback to OpenGraph when not getting information about links
+- fallback to OpenGraph when not getting information about links
 
 ## 2.0.0 – 2023-04-21
 ### Changed
