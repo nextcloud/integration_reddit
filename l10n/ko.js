@@ -7,6 +7,7 @@ OC.L10N.register(
     "Bad credentials" : "잘못된 자격 증명",
     "OAuth access token refused" : "OAuth 액세스 토큰 거부됨",
     "Connected accounts" : "계정 연결됨",
+    "Application ID" : "애플리케이션 ID",
     "Connected as {user}" : "[user]로 연결됨",
     "No Reddit account connected" : "연결된 Reddit 계정이 없음"
 },
