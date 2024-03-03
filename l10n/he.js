@@ -12,4 +12,4 @@ OC.L10N.register(
     "If you don't see the popup, you can still click on this icon in the address bar." : "אם אינך רואה את החלון הקופץ, תוכל עדיין ללחוץ על סמל זה בשורת הכתובת.",
     "If you still don't manage to get the protocol registered, check your settings on this page:" : "אם אתה עדיין לא מצליח לרשום את הפרוטוקול, בדוק את ההגדרות שלך בדף זה:"
 },
-"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");
+"nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");
