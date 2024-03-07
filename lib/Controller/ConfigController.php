@@ -12,27 +12,27 @@
 namespace OCA\Reddit\Controller;
 
 use DateTime;
-use OCP\IURLGenerator;
+use OCA\Reddit\AppInfo\Application;
+use OCA\Reddit\Service\RedditAPIService;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
 use OCP\IL10N;
-use OCP\IRequest;
-use OCP\AppFramework\Http\RedirectResponse;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Controller;
 
-use OCA\Reddit\Service\RedditAPIService;
-use OCA\Reddit\AppInfo\Application;
+use OCP\IRequest;
+use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
 
 class ConfigController extends Controller {
 
 	public function __construct(string $appName,
-								IRequest $request,
-								private IConfig $config,
-								private IURLGenerator $urlGenerator,
-								private IL10N $l,
-								private RedditAPIService $redditAPIService,
-								private ?string $userId) {
+		IRequest $request,
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
+		private IL10N $l,
+		private RedditAPIService $redditAPIService,
+		private ?string $userId) {
 		parent::__construct($appName, $request);
 	}
 

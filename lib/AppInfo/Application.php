@@ -9,17 +9,17 @@
 
 namespace OCA\Reddit\AppInfo;
 
+use OCA\Reddit\Dashboard\RedditWidget;
 use OCA\Reddit\Reference\CommentReferenceProvider;
 use OCA\Reddit\Reference\PublicationReferenceProvider;
 use OCA\Reddit\Reference\SubredditReferenceProvider;
 use OCA\Reddit\Search\PublicationSearchProvider;
 use OCA\Reddit\Search\SubredditSearchProvider;
 use OCP\AppFramework\App;
-use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 
-use OCA\Reddit\Dashboard\RedditWidget;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 
 class Application extends App implements IBootstrap {
 
