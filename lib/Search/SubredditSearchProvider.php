@@ -24,11 +24,11 @@ declare(strict_types=1);
  */
 namespace OCA\Reddit\Search;
 
-use OCA\Reddit\Service\RedditAPIService;
 use OCA\Reddit\AppInfo\Application;
+use OCA\Reddit\Service\RedditAPIService;
 use OCP\App\IAppManager;
-use OCP\IL10N;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
 use OCP\Search\IProvider;
@@ -39,10 +39,10 @@ use OCP\Search\SearchResultEntry;
 class SubredditSearchProvider implements IProvider {
 
 	public function __construct(private IAppManager $appManager,
-								private IL10N $l10n,
-								private IConfig $config,
-								private IURLGenerator $urlGenerator,
-								private RedditAPIService $service) {
+		private IL10N $l10n,
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
+		private RedditAPIService $service) {
 	}
 
 	/**

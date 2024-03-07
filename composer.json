@@ -1,0 +1,22 @@
+{
+	"name": "nextcloud/integration_reddit",
+	"type": "project",
+	"license": "APL-3.0-or-later",
+	"autoload": {
+		"psr-4": {
+			"OCA\\Reddit\\": "lib/"
+		}
+	},
+	"minimum-stability": "stable",
+	"require-dev": {
+		"nextcloud/ocp": "^26.0",
+		"nextcloud/coding-standard": "^1.1",
+		"phpunit/phpunit": "^10"
+	},
+	"scripts": {
+		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
+		"cs:check": "php-cs-fixer fix --dry-run --diff",
+		"cs:fix": "php-cs-fixer fix",
+		"test:unit": "vendor/bin/phpunit -c tests/phpunit.xml --colors=always --fail-on-warning --fail-on-risky"
+	}
+}

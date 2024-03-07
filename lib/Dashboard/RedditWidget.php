@@ -23,17 +23,17 @@
 
 namespace OCA\Reddit\Dashboard;
 
+use OCA\Reddit\AppInfo\Application;
 use OCP\Dashboard\IWidget;
 use OCP\IL10N;
 use OCP\IURLGenerator;
-use OCP\Util;
 
-use OCA\Reddit\AppInfo\Application;
+use OCP\Util;
 
 class RedditWidget implements IWidget {
 
 	public function __construct(private IL10N $l10n,
-								private IURLGenerator $url) {
+		private IURLGenerator $url) {
 	}
 
 	/**
@@ -48,7 +48,7 @@ class RedditWidget implements IWidget {
 	 */
 	public function getTitle(): string {
 		return $this->l10n->t('Reddit news');
-		}
+	}
 
 	/**
 	 * @inheritDoc

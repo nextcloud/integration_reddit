@@ -13,16 +13,16 @@ namespace OCA\Reddit\Service;
 
 use DateTime;
 use Exception;
-use OCP\Http\Client\IClient;
-use OCP\IL10N;
-use OCP\PreConditionNotMetException;
-use Psr\Log\LoggerInterface;
-use OCP\IConfig;
-use OCP\Http\Client\IClientService;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
-
 use OCA\Reddit\AppInfo\Application;
+use OCP\Http\Client\IClient;
+use OCP\Http\Client\IClientService;
+use OCP\IConfig;
+use OCP\IL10N;
+use OCP\PreConditionNotMetException;
+
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**
@@ -32,11 +32,11 @@ class RedditAPIService {
 
 	private IClient $client;
 
-	public function __construct (string                  $appName,
-								 IClientService          $clientService,
-								 private LoggerInterface $logger,
-								 private IL10N           $l10n,
-								 private IConfig         $config) {
+	public function __construct(string                  $appName,
+		IClientService          $clientService,
+		private LoggerInterface $logger,
+		private IL10N           $l10n,
+		private IConfig         $config) {
 		$this->client = $clientService->newClient();
 	}
 
@@ -60,8 +60,7 @@ class RedditAPIService {
 				if (isset($response['data']['community_icon']) && $response['data']['community_icon'] !== '') {
 					$url = parse_url($response['data']['community_icon']);
 					$url = $url['scheme'] . '://' . $url['host'] . $url['path'];
-				}
-				else if (isset($response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
+				} elseif (isset($response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
 					$url = $response['data']['icon_img'];
 				}
 			}
@@ -269,11 +268,11 @@ class RedditAPIService {
 
 			if ($method === 'GET') {
 				$response = $this->client->get($url, $options);
-			} else if ($method === 'POST') {
+			} elseif ($method === 'POST') {
 				$response = $this->client->post($url, $options);
-			} else if ($method === 'PUT') {
+			} elseif ($method === 'PUT') {
 				$response = $this->client->put($url, $options);
-			} else if ($method === 'DELETE') {
+			} elseif ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
 			} else {
 				return ['error' => $this->l10n->t('Bad HTTP method')];
@@ -382,11 +381,11 @@ class RedditAPIService {
 
 			if ($method === 'GET') {
 				$response = $this->client->get($url, $options);
-			} else if ($method === 'POST') {
+			} elseif ($method === 'POST') {
 				$response = $this->client->post($url, $options);
-			} else if ($method === 'PUT') {
+			} elseif ($method === 'PUT') {
 				$response = $this->client->put($url, $options);
-			} else if ($method === 'DELETE') {
+			} elseif ($method === 'DELETE') {
 				$response = $this->client->delete($url, $options);
 			} else {
 				return ['error' => $this->l10n->t('Bad HTTP method')];
