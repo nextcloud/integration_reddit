@@ -1,7 +1,7 @@
 OC.L10N.register(
     "integration_reddit",
     {
-    "Error during OAuth exchanges" : "OAuth alış verişinde sorun çıktı",
+    "Error during OAuth exchanges" : "OAuth alışverişinde sorun çıktı",
     "Error getting OAuth access token" : "OAuth erişim kodu alınırken sorun çıktı",
     "Reddit news" : "Reddit haberleri",
     "Comment from %1$s in %2$s" : "%1$s kullanıcısının %2$s içindeki yorumu",
