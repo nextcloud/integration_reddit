@@ -7,6 +7,8 @@ OC.L10N.register(
     "Bad credentials" : "Dintiúir dona",
     "OAuth access token refused" : "Diúltaíodh comhartha rochtana OAuth",
     "Connected accounts" : "Cuntais nasctha",
+    "Application ID" : "ID Feidhmchláir",
+    "Application secret" : "Rún iarratais",
     "Connected as {user}" : "Ceangailte mar {user}"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
