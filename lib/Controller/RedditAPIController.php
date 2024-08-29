@@ -15,6 +15,8 @@ use OCA\Reddit\AppInfo\Application;
 use OCA\Reddit\Service\RedditAPIService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
@@ -40,12 +42,12 @@ class RedditAPIController extends Controller {
 
 	/**
 	 * get notification list
-	 * @NoAdminRequired
 	 *
 	 * @param string|null $after
 	 * @return DataResponse
 	 * @throws PreConditionNotMetException
 	 */
+	#[NoAdminRequired]
 	public function getNotifications(?string $after = null): DataResponse {
 		if ($this->accessToken === '') {
 			return new DataResponse(null, 400);
@@ -61,14 +63,14 @@ class RedditAPIController extends Controller {
 
 	/**
 	 * get user avatar
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 *
 	 * @param ?string $username
 	 * @param string|null $subreddit
 	 * @return DataDisplayResponse|RedirectResponse
 	 * @throws PreConditionNotMetException
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function getAvatar(?string $username = null, string $subreddit = null) {
 		$avatarContent = $this->redditAPIService->getAvatar($this->userId, $username, $subreddit);
 		if ($avatarContent !== '') {
@@ -83,13 +85,13 @@ class RedditAPIController extends Controller {
 
 	/**
 	 * get subreddit thumbnail
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 *
 	 * @param string|null $url
 	 * @param string $subreddit
 	 * @return DataDisplayResponse|RedirectResponse
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function getThumbnail(string $url = null, string $subreddit = '??'): DataDisplayResponse|RedirectResponse {
 		$thumbnailResponse = $this->redditAPIService->getThumbnail($url);
 		if (isset($thumbnailResponse['body'], $thumbnailResponse['headers'])) {
