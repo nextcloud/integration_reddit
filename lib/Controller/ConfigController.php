@@ -15,6 +15,8 @@ use DateTime;
 use OCA\Reddit\AppInfo\Application;
 use OCA\Reddit\Service\RedditAPIService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
@@ -38,12 +40,12 @@ class ConfigController extends Controller {
 
 	/**
 	 * set config values
-	 * @NoAdminRequired
 	 *
 	 * @param array $values
 	 * @return DataResponse
 	 * @throws PreConditionNotMetException
 	 */
+	#[NoAdminRequired]
 	public function setConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
 			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
@@ -71,13 +73,13 @@ class ConfigController extends Controller {
 
 	/**
 	 * receive oauth payload with protocol handler redirect
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 *
 	 * @param string $url
 	 * @return RedirectResponse
 	 * @throws PreConditionNotMetException
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function oauthProtocolRedirect(string $url = ''): RedirectResponse {
 		if ($url === '') {
 			$message = $this->l->t('Error during OAuth exchanges');
@@ -97,8 +99,6 @@ class ConfigController extends Controller {
 
 	/**
 	 * receive oauth code and get oauth access token
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 *
 	 * @param string|null $code
 	 * @param string|null $state
@@ -106,6 +106,8 @@ class ConfigController extends Controller {
 	 * @return RedirectResponse
 	 * @throws \OCP\PreConditionNotMetException
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function oauthRedirect(?string $code = '', ?string $state = '', ?string $error = ''): RedirectResponse {
 		if ($code === '' || $state === '') {
 			$message = $this->l->t('Error during OAuth exchanges');
