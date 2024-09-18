@@ -14,7 +14,7 @@
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Lassa totu is campos bòidos pro impreare s'aplicatzione OAuth de Reddit pro Nextcloud predefinida.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Crea sa \"aplicatzione web\" Reddit tua in is preferèntzias de Reddit e inserta s'ID de s'aplicatzione e su segretu in fatu.",
     "Reddit app settings" : "Cunfiguratzione de s'aplicatzione de Reddit",
-    "Make sure you set the \"Redirection URI\" to" : "Segura·ti de àere impostadu su \"URI pro deretare torra\" a",
+    "Make sure you set the \"Redirection URI\" to" : "Assegura·ti de àere cunfiguradu \"URI de reindiritzamentu\" a",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Crea sa \"aplicatzione mòbile\" Reddit tua in is preferèntzias de Reddit e pone s'ID de s'aplicatzione in suta. Lassa su campu \"segretu aplicatzione\" bòidu. ",
     "Application ID" : "ID aplicatzione",
     "Client ID of your Reddit application" : "ID cliente pro s'aplicatzione Reddit tua",
