@@ -21,7 +21,7 @@
     "Reddit app settings" : "إعدادات تطبيق Reddit",
     "Make sure you set the \"Redirection URI\" to" : "تأكد من تعيين \"إعادة توجيه عنوان URI\" على",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "قم بإنشاء \"تطبيق جوال\" Reddit الخاص بك في تفضيلات Reddit، و ضَعْ مُعرّف التطبيق أدناه. أُترُك حقل \"كلمة سر التطبيق\" فارغًا.",
-    "Application ID" : "الرقم المُعرّف للتطبيق ",
+    "Application ID" : "الرقم المعرف للتطبيق ",
     "Client ID of your Reddit application" : "مُعرّف العميل لتطبيق Reddit ‏الخاص بك",
     "Application secret" : "كلمة سر التطبيق",
     "Client secret of your Reddit application" : "كلمة سر العميل لتطبيق Reddit ‏الخاص بك",
