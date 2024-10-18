@@ -10,7 +10,7 @@ OC.L10N.register(
     "Reddit posts" : "منشورات Reddit",
     "Subreddits" : "مجتمعات Reddit الفرعية subreddits",
     "Bad HTTP method" : "دالة HTTP  غير صحيحة",
-    "Bad credentials" : "حيثيّات الدخول credentials غير صحيحة",
+    "Bad credentials" : "بيانات تسجيل الدخول غير صحيحة",
     "Failed to get Reddit news" : "فشل في الحصول على أخبار Reddit ",
     "OAuth access token refused" : "أمارة token مرفوضة",
     "Connected accounts" : "حسابات مترابطة",
