@@ -13,7 +13,7 @@
     "OAuth access token refused" : "OAuth访问令牌被拒绝",
     "Connected accounts" : "关联账号",
     "Reddit integration" : "Reddit集成",
-    "Integration of Reddit social news aggregation service" : "整合Reddit社交新闻聚合服务",
+    "Integration of Reddit social news aggregation service" : "集成 Reddit 社交新闻聚合服务",
     "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Reddit集成提供了一个仪表板小部件，其显示您最近订阅的新闻。",
     "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "有3种方法允许你的Nextcloud用户使用OAuth认证到Reddit: ",
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "留空所有字段使用默认的Nextcloud Reddit OAuth应用程序。",
