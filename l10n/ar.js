@@ -29,7 +29,7 @@ OC.L10N.register(
     "Client secret of your Reddit application" : "كلمة سر العميل لتطبيق Reddit ‏الخاص بك",
     "Reddit admin options saved" : "تم حفظ خيارات مشرف Reddit‏ ",
     "Failed to save Reddit admin options" : "فشل في حفظ خيارات مشرف Reddit ‏ ",
-    "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "إذا كنت تواجه مشكلة في المصادقة، فاطلب من مسؤول نكست كلاود التحقُّق من إعدادات مشرف الصفحة الرئيسية للانترنت Reddit.",
+    "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "إذا كنت تواجه مشكلة في المصادقة، فاطلب من مسؤول Nextcloud التحقق من إعدادات مسؤول Reddit.",
     "Make sure to accept the protocol registration on top of this page to allow authentication to Reddit." : "تأكد من قبول تسجيل البروتوكول في أعلى الصفحة للسماح بالمصادقة على Reddit.",
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "عند استخدام متصفح كروم/كروميوم، من المفترض أن ترى نافذة منبثقة في أعلى المتصفح للسماح لهذه الصفحة بفتح روابط \"web+nextcloudreddit\".",
     "If you don't see the popup, you can still click on this icon in the address bar." : "إذا كنت لا ترى النافذة المنبثقة، فلا يزال بإمكانك النقر فوق هذه الأيقونة في شريط العناوين.",
