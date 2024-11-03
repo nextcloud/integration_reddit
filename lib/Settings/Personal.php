@@ -10,7 +10,6 @@ use OCA\Reddit\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
-use OCP\Security\ICrypto;
 
 use OCP\Settings\ISettings;
 
@@ -19,7 +18,6 @@ class Personal implements ISettings {
 	public function __construct(
 		private IConfig $config,
 		private IInitialState $initialStateService,
-		private ICrypto $crypto,
 		private ?string $userId,
 	) {
 	}
@@ -31,9 +29,7 @@ class Personal implements ISettings {
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientID = $clientID === '' ? '' : $this->crypto->decrypt($clientID);
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
-		$clientSecret = $clientSecret === '' ? '' : $this->crypto->decrypt($clientSecret);
 
 		$userConfig = [
 			'client_id' => $clientID,

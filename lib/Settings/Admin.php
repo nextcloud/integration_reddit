@@ -10,7 +10,6 @@ use OCA\Reddit\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
-use OCP\Security\ICrypto;
 
 use OCP\Settings\ISettings;
 
@@ -19,7 +18,6 @@ class Admin implements ISettings {
 	public function __construct(
 		private IConfig $config,
 		private IInitialState $initialStateService,
-		private ICrypto $crypto,
 	) {
 	}
 
@@ -27,10 +25,8 @@ class Admin implements ISettings {
 	 * @return TemplateResponse
 	 */
 	public function getForm(): TemplateResponse {
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientID = $clientID === '' ? '' : $this->crypto->decrypt($clientID);
+		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id');
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
-		$clientSecret = $clientSecret === '' ? '' : $this->crypto->decrypt($clientSecret);
 
 		$adminConfig = [
 			'client_id' => $clientID,

@@ -68,7 +68,7 @@ class ConfigController extends Controller {
 	 */
 	public function setAdminConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
-			if (in_array($key, ['client_id', 'client_secret']) && $value !== '') {
+			if (in_array($key, ['client_secret', 'token', 'refresh_token']) && $value !== '') {
 				$value = $this->crypto->encrypt($value);
 			}
 			$this->config->setAppValue(Application::APP_ID, $key, $value);
@@ -124,9 +124,6 @@ class ConfigController extends Controller {
 		}
 		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		if ($clientID !== '') {
-			$clientID = $this->crypto->decrypt($clientID);
-		}
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		if ($clientSecret !== '') {
 			$clientSecret = $this->crypto->decrypt($clientSecret);

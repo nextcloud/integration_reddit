@@ -29,7 +29,6 @@ class RedditAPIService {
 	private IClient $client;
 
 	public function __construct(
-		string                  $appName,
 		IClientService          $clientService,
 		private LoggerInterface $logger,
 		private IL10N           $l10n,
@@ -305,6 +304,7 @@ class RedditAPIService {
 	 */
 	private function checkTokenExpiration(string $userId): void {
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
+		$refreshToken = $refreshToken === '' ? '' : $this->crypto->decrypt($refreshToken);
 		$expireAt = $this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
 		if ($refreshToken !== '' && $expireAt !== '') {
 			$nowTs = (new Datetime())->getTimestamp();
@@ -323,7 +323,6 @@ class RedditAPIService {
 	 */
 	private function refreshToken(string $userId): bool {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientID = $clientID === '' ? '' : $this->crypto->decrypt($clientID);
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		$clientSecret = $clientSecret === '' ? '' : $this->crypto->decrypt($clientSecret);
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');

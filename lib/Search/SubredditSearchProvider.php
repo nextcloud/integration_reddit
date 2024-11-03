@@ -19,14 +19,18 @@ use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
+use OCP\Security\ICrypto;
 
 class SubredditSearchProvider implements IProvider {
 
-	public function __construct(private IAppManager $appManager,
+	public function __construct(
+		private IAppManager $appManager,
 		private IL10N $l10n,
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
-		private RedditAPIService $service) {
+		private RedditAPIService $service,
+		private ICrypto			 $crypto,
+	) {
 	}
 
 	/**
@@ -68,6 +72,7 @@ class SubredditSearchProvider implements IProvider {
 		$after = $query->getCursor();
 
 		$accessToken = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'token');
+		$accessToken = $accessToken === '' ? '' : $this->crypto->decrypt($accessToken);
 		$searchEnabled = $this->config->getUserValue($user->getUID(), Application::APP_ID, 'search_enabled', '1') === '1';
 		if ($accessToken === '' || !$searchEnabled) {
 			return SearchResult::paginated($this->getName(), [], 0);

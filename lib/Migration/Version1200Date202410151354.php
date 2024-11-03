@@ -35,12 +35,7 @@ class Version1200Date202410151354 extends SimpleMigrationStep {
 	 * @return null|ISchemaWrapper
 	 */
 	public function postSchemaChange(IOutput $output, Closure $schemaClosure, array $options) {
-		// encrypt appconfig client_id and client_secret
-		$clientId = $this->config->getAppValue(Application::APP_ID, 'client_id');
-		if ($clientId !== '') {
-			$clientId = $this->crypto->encrypt($clientId);
-			$this->config->setAppValue(Application::APP_ID, 'client_id', $clientId);
-		}
+		// encrypt "client_secret" in the appconfig
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 		if ($clientSecret !== '') {
 			$clientSecret = $this->crypto->encrypt($clientSecret);
