@@ -10,14 +10,18 @@ use OCA\Reddit\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
+use OCP\Security\ICrypto;
 
 use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
 
-	public function __construct(private IConfig $config,
+	public function __construct(
+		private IConfig $config,
 		private IInitialState $initialStateService,
-		private ?string $userId) {
+		private ICrypto $crypto,
+		private ?string $userId,
+	) {
 	}
 
 	/**
@@ -26,13 +30,15 @@ class Personal implements ISettings {
 	public function getForm(): TemplateResponse {
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 
-		// for OAuth
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret') !== '';
+		$clientID = $clientID === '' ? '' : $this->crypto->decrypt($clientID);
+		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$clientSecret = $clientSecret === '' ? '' : $this->crypto->decrypt($clientSecret);
 
 		$userConfig = [
 			'client_id' => $clientID,
-			'client_secret' => $clientSecret,
+			// Do not expose the saved client secret to the user
+			'client_secret' => $clientSecret !== '' ? 'dummySecret' : '',
 			'user_name' => $userName,
 		];
 		$this->initialStateService->provideInitialState('user-config', $userConfig);

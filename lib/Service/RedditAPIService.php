@@ -17,6 +17,7 @@ use OCP\IConfig;
 use OCP\IL10N;
 use OCP\PreConditionNotMetException;
 
+use OCP\Security\ICrypto;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -27,11 +28,14 @@ class RedditAPIService {
 
 	private IClient $client;
 
-	public function __construct(string                  $appName,
+	public function __construct(
+		string                  $appName,
 		IClientService          $clientService,
 		private LoggerInterface $logger,
 		private IL10N           $l10n,
-		private IConfig         $config) {
+		private ICrypto			$crypto,
+		private IConfig         $config,
+	) {
 		$this->client = $clientService->newClient();
 	}
 
@@ -243,6 +247,9 @@ class RedditAPIService {
 	public function request(string $userId, string $endPoint, array $params = [], string $method = 'GET'): array {
 		$this->checkTokenExpiration($userId);
 		$accessToken = $this->config->getUserValue($userId, Application::APP_ID, 'token');
+		if ($accessToken !== '') {
+			$accessToken = $this->crypto->decrypt($accessToken);
+		}
 		try {
 			$url = 'https://oauth.reddit.com/' . $endPoint;
 			$options = [
@@ -316,8 +323,11 @@ class RedditAPIService {
 	 */
 	private function refreshToken(string $userId): bool {
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$clientID = $clientID === '' ? '' : $this->crypto->decrypt($clientID);
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$clientSecret = $clientSecret === '' ? '' : $this->crypto->decrypt($clientSecret);
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
+		$refreshToken = $refreshToken === '' ? '' : $this->crypto->decrypt($refreshToken);
 		if (!$refreshToken) {
 			$this->logger->error('No Reddit refresh token found', ['app' => Application::APP_ID]);
 			return false;
@@ -329,7 +339,8 @@ class RedditAPIService {
 		if (isset($result['access_token'])) {
 			$this->logger->info('Reddit access token successfully refreshed', ['app' => Application::APP_ID]);
 			$accessToken = $result['access_token'];
-			$this->config->setUserValue($userId, Application::APP_ID, 'token', $accessToken);
+			$encryptedToken = $accessToken === '' ? '' : $this->crypto->encrypt($accessToken);
+			$this->config->setUserValue($userId, Application::APP_ID, 'token', $encryptedToken);
 			if (isset($result['expires_in'])) {
 				$nowTs = (new Datetime())->getTimestamp();
 				$expiresAt = $nowTs + (int) $result['expires_in'];
