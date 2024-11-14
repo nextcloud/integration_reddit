@@ -79,6 +79,7 @@ import { generateUrl } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import { delay } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
+import { confirmPassword } from '@nextcloud/password-confirmation'
 
 export default {
 	name: 'AdminSettings',
@@ -109,19 +110,26 @@ export default {
 
 	methods: {
 		onInput() {
-			const that = this
 			delay(() => {
-				that.saveOptions()
+				const values = {
+					client_id: this.state.client_id,
+				}
+				if (this.state.client_secret !== 'dummySecret') {
+					values.client_secret = this.state.client_secret
+				}
+				this.saveOptions(values, true)
 			}, 2000)()
 		},
-		saveOptions() {
-			const req = {
-				values: {
-					client_id: this.state.client_id,
-					client_secret: this.state.client_secret,
-				},
+		async saveOptions(values, sensitive = false) {
+			if (sensitive) {
+				await confirmPassword()
 			}
-			const url = generateUrl('/apps/integration_reddit/admin-config')
+			const req = {
+				values,
+			}
+			const url = sensitive
+				? generateUrl('/apps/integration_reddit/sensitive-admin-config')
+				: generateUrl('/apps/integration_reddit/admin-config')
 			axios.put(url, req)
 				.then((response) => {
 					showSuccess(t('integration_reddit', 'Reddit admin options saved'))
