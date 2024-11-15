@@ -20,6 +20,7 @@ use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
+use OCP\Security\ICrypto;
 
 class RedditAPIController extends Controller {
 
@@ -30,9 +31,11 @@ class RedditAPIController extends Controller {
 		private IConfig          $config,
 		private IURLGenerator    $urlGenerator,
 		private RedditAPIService $redditAPIService,
+		private ICrypto $crypto,
 		private ?string          $userId) {
 		parent::__construct($appName, $request);
-		$this->accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
+		$accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
+		$this->accessToken = $accessToken === '' ? '' : $this->crypto->decrypt($accessToken);
 	}
 
 	/**

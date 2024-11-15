@@ -15,9 +15,11 @@ use OCP\Settings\ISettings;
 
 class Personal implements ISettings {
 
-	public function __construct(private IConfig $config,
+	public function __construct(
+		private IConfig $config,
 		private IInitialState $initialStateService,
-		private ?string $userId) {
+		private ?string $userId,
+	) {
 	}
 
 	/**
@@ -26,13 +28,13 @@ class Personal implements ISettings {
 	public function getForm(): TemplateResponse {
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 
-		// for OAuth
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret') !== '';
+		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
 
 		$userConfig = [
 			'client_id' => $clientID,
-			'client_secret' => $clientSecret,
+			// Do not expose the saved client secret to the user
+			'client_secret' => $clientSecret !== '' ? 'dummySecret' : '',
 			'user_name' => $userName,
 		];
 		$this->initialStateService->provideInitialState('user-config', $userConfig);

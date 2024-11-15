@@ -12,6 +12,7 @@ use OCA\Reddit\Service\RedditAPIService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
+use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
@@ -20,16 +21,20 @@ use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
+use OCP\Security\ICrypto;
 
 class ConfigController extends Controller {
 
-	public function __construct(string $appName,
+	public function __construct(
+		string $appName,
 		IRequest $request,
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
 		private IL10N $l,
+		private ICrypto $crypto,
 		private RedditAPIService $redditAPIService,
-		private ?string $userId) {
+		private ?string $userId,
+	) {
 		parent::__construct($appName, $request);
 	}
 
@@ -43,6 +48,9 @@ class ConfigController extends Controller {
 	#[NoAdminRequired]
 	public function setConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
+			if (in_array($key, ['token', 'refresh_token']) && $value !== '') {
+				$value = $this->crypto->encrypt($value);
+			}
 			$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 		}
 		if (isset($values['user_name']) && $values['user_name'] === '') {
@@ -61,9 +69,23 @@ class ConfigController extends Controller {
 	 */
 	public function setAdminConfig(array $values): DataResponse {
 		foreach ($values as $key => $value) {
+			if (in_array($key, ['token', 'refresh_token']) && $value !== '') {
+				$value = $this->crypto->encrypt($value);
+			}
 			$this->config->setAppValue(Application::APP_ID, $key, $value);
 		}
 		return new DataResponse(1);
+	}
+
+	#[PasswordConfirmationRequired]
+	public function setSensitiveAdminConfig(array $values): DataResponse {
+		foreach ($values as $key => $value) {
+			if (in_array($key, ['client_secret'], true) && $value !== '') {
+				$value = $this->crypto->encrypt($value);
+			}
+			$this->config->setAppValue(Application::APP_ID, $key, $value);
+		}
+		return new DataResponse([]);
 	}
 
 	/**
@@ -115,6 +137,9 @@ class ConfigController extends Controller {
 		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
 		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
 		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		if ($clientSecret !== '') {
+			$clientSecret = $this->crypto->decrypt($clientSecret);
+		}
 
 		// anyway, reset state
 		$this->config->setUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
@@ -134,9 +159,11 @@ class ConfigController extends Controller {
 			], 'POST');
 			if (isset($result['access_token'], $result['refresh_token'])) {
 				$accessToken = $result['access_token'];
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $accessToken);
+				$encryptedToken = $accessToken === '' ? '' : $this->crypto->encrypt($accessToken);
 				$refreshToken = $result['refresh_token'];
-				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $refreshToken);
+				$encryptedRefreshToken = $refreshToken === '' ? '' : $this->crypto->encrypt($refreshToken);
+				$this->config->setUserValue($this->userId, Application::APP_ID, 'token', $encryptedToken);
+				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $encryptedRefreshToken);
 				if (isset($result['expires_in'])) {
 					$nowTs = (new Datetime())->getTimestamp();
 					$expiresAt = $nowTs + (int) $result['expires_in'];

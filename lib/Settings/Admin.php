@@ -15,8 +15,10 @@ use OCP\Settings\ISettings;
 
 class Admin implements ISettings {
 
-	public function __construct(private IConfig $config,
-		private IInitialState $initialStateService) {
+	public function __construct(
+		private IConfig $config,
+		private IInitialState $initialStateService,
+	) {
 	}
 
 	/**
@@ -28,7 +30,8 @@ class Admin implements ISettings {
 
 		$adminConfig = [
 			'client_id' => $clientID,
-			'client_secret' => $clientSecret,
+			// Do not expose the saved client secret to the user
+			'client_secret' => $clientSecret !== '' ? 'dummySecret' : '',
 		];
 		$this->initialStateService->provideInitialState('admin-config', $adminConfig);
 		return new TemplateResponse(Application::APP_ID, 'adminSettings');
