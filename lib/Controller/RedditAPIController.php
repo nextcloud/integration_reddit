@@ -31,7 +31,7 @@ class RedditAPIController extends Controller {
 		private IConfig          $config,
 		private IURLGenerator    $urlGenerator,
 		private RedditAPIService $redditAPIService,
-		private ICrypto			 $crypto,
+		private ICrypto $crypto,
 		private ?string          $userId) {
 		parent::__construct($appName, $request);
 		$accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
