@@ -37,7 +37,7 @@
     "Connect to Reddit" : "Conectar con Reddit",
     "Connected as {user}" : "Conectado como {user}",
     "Disconnect from Reddit" : "Desconectar de Reddit",
-    "You must access this page with HTTPS to be able to authenticate to Reddit." : "Debe acceder a esta páxina con HTTPS para poder autenticarse no Reddit.",
+    "You must access this page with HTTPS to be able to authenticate to Reddit." : "Acceda a esta páxina con HTTPS para poder autenticarse no Reddit.",
     "Successfully connected to Reddit!" : "Conectou satisfactoriamente con Reddit!",
     "Reddit OAuth error:" : "Erro do OAuth de Reddit:",
     "Nextcloud Reddit integration on {ncUrl}" : "Integración de Reddit con Nextcloud en {ncUrl}",
