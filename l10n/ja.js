@@ -4,6 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "OAuth 通信中のエラー",
     "Error getting OAuth access token" : "OAuth アクセストークン取得時のエラー",
     "Reddit news" : "Reddit ニュース",
+    "Bad HTTP method" : "不正なHTTPメソッド",
     "Bad credentials" : "不正な資格情報",
     "OAuth access token refused" : "OAuth アクセストークンが拒否されました",
     "Connected accounts" : "接続済みアカウント",
