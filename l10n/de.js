@@ -29,7 +29,7 @@ OC.L10N.register(
     "Client secret of your Reddit application" : "Client-Geheimnis von deiner Reddit-Anwendung",
     "Reddit admin options saved" : "Reddit-Verwaltungseinstellungen gespeichert",
     "Failed to save Reddit admin options" : "Fehler beim Speichern der Reddit-Verwaltungseinstellungen",
-    "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "Wenn du Probleme bei der Authentifizierung hast, bitte deinen Nextcloud-Administrator, die Reddit-Administratoreinstellungen zu überprüfen.",
+    "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "Wenn du Probleme bei der Authentifizierung hast, bitte deine Nextcloud-Administration, die Reddit-Administrationseinstellungen zu überprüfen.",
     "Make sure to accept the protocol registration on top of this page to allow authentication to Reddit." : "Stelle sicher, dass du die Protokollregistrierung oben auf dieser Seite akzeptierst, um die Authentifizierung bei Reddit zu ermöglichen.",
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "Bei Chrome/Chromium sollte oben links im Browser ein Popup angezeigt werden, um diese Seite zum Öffnen von \"web + nextcloudreddit\" -Links zu autorisieren.",
     "If you don't see the popup, you can still click on this icon in the address bar." : "Wenn du das Popup nicht siehst, kannst du trotzdem auf dieses Symbol in der Adressleiste klicken.",
