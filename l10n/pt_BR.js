@@ -9,7 +9,7 @@ OC.L10N.register(
     "By @%1$s in %2$s" : "Por @%1$s em %2$s",
     "Reddit posts" : "Postagens do Reddit",
     "Subreddits" : "Subreddits",
-    "Bad HTTP method" : "Método HTTP ruim",
+    "Bad HTTP method" : "Método HTTP incorreto",
     "Bad credentials" : "Credenciais erradas",
     "Failed to get Reddit news" : "Falha ao obter notícias do Reddit",
     "OAuth access token refused" : "Token de acesso OAuth recusado",
