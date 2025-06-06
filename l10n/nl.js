@@ -33,7 +33,7 @@ OC.L10N.register(
     "If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings." : "Als je problemen ondervindt bij het authenticeren, vraagt je je Nextcloudbeheerder om de beheerdersinstellingen van Reddit te controleren.",
     "Make sure to accept the protocol registration on top of this page to allow authentication to Reddit." : "Accepteer de protocol-registratie bovenaan deze pagina om authenticatie bij Reddit mogelijk te maken.",
     "With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open \"web+nextcloudreddit\" links." : "In Chrome/Chromium zou je linksboven in de browser een pop-up moeten zien om deze pagina toestemming te geven om \"web+nextcloudreddit\" links te openen.",
-    "If you don't see the popup, you can still click on this icon in the address bar." : "Als u deze pop-up niet ziet, kunt u not steeds op dit icoon in de adresbalk klikken.",
+    "If you don't see the popup, you can still click on this icon in the address bar." : "Als je deze pop-up niet ziet, kunt je nog steeds op dit pictogram in de adresbalk klikken.",
     "Then authorize this page to open \"web+nextcloudreddit\" links." : "Geef daarna toestemming aan deze pagina om \"web+nextcloudreddit\" links te openen.",
     "If you still don't manage to get the protocol registered, check your settings on this page:" : "Als je het protocol nog steeds niet kunt registreren, controleer dan de instellingen op deze pagina:",
     "With Firefox, you should see a bar on top of this page to authorize this page to open \"web+nextcloudreddit\" links." : "In Firefox zou je bovenaan de pagina een balk moeten zien om toestemming te geven om \"web+nextcloudreddit\" links te openen.",
