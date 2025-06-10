@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -15,8 +16,10 @@ use OCP\Util;
 
 class RedditWidget implements IWidget {
 
-	public function __construct(private IL10N $l10n,
-		private IURLGenerator $url) {
+	public function __construct(
+		private IL10N $l10n,
+		private IURLGenerator $url,
+	) {
 	}
 
 	/**

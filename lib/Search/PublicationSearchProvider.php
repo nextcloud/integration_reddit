@@ -31,7 +31,7 @@ class PublicationSearchProvider implements IProvider {
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
 		private RedditAPIService $service,
-		private ICrypto			 $crypto,
+		private ICrypto $crypto,
 	) {
 	}
 
@@ -122,7 +122,7 @@ class PublicationSearchProvider implements IProvider {
 		try {
 			// TRANSLATORS By @$author in $subreddit_name_prefixed
 			return $this->l10n->t('By @%1$s in %2$s', [$entry['data']['author'], $entry['data']['subreddit_name_prefixed']]);
-		} catch (Exception | Throwable $e) {
+		} catch (Exception|Throwable $e) {
 		}
 		return '??';
 	}

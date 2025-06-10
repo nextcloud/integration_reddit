@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -26,13 +27,15 @@ class RedditAPIController extends Controller {
 
 	private string $accessToken;
 
-	public function __construct(string                   $appName,
-		IRequest                 $request,
-		private IConfig          $config,
-		private IURLGenerator    $urlGenerator,
+	public function __construct(
+		string $appName,
+		IRequest $request,
+		private IConfig $config,
+		private IURLGenerator $urlGenerator,
 		private RedditAPIService $redditAPIService,
 		private ICrypto $crypto,
-		private ?string          $userId) {
+		private ?string $userId,
+	) {
 		parent::__construct($appName, $request);
 		$accessToken = $this->config->getUserValue($this->userId, Application::APP_ID, 'token');
 		$this->accessToken = $accessToken === '' ? '' : $this->crypto->decrypt($accessToken);
@@ -69,7 +72,7 @@ class RedditAPIController extends Controller {
 	 */
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
-	public function getAvatar(?string $username = null, string $subreddit = null) {
+	public function getAvatar(?string $username = null, ?string $subreddit = null) {
 		$avatarContent = $this->redditAPIService->getAvatar($this->userId, $username, $subreddit);
 		if ($avatarContent !== '') {
 			$response = new DataDisplayResponse($avatarContent);
@@ -90,7 +93,7 @@ class RedditAPIController extends Controller {
 	 */
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
-	public function getThumbnail(string $url = null, string $subreddit = '??'): DataDisplayResponse|RedirectResponse {
+	public function getThumbnail(?string $url = null, string $subreddit = '??'): DataDisplayResponse|RedirectResponse {
 		$thumbnailResponse = $this->redditAPIService->getThumbnail($url);
 		if (isset($thumbnailResponse['body'], $thumbnailResponse['headers'])) {
 			$response = new DataDisplayResponse(
