@@ -25,10 +25,5 @@
 		"psalm": "psalm.phar --no-cache",
 		"psalm:update-baseline": "psalm.phar --threads=1 --update-baseline",
 		"psalm:update-baseline:force": "psalm.phar --threads=1 --update-baseline --set-baseline=tests/psalm-baseline.xml"
-	},
-	"config": {
-		"platform": {
-			"php": "8.1.0"
-		}
 	}
 }
