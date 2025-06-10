@@ -1,6 +1,8 @@
 OC.L10N.register(
     "integration_reddit",
     {
+    "Error during OAuth exchanges" : "Viga OAuth andmevahetusel",
+    "Error getting OAuth access token" : "Viga OAuth tunnusloa laadimisel",
     "Bad HTTP method" : "Vigane HTTP-meetod",
     "Bad credentials" : "Vale kasutajanimi, salasõna või tunnusluba",
     "Connected accounts" : "Ühendatud kasutajakontod",
