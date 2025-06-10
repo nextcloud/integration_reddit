@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -29,11 +30,11 @@ class RedditAPIService {
 	private IClient $client;
 
 	public function __construct(
-		IClientService          $clientService,
+		IClientService $clientService,
 		private LoggerInterface $logger,
-		private IL10N           $l10n,
-		private ICrypto			$crypto,
-		private IConfig         $config,
+		private IL10N $l10n,
+		private ICrypto $crypto,
+		private IConfig $config,
 	) {
 		$this->client = $clientService->newClient();
 	}
@@ -49,7 +50,7 @@ class RedditAPIService {
 		$url = null;
 		if (!is_null($username)) {
 			$response = $this->request($userId, 'user/' . urlencode($username) . '/about');
-			if (is_array($response) && isset($response['data'], $response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
+			if (isset($response['data'], $response['data']['icon_img']) && $response['data']['icon_img'] !== '') {
 				$url = str_replace('&amp;', '&', $response['data']['icon_img']);
 			}
 		} else {
@@ -66,8 +67,8 @@ class RedditAPIService {
 		if ($url !== null) {
 			try {
 				return $this->client->get($url)->getBody();
-			} catch (Exception | Throwable $e) {
-				$this->logger->warning('Reddit avatar request error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+			} catch (Exception|Throwable $e) {
+				$this->logger->warning('Reddit avatar request error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			}
 		}
 		return '';
@@ -175,8 +176,8 @@ class RedditAPIService {
 					'headers' => $thumbnailResponse->getHeaders(),
 				];
 			}
-		} catch (Exception | Throwable $e) {
-			$this->logger->debug('Reddit thumbnail request error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+		} catch (Exception|Throwable $e) {
+			$this->logger->debug('Reddit thumbnail request error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 		}
 		return null;
 	}
@@ -289,10 +290,10 @@ class RedditAPIService {
 			if ($json_decode_code === JSON_ERROR_NONE) {
 				return $result;
 			}
-			$this->logger->warning('Reddit API error: js_decode='.$json_decode_code.' , url='.$url, ['app' => Application::APP_ID]);
+			$this->logger->warning('Reddit API error: js_decode=' . (string)$json_decode_code . ' , url=' . $url, ['app' => Application::APP_ID]);
 			return ['error' => $this->l10n->t('Failed to get Reddit news')];
-		} catch (ServerException | ClientException $e) {
-			$this->logger->warning('Reddit API error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+		} catch (ServerException|ClientException $e) {
+			$this->logger->warning('Reddit API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}
@@ -308,7 +309,7 @@ class RedditAPIService {
 		$expireAt = $this->config->getUserValue($userId, Application::APP_ID, 'token_expires_at');
 		if ($refreshToken !== '' && $expireAt !== '') {
 			$nowTs = (new Datetime())->getTimestamp();
-			$expireAt = (int) $expireAt;
+			$expireAt = (int)$expireAt;
 			// if token expires in less than a minute or is already expired
 			if ($nowTs > $expireAt - 60) {
 				$this->refreshToken($userId);
@@ -342,8 +343,8 @@ class RedditAPIService {
 			$this->config->setUserValue($userId, Application::APP_ID, 'token', $encryptedToken);
 			if (isset($result['expires_in'])) {
 				$nowTs = (new Datetime())->getTimestamp();
-				$expiresAt = $nowTs + (int) $result['expires_in'];
-				$this->config->setUserValue($userId, Application::APP_ID, 'token_expires_at', $expiresAt);
+				$expiresAt = $nowTs + (int)$result['expires_in'];
+				$this->config->setUserValue($userId, Application::APP_ID, 'token_expires_at', (string)$expiresAt);
 			}
 			return true;
 		} else {
@@ -351,7 +352,7 @@ class RedditAPIService {
 			$this->logger->error(
 				'Token is not valid anymore. Impossible to refresh it. '
 					. $result['error'] . ' '
-					. $result['error_description'] ?? '[no error description]',
+					. ($result['error_description'] ?? '[no error description]'),
 				['app' => Application::APP_ID]
 			);
 			return false;
@@ -370,7 +371,7 @@ class RedditAPIService {
 			$url = 'https://www.reddit.com/api/v1/access_token';
 			$options = [
 				'headers' => [
-					'Authorization' => 'Basic '. base64_encode($clientID. ':' . $clientSecret),
+					'Authorization' => 'Basic ' . base64_encode($clientID . ':' . $clientSecret),
 					'User-Agent' => 'Nextcloud Reddit integration'
 				],
 			];
@@ -403,8 +404,8 @@ class RedditAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (ServerException | ClientException  $e) {
-			$this->logger->warning('Reddit OAuth error : '.$e->getMessage(), ['app' => Application::APP_ID]);
+		} catch (ServerException|ClientException  $e) {
+			$this->logger->warning('Reddit OAuth error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
 		}
 	}

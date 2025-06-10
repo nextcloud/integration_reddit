@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SPDX-FileCopyrightText: 2020 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -128,7 +129,9 @@ class ConfigController extends Controller {
 	public function oauthRedirect(?string $code = '', ?string $state = '', ?string $error = ''): RedirectResponse {
 		if ($code === '' || $state === '') {
 			$message = $this->l->t('Error during OAuth exchanges');
-			$message .= ': ' . $error ?? '';
+			if ($error !== null && $error !== '') {
+				$message .= ': ' . $error;
+			}
 			return new RedirectResponse(
 				$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
 				'?redditToken=error&message=' . urlencode($message)
@@ -144,7 +147,7 @@ class ConfigController extends Controller {
 		// anyway, reset state
 		$this->config->setUserValue($this->userId, Application::APP_ID, 'oauth_state', '');
 
-		if ($clientID && $configState !== '' && $configState === $state) {
+		if ($configState !== '' && $configState === $state) {
 			// if there is a client secret, then the app should be a 'classic' one redirecting to a web page
 			if ($clientSecret) {
 				$redirect_uri = $this->config->getUserValue($this->userId, Application::APP_ID, 'redirect_uri');
@@ -166,8 +169,8 @@ class ConfigController extends Controller {
 				$this->config->setUserValue($this->userId, Application::APP_ID, 'refresh_token', $encryptedRefreshToken);
 				if (isset($result['expires_in'])) {
 					$nowTs = (new Datetime())->getTimestamp();
-					$expiresAt = $nowTs + (int) $result['expires_in'];
-					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_expires_at', $expiresAt);
+					$expiresAt = $nowTs + (int)$result['expires_in'];
+					$this->config->setUserValue($this->userId, Application::APP_ID, 'token_expires_at', (string)$expiresAt);
 				}
 				// get user information
 				$info = $this->redditAPIService->request($this->userId, 'api/v1/me');

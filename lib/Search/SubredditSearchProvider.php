@@ -29,7 +29,7 @@ class SubredditSearchProvider implements IProvider {
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
 		private RedditAPIService $service,
-		private ICrypto			 $crypto,
+		private ICrypto $crypto,
 	) {
 	}
 
