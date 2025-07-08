@@ -8,6 +8,7 @@ OC.L10N.register(
     "Client ID of your Reddit application" : "Reddit lietotnes klienta Id",
     "Application secret" : "Lietotnes noslēpums",
     "Client secret of your Reddit application" : "Reddit lietotnes klienta noslēpums",
+    "Connected as {user}" : "Savienojies kā {user}",
     "No Reddit account connected" : "Nav sasaistītu Reddit kontu"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");
