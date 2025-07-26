@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.1.0 - 2025-07-22
+### Changed
+- minimum required NC raised from v28 to v30
+- bump js libs
+
 ## 2.0.5 - 2024-11-18
 ### Changed
 - bump js libs
