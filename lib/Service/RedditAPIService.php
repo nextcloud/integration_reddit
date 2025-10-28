@@ -168,8 +168,8 @@ class RedditAPIService {
 	public function getThumbnail(string $url): ?array {
 		try {
 			$domain = parse_url($url, PHP_URL_HOST);
-			if ((preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1) ||
-				(preg_match('/i\.redd\..*/i', $domain) === 1)) {
+			if ((preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1)
+				|| (preg_match('/i\.redd\..*/i', $domain) === 1)) {
 				$thumbnailResponse = $this->client->get($url);
 				return [
 					'body' => $thumbnailResponse->getBody(),

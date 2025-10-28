@@ -102,8 +102,8 @@ class ConfigController extends Controller {
 		if ($url === '') {
 			$message = $this->l->t('Error during OAuth exchanges');
 			return new RedirectResponse(
-				$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-				'?redditToken=error&message=' . urlencode($message)
+				$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+				. '?redditToken=error&message=' . urlencode($message)
 			);
 		}
 		$parts = parse_url($url);
@@ -133,8 +133,8 @@ class ConfigController extends Controller {
 				$message .= ': ' . $error;
 			}
 			return new RedirectResponse(
-				$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-				'?redditToken=error&message=' . urlencode($message)
+				$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+				. '?redditToken=error&message=' . urlencode($message)
 			);
 		}
 		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
@@ -182,8 +182,8 @@ class ConfigController extends Controller {
 					$this->config->setUserValue($this->userId, Application::APP_ID, 'user_name', '??');
 				}
 				return new RedirectResponse(
-					$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-					'?redditToken=success'
+					$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+					. '?redditToken=success'
 				);
 			} else {
 				$message = $this->l->t('Error getting OAuth access token') . ' ' . ($result['error'] ?? 'missing token or refresh token');
@@ -192,8 +192,8 @@ class ConfigController extends Controller {
 			$message = $this->l->t('Error during OAuth exchanges');
 		}
 		return new RedirectResponse(
-			$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts']) .
-			'?redditToken=error&message=' . urlencode($message)
+			$this->urlGenerator->linkToRoute('settings.PersonalSettings.index', ['section' => 'connected-accounts'])
+			. '?redditToken=error&message=' . urlencode($message)
 		);
 	}
 }
