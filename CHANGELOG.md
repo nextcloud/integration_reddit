@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.1.1 - 2025-11-10
+### Changed
+- added support of NC33
+- bump dependencies
+
 ## 2.1.0 - 2025-07-22
 ### Changed
 - minimum required NC raised from v28 to v30
