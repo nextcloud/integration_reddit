@@ -83,13 +83,13 @@ import CloseIcon from 'vue-material-design-icons/Close.vue'
 
 import RedditIcon from './icons/RedditIcon.vue'
 
+import NcButton from '@nextcloud/vue/components/NcButton'
+
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import axios from '@nextcloud/axios'
 import { delay, detectBrowser } from '../utils.js'
 import { showSuccess, showError } from '@nextcloud/dialogs'
-
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 export default {
 	name: 'PersonalSettings',
@@ -155,7 +155,7 @@ export default {
 			window.navigator.registerProtocolHandler(
 				'web+nextcloudreddit',
 				generateUrl('/apps/integration_reddit/oauth-protocol-redirect') + '?url=%s',
-				t('integration_reddit', 'Nextcloud Reddit integration on {ncUrl}', { ncUrl })
+				t('integration_reddit', 'Nextcloud Reddit integration on {ncUrl}', { ncUrl }),
 			)
 		}
 	},
@@ -185,7 +185,7 @@ export default {
 				.catch((error) => {
 					showError(
 						t('integration_reddit', 'Failed to save Reddit options')
-						+ ': ' + error.response?.request?.responseText
+						+ ': ' + error.response?.request?.responseText,
 					)
 				})
 				.then(() => {
@@ -218,7 +218,7 @@ export default {
 				.catch((error) => {
 					showError(
 						t('integration_reddit', 'Failed to save Reddit OAuth state')
-						+ ': ' + error.response?.request?.responseText
+						+ ': ' + error.response?.request?.responseText,
 					)
 				})
 				.then(() => {
