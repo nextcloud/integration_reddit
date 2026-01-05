@@ -15,13 +15,13 @@ use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use OCP\IUser;
-use OCP\Search\IProvider;
+use OCP\Search\IExternalProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
 use OCP\Search\SearchResultEntry;
 use OCP\Security\ICrypto;
 
-class SubredditSearchProvider implements IProvider {
+class SubredditSearchProvider implements IExternalProvider {
 
 	public function __construct(
 		private IAppManager $appManager,
@@ -45,6 +45,13 @@ class SubredditSearchProvider implements IProvider {
 	 */
 	public function getName(): string {
 		return $this->l10n->t('Subreddits');
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function isExternalProvider(): bool {
+		return true;
 	}
 
 	/**
