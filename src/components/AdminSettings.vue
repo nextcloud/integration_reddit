@@ -9,70 +9,63 @@
 			<RedditIcon class="icon" />
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
-		<p class="settings-hint">
-			{{ t('integration_reddit', 'There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:') }}
-		</p>
-		<p class="settings-hint">
-			1. {{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}
-		</p>
-		<p class="settings-hint">
-			2. {{ t('integration_reddit', 'Create your own Reddit "web application" in Reddit preferences and put the application ID and secret below.') }}
-		</p>
-		<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
-		<br><br>
-		<p class="settings-hint">
-			<InformationOutlineIcon :size="20" class="icon" />
-			{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
-		</p>
-		<strong>{{ redirect_uri }}</strong>
-		<br><br>
-		<p class="settings-hint">
-			3. {{ t('integration_reddit', 'Create your own Reddit "mobile application" in Reddit preferences and put the application ID below. Leave the "Application secret" field empty.') }}
-		</p>
-		<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
-		<br><br>
-		<p class="settings-hint">
-			<InformationOutlineIcon :size="20" class="icon" />
-			{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
-		</p>
-		<strong>{{ redirect_uri_protocol }}</strong>
-		<br><br>
 		<div id="reddit-content">
-			<div class="line">
-				<label for="reddit-client-id">
-					<KeyIcon :size="20" class="icon" />
-					{{ t('integration_reddit', 'Application ID') }}
-				</label>
-				<input id="reddit-client-id"
-					v-model="state.client_id"
-					type="password"
-					:readonly="readonly"
-					:placeholder="t('integration_reddit', 'Client ID of your Reddit application')"
-					@input="onInput"
-					@focus="readonly = false">
-			</div>
-			<div class="line">
-				<label for="reddit-client-secret">
-					<KeyIcon :size="20" class="icon" />
-					{{ t('integration_reddit', 'Application secret') }}
-				</label>
-				<input id="reddit-client-secret"
-					v-model="state.client_secret"
-					type="password"
-					:readonly="readonly"
-					:placeholder="t('integration_reddit', 'Client secret of your Reddit application')"
-					@input="onInput"
-					@focus="readonly = false">
-			</div>
+			<NcNoteCard type="info">
+				{{ t('integration_reddit', 'There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:') }}
+				<br><br>
+				1. {{ t('integration_reddit', 'Leave all fields empty to use default Nextcloud Reddit OAuth app.') }}
+				<br><br>
+				2. {{ t('integration_reddit', 'Create your own Reddit "web application" in Reddit preferences and put the application ID and secret below.') }}
+				<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
+				<br>
+				{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
+				<strong>{{ redirect_uri }}</strong>
+				<br><br>
+				3. {{ t('integration_reddit', 'Create your own Reddit "mobile application" in Reddit preferences and put the application ID below. Leave the "Application secret" field empty.') }}
+				<a href="https://www.reddit.com/prefs/apps" target="_blank" class="external">{{ t('integration_reddit', 'Reddit app settings') }}</a>
+				<br>
+				{{ t('integration_reddit', 'Make sure you set the "Redirection URI" to') }}
+				<strong>{{ redirect_uri_protocol }}</strong>
+			</NcNoteCard>
+			<NcTextField
+				v-model="state.client_id"
+				type="password"
+				:label="t('integration_reddit', 'Application ID')"
+				:placeholder="t('integration_reddit', 'Client ID of your Reddit application')"
+				:readonly="readonly"
+				:show-trailing-button="!!state.client_id"
+				@trailing-button-click="state.client_id = ''; onInput()"
+				@focus="readonly = false"
+				@update:model-value="onInput">
+				<template #icon>
+					<KeyOutlineIcon :size="20" />
+				</template>
+			</NcTextField>
+			<NcTextField
+				v-model="state.client_secret"
+				type="password"
+				:label="t('integration_reddit', 'Application secret')"
+				:placeholder="t('integration_reddit', 'Client secret of your Reddit application')"
+				:readonly="readonly"
+				:show-trailing-button="!!state.client_secret"
+				@trailing-button-click="state.client_secret = ''; onInput()"
+				@focus="readonly = false"
+				@update:model-value="onInput">
+				<template #icon>
+					<KeyOutlineIcon :size="20" />
+				</template>
+			</NcTextField>
 		</div>
 	</div>
 </template>
 
 <script>
-import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
-import KeyIcon from 'vue-material-design-icons/Key.vue'
+import KeyOutlineIcon from 'vue-material-design-icons/KeyOutline.vue'
 
 import RedditIcon from './icons/RedditIcon.vue'
+
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
+import NcTextField from '@nextcloud/vue/components/NcTextField'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl } from '@nextcloud/router'
@@ -86,8 +79,9 @@ export default {
 
 	components: {
 		RedditIcon,
-		KeyIcon,
-		InformationOutlineIcon,
+		KeyOutlineIcon,
+		NcNoteCard,
+		NcTextField,
 	},
 
 	props: [],
@@ -152,31 +146,17 @@ export default {
 #reddit_prefs {
 	#reddit-content{
 		margin-left: 40px;
+		max-width: 800px;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
 	}
 
-	h2,
-	.line,
-	.settings-hint {
+	h2 {
 		display: flex;
 		align-items: center;
-		.icon {
-			margin-right: 4px;
-		}
-	}
-
-	h2 .icon {
-		margin-right: 8px;
-	}
-
-	.line {
-		> label {
-			width: 300px;
-			display: flex;
-			align-items: center;
-		}
-		> input {
-			width: 300px;
-		}
+		justify-content: start;
+		gap: 8px;
 	}
 }
 </style>

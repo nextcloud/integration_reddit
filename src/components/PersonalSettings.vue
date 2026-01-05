@@ -10,42 +10,34 @@
 			{{ t('integration_reddit', 'Reddit integration') }}
 		</h2>
 		<div v-if="showOAuth">
-			<div v-if="!connected">
-				<p v-if="usingCustomApp" class="settings-hint">
-					<InformationOutlineIcon :size="20" class="icon" />
-					{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
-				</p>
-				<div v-else>
-					<p class="settings-hint">
-						{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
-					</p>
-					<span v-if="isChromium">
-						<p class="settings-hint">
-							{{ t('integration_reddit', 'With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open "web+nextcloudreddit" links.') }}
-						</p>
-						<p class="settings-hint">
-							{{ t('integration_reddit', 'If you don\'t see the popup, you can still click on this icon in the address bar.') }}
-						</p>
-						<img :src="chromiumImagePath">
-						<br><br>
-						<p class="settings-hint">
-							{{ t('integration_reddit', 'Then authorize this page to open "web+nextcloudreddit" links.') }}
-						</p>
-						<p class="settings-hint">
-							{{ t('integration_reddit', 'If you still don\'t manage to get the protocol registered, check your settings on this page:') }}
-						</p>
-						<strong>chrome://settings/handlers</strong>
-					</span>
-					<span v-else-if="isFirefox">
-						<p class="settings-hint">
-							{{ t('integration_reddit', 'With Firefox, you should see a bar on top of this page to authorize this page to open "web+nextcloudreddit" links.') }}
-						</p>
-						<img :src="firefoxImagePath">
-					</span>
-				</div>
-				<br>
-			</div>
 			<div id="reddit-content">
+				<div v-if="!connected">
+					<NcNoteCard v-if="usingCustomApp"
+						type="info">
+						{{ t('integration_reddit', 'If you have trouble authenticating, ask your Nextcloud administrator to check Reddit admin settings.') }}
+					</NcNoteCard>
+					<NcNoteCard v-else type="info">
+						{{ t('integration_reddit', 'Make sure to accept the protocol registration on top of this page to allow authentication to Reddit.') }}
+						<br>
+						<span v-if="isChromium">
+							{{ t('integration_reddit', 'With Chrome/Chromium, you should see a popup on browser top-left to authorize this page to open "web+nextcloudreddit" links.') }}
+							<br>
+							{{ t('integration_reddit', 'If you don\'t see the popup, you can still click on this icon in the address bar.') }}
+							<br><br>
+							<img :src="chromiumImagePath" :alt="t('integration_reddit', 'Image of custom protocol handler registration in Chromium')">
+							<br><br>
+							{{ t('integration_reddit', 'Then authorize this page to open "web+nextcloudreddit" links.') }}
+							<br>
+							{{ t('integration_reddit', 'If you still don\'t manage to get the protocol registered, check your settings on this page:') }}
+							<strong>chrome://settings/handlers</strong>
+						</span>
+						<span v-else-if="isFirefox">
+							{{ t('integration_reddit', 'With Firefox, you should see a bar on top of this page to authorize this page to open "web+nextcloudreddit" links.') }}
+							<br><br>
+							<img :src="firefoxImagePath" :alt="t('integration_reddit', 'Image of custom protocol handler registration in Firefox')">
+						</span>
+					</NcNoteCard>
+				</div>
 				<NcButton v-if="!connected"
 					@click="onOAuthClick">
 					<template #icon>
@@ -68,15 +60,14 @@
 				</div>
 			</div>
 		</div>
-		<p v-else
-			class="settings-hint">
+		<NcNoteCard v-else
+			type="warning">
 			{{ t('integration_reddit', 'You must access this page with HTTPS to be able to authenticate to Reddit.') }}
-		</p>
+		</NcNoteCard>
 	</div>
 </template>
 
 <script>
-import InformationOutlineIcon from 'vue-material-design-icons/InformationOutline.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
@@ -84,6 +75,7 @@ import CloseIcon from 'vue-material-design-icons/Close.vue'
 import RedditIcon from './icons/RedditIcon.vue'
 
 import NcButton from '@nextcloud/vue/components/NcButton'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
@@ -97,10 +89,10 @@ export default {
 	components: {
 		RedditIcon,
 		NcButton,
+		NcNoteCard,
 		CheckIcon,
 		OpenInNewIcon,
 		CloseIcon,
-		InformationOutlineIcon,
 	},
 
 	props: [],
@@ -232,29 +224,32 @@ export default {
 #reddit_prefs {
 	#reddit-content {
 		margin-left: 40px;
-	}
-	h2,
-	.line,
-	.settings-hint {
+		max-width: 800px;
 		display: flex;
-		align-items: center;
-		.icon {
-			margin-right: 4px;
+		flex-direction: column;
+		gap: 4px;
+
+		img {
+			width: 100%;
 		}
 	}
 
-	h2 .icon {
-		margin-right: 8px;
+	h2 {
+		display: flex;
+		align-items: center;
+		justify-content: start;
+		gap: 8px;
 	}
 
 	.line {
-		> label {
-			width: 300px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		label {
 			display: flex;
 			align-items: center;
-		}
-		> input {
-			width: 250px;
+			gap: 4px;
 		}
 	}
 }
