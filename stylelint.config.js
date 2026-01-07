@@ -6,7 +6,6 @@ module.exports = {
 	extends: 'stylelint-config-recommended-vue',
 	rules: {
 		'selector-type-no-unknown': null,
-		'number-leading-zero': null,
 		'rule-empty-line-before': [
 			'always',
 			{

@@ -11,12 +11,12 @@ __webpack_public_path__ = linkTo('integration_reddit', 'js/') // eslint-disable-
 
 document.addEventListener('DOMContentLoaded', () => {
 	OCA.Dashboard.register('reddit_news', async (el, { widget }) => {
-		const { default: Vue } = await import(/* webpackChunkName: "dashboard-lazy" */'vue')
-		const { default: Dashboard } = await import(/* webpackChunkName: "dashboard-lazy" */'./views/Dashboard.vue')
-		Vue.mixin({ methods: { t, n } })
-		const View = Vue.extend(Dashboard)
-		new View({
-			propsData: { title: widget.title },
-		}).$mount(el)
+		const { createApp } = await import('vue')
+		const { default: Dashboard } = await import('./views/Dashboard.vue')
+		const app = createApp(Dashboard, {
+			title: widget.title,
+		})
+		app.mixin({ methods: { t, n } })
+		app.mount(el)
 	})
 })

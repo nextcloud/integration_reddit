@@ -4,7 +4,7 @@
 -->
 
 <template>
-	<DashboardWidget :items="items"
+	<NcDashboardWidget :items="items"
 		:show-more-url="showMoreUrl"
 		:show-more-text="title"
 		:loading="state === 'loading'">
@@ -29,7 +29,7 @@
 				</template>
 			</NcEmptyContent>
 		</template>
-	</DashboardWidget>
+	</NcDashboardWidget>
 </template>
 
 <script>
@@ -39,20 +39,21 @@ import CloseIcon from 'vue-material-design-icons/Close.vue'
 
 import RedditIcon from '../components/icons/RedditIcon.vue'
 
+import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
+
 import axios from '@nextcloud/axios'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 import { getLocale } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
-import { DashboardWidget } from '@nextcloud/vue-dashboard'
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js'
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js'
 
 export default {
 	name: 'Dashboard',
 
 	components: {
-		DashboardWidget,
+		NcDashboardWidget,
 		NcEmptyContent,
 		RedditIcon,
 		NcButton,
@@ -135,7 +136,7 @@ export default {
 		},
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		document.removeEventListener('visibilitychange', this.changeWindowVisibility)
 	},
 
@@ -176,7 +177,7 @@ export default {
 				} else if (error.response && error.response.status === 401) {
 					showError(
 						t('integration_reddit', 'Failed to get Reddit news') + ' '
-						+ error.response.request.responseText
+						+ error.response.request.responseText,
 					)
 					this.state = 'error'
 				} else {
@@ -240,7 +241,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-::v-deep .connect-button {
+:deep(.connect-button) {
 	margin-top: 10px;
 }
 </style>
