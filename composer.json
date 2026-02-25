@@ -15,7 +15,7 @@
 		"psalm/phar": "6.7.x"
 	},
 	"require": {
-		"php": ">=8.1.0"
+		"php": ">=8.2.0"
 	},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -print0 | xargs -0 -n1 php -l",
