@@ -12,7 +12,7 @@
 		"nextcloud/ocp": "dev-master",
 		"nextcloud/coding-standard": "^1.1",
 		"phpunit/phpunit": "^10",
-		"psalm/phar": "6.7.x"
+		"psalm/phar": "~6.15.1"
 	},
 	"require": {
 		"php": ">=8.2.0"
