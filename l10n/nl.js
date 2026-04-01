@@ -4,7 +4,7 @@ OC.L10N.register(
     "Error during OAuth exchanges" : "Fout tijdens OAuth uitwisselingen",
     "Error getting OAuth access token" : "Fout bij ophalen OAuth access token",
     "Reddit news" : "Reddit nieuws",
-    "Comment from %1$s in %2$s" : "Commentaar van %1$s in %2$s",
+    "Comment from %1$s in %2$s" : "Reactie van %1$s in %2$s",
     "Reddit publications and subreddits" : "Reddit publicaties en subreddits",
     "By @%1$s in %2$s" : "Door @%1$s ub %2$s",
     "Reddit posts" : "Reddit-artikelen",
