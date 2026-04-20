@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## 2.1.2 - 2026-04-20
+### Changed
+- added support of NC34, dropped NC30, NC31, and NC32
+- minimum required PHP raised from 8.1 to 8.2
+- bump dependencies
+
 ## 2.1.1 - 2025-11-10
 ### Changed
 - added support of NC33
