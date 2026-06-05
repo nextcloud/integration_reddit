@@ -17,7 +17,6 @@ use OCP\Collaboration\Reference\ISearchableReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 use OCP\IL10N;
-
 use OCP\IURLGenerator;
 
 class PublicationReferenceProvider extends ADiscoverableReferenceProvider implements ISearchableReferenceProvider {

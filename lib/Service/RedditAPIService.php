@@ -17,7 +17,6 @@ use OCP\Http\Client\IClientService;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\PreConditionNotMetException;
-
 use OCP\Security\ICrypto;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -102,7 +101,6 @@ class RedditAPIService {
 		}
 
 		return $posts;
-
 		//// private messages
 		//$result = $this->request($accessToken, $refreshToken, $clientID, $clientSecret, 'message/inbox', $params);
 		//if (isset($result['data'], $result['data']['children']) && is_array($result['data']['children'])) {

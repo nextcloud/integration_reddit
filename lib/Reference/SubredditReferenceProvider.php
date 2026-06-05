@@ -15,7 +15,6 @@ use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
-
 use OCP\IURLGenerator;
 
 class SubredditReferenceProvider implements IReferenceProvider {
