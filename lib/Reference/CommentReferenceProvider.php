@@ -16,7 +16,6 @@ use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
 use OCP\IConfig;
 use OCP\IL10N;
-
 use OCP\IURLGenerator;
 
 class CommentReferenceProvider implements IReferenceProvider {

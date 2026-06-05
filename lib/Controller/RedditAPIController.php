@@ -16,7 +16,6 @@ use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
-
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IURLGenerator;

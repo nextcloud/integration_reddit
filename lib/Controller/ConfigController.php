@@ -18,7 +18,6 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IConfig;
 use OCP\IL10N;
-
 use OCP\IRequest;
 use OCP\IURLGenerator;
 use OCP\PreConditionNotMetException;
