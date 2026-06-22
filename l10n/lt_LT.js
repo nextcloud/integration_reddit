@@ -2,7 +2,7 @@ OC.L10N.register(
     "integration_reddit",
     {
     "Error during OAuth exchanges" : "Klaida „OAuth“ apsikeitimo metu",
-    "Error getting OAuth access token" : "Klaida gaunant „OAuth“ prieigos raktą",
+    "Error getting OAuth access token" : "Klaida gaunant „OAuth“ prieigos žymenį",
     "Reddit news" : "„Reddit“ naujienos",
     "Comment from %1$s in %2$s" : "Komentaras iš %1$s - %2$s",
     "Reddit publications and subreddits" : "„Reddit“ įrašai ir „subreddits“",
@@ -12,7 +12,7 @@ OC.L10N.register(
     "Bad HTTP method" : "Blogas HTTP metodas",
     "Bad credentials" : "Blogi prisijungimo duomenys",
     "Failed to get Reddit news" : "Nepavyko gauti „Reddit“ naujienų",
-    "OAuth access token refused" : "„OAuth“ prieigos raktas atmestas",
+    "OAuth access token refused" : "„OAuth“ prieigos žymuo atmestas",
     "Connected accounts" : "Prijungtos paskyros",
     "Reddit integration" : "„Reddit“ integracija",
     "Integration of Reddit social news aggregation service" : "„Reddit“ socialinių naujienų agregavimo paslaugos integracija",
