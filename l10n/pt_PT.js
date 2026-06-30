@@ -10,6 +10,8 @@ OC.L10N.register(
     "Connected accounts" : "Contas conectadas",
     "Integration of Reddit social news aggregation service" : "Integração do serviço de agregação de notícias sociais Reddit",
     "Reddit admin options saved" : "Opções de administração do Reddit salvas",
+    "Application ID" : "ID do aplicativo",
+    "Application secret" : "Segredo de aplicativo",
     "Nextcloud Reddit integration on {ncUrl}" : "Integração Reddit para Nextcloud em {ncUrl}",
     "Reddit options saved" : "Opções do Reddit salvas"
 },
