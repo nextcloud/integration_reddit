@@ -1,17 +1,17 @@
 { "translations": {
-    "Error during OAuth exchanges" : "Fel vid utväxling av OAuth-token",
-    "Error getting OAuth access token" : "Kunde inte hämta OAuth-token",
+    "Error during OAuth exchanges" : "Fel vid OAuth-utbytet",
+    "Error getting OAuth access token" : "Det gick inte att hämta OAuth-åtkomsttoken",
     "Reddit news" : "Reddit-nyheter",
     "Bad HTTP method" : "Felaktig HTTP-metod",
     "Bad credentials" : "Ogiltiga inloggningsuppgifter",
-    "OAuth access token refused" : "OAuth-token avvisades",
+    "OAuth access token refused" : "OAuth-åtkomsttoken avvisades",
     "Connected accounts" : "Anslutna konton",
     "Reddit integration" : "Reddit-integrering",
-    "Application ID" : "Applikations-ID",
-    "Application secret" : "Applikationshemlighet",
+    "Application ID" : "App-ID",
+    "Application secret" : "Apphemlighet",
     "Connect to Reddit" : "Anslut till Reddit",
     "Connected as {user}" : "Ansluten som {user}",
-    "Disconnect from Reddit" : "Koppla ner från Reddit",
+    "Disconnect from Reddit" : "Koppla från Reddit",
     "No Reddit news!" : "Inga Reddit-nyheter!"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
