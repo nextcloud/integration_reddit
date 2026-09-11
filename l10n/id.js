@@ -9,6 +9,8 @@ OC.L10N.register(
     "Connected accounts" : "Akun terhubung",
     "Application ID" : "ID aplikasi",
     "Application secret" : "Rahasia aplikasi",
+    "If you don't see the popup, you can still click on this icon in the address bar." : "Jika Anda tidak melihat pop-up tersebut, Anda tetap dapat mengeklik ikon ini pada bilah alamat.",
+    "If you still don't manage to get the protocol registered, check your settings on this page:" : "Jika Anda masih tidak dapat mendaftarkan protokol tersebut, periksa pengaturan Anda di halaman ini:",
     "Connected as {user}" : "Terhubung sebagai {user}"
 },
 "nplurals=1; plural=0;");
