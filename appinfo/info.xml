@@ -22,7 +22,7 @@
 	<screenshot>https://github.com/nextcloud/integration_reddit/raw/main/screenshots/screenshot1.jpg</screenshot>
 	<dependencies>
 		<php min-version="8.2"/>
-		<nextcloud min-version="33" max-version="35"/>
+		<nextcloud min-version="33" max-version="36"/>
 	</dependencies>
 	<settings>
 		<admin>OCA\Reddit\Settings\Admin</admin>
