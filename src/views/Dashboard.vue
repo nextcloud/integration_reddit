@@ -80,7 +80,6 @@ export default {
 			loop: null,
 			state: 'loading',
 			settingsUrl: generateUrl('/settings/user/connected-accounts'),
-			themingColor: OCA.Theming ? OCA.Theming.color.replace('#', '') : '0082C9',
 			windowVisibility: true,
 		}
 	},

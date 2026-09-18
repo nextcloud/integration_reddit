@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - added support of NC36
 
+### Fixed
+- show the content of the dashboard widget again, it stayed empty because of an error when loading
+
 ## 2.3.0 - 2026-07-27
 ### Changed
 - added support of NC35
