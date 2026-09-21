@@ -12,3 +12,5 @@ tests/.phpunit.cache/
 .vscode/
 .vscode-upload.json
 *.code-workspace
+/test-results/
+/playwright-report/
