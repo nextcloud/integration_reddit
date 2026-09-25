@@ -95,6 +95,20 @@ test.describe('Dashboard widget', () => {
 		await expect(widget.getByRole('button', { name: 'Connect to Reddit' })).toBeVisible()
 	})
 
+	test('link to Reddit under a full widget', async ({ page }) => {
+		await showOnlyWidgets(page, 'reddit_news')
+		// the widget shows seven posts and links to Reddit for the rest
+		const posts = Array.from({ length: 8 }, (_, index) => ({ ...post, id: `probe-${index}` }))
+		await page.route('**/apps/integration_reddit/notifications**', (route) => route.fulfill({ json: posts }))
+		await page.route('**/apps/integration_reddit/avatar**', (route) => route.fulfill({ contentType: 'image/png', body: png }))
+		await page.goto('apps/dashboard/')
+
+		const widget = page.locator('.panel').filter({ hasText: 'Reddit news' })
+		const more = widget.getByRole('link', { name: 'Reddit news' }).last()
+		await expect(more).toBeVisible()
+		await expect(more).toHaveAttribute('href', 'https://reddit.com/new')
+	})
+
 	test('list the posts of a connected account', async ({ page }) => {
 		await showOnlyWidgets(page, 'reddit_news')
 		// answer the way the app does for a connected account, the test container cannot reach Reddit

@@ -5,7 +5,7 @@
 .vscode
 .php-cs-fixer.*
 /.codecov.yml
-/.eslintrc.js
+/eslint.config.mjs
 /.gitattributes
 /.gitignore
 /.l10nignore
