@@ -5,8 +5,8 @@
 
 <template>
 	<NcDashboardWidget :items="items"
-		:show-more-url="showMoreUrl"
-		:show-more-text="title"
+		:showMoreUrl="showMoreUrl"
+		:showMoreText="title"
 		:loading="state === 'loading'">
 		<template #empty-content>
 			<NcEmptyContent
@@ -33,24 +33,21 @@
 </template>
 
 <script>
-import LoginVariantIcon from 'vue-material-design-icons/LoginVariant.vue'
-import CheckIcon from 'vue-material-design-icons/Check.vue'
-import CloseIcon from 'vue-material-design-icons/Close.vue'
-
-import RedditIcon from '../components/icons/RedditIcon.vue'
-
-import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
-import NcButton from '@nextcloud/vue/components/NcButton'
-import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
-
 import axios from '@nextcloud/axios'
-import { generateUrl, imagePath } from '@nextcloud/router'
 import { showError } from '@nextcloud/dialogs'
 import { getLocale } from '@nextcloud/l10n'
 import moment from '@nextcloud/moment'
+import { generateUrl, imagePath } from '@nextcloud/router'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
+import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+import LoginVariantIcon from 'vue-material-design-icons/LoginVariant.vue'
+import RedditIcon from '../components/icons/RedditIcon.vue'
 
 export default {
-	name: 'Dashboard',
+	name: 'RedditDashboard',
 
 	components: {
 		NcDashboardWidget,
@@ -99,10 +96,12 @@ export default {
 				}
 			})
 		},
+
 		lastId() {
 			const nbNotif = this.notifications.length
 			return (nbNotif > 0) ? this.notifications[0].name : null
 		},
+
 		emptyContentMessage() {
 			if (this.state === 'no-token') {
 				return t('integration_reddit', 'No Reddit account connected')
@@ -113,6 +112,7 @@ export default {
 			}
 			return ''
 		},
+
 		emptyContentIcon() {
 			if (this.state === 'no-token') {
 				return RedditIcon
@@ -151,13 +151,16 @@ export default {
 		changeWindowVisibility() {
 			this.windowVisibility = !document.hidden
 		},
+
 		stopLoop() {
 			clearInterval(this.loop)
 		},
+
 		launchLoop() {
 			this.fetchNotifications()
 			this.loop = setInterval(() => this.fetchNotifications(), 60000)
 		},
+
 		fetchNotifications() {
 			const req = {}
 			// dunnow why 'after' param does not work
@@ -174,10 +177,8 @@ export default {
 				if (error.response && error.response.status === 400) {
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
-					showError(
-						t('integration_reddit', 'Failed to get Reddit news') + ' '
-						+ error.response.request.responseText,
-					)
+					showError(t('integration_reddit', 'Failed to get Reddit news') + ' '
+						+ error.response.request.responseText)
 					this.state = 'error'
 				} else {
 					// there was an error in notif processing
@@ -185,6 +186,7 @@ export default {
 				}
 			})
 		},
+
 		processNotifications(newNotifications) {
 			if (this.lastDate) {
 				// just add those which are more recent than our most recent one
@@ -204,9 +206,11 @@ export default {
 			const nbNotif = this.notifications.length
 			this.lastDate = (nbNotif > 0) ? this.notifications[0].created_utc : null
 		},
+
 		filter(notifications) {
 			return notifications
 		},
+
 		getAvatarUrl(n) {
 			if (n.notification_type === 'privatemessage') {
 				return (n.author)
@@ -218,12 +222,15 @@ export default {
 					: generateUrl('/apps/integration_reddit/thumbnail?url={url}', { url: n.thumbnail })
 			}
 		},
+
 		getNotificationTarget(n) {
 			return 'https://reddit.com' + n.permalink
 		},
+
 		getSubline(n) {
 			return '/r/' + n.subreddit
 		},
+
 		getNotificationTypeImage(n) {
 			if (n.notification_type === 'privatemessage') {
 				return imagePath('integration_reddit', 'message.svg')
@@ -232,6 +239,7 @@ export default {
 			}
 			return ''
 		},
+
 		getFormattedDate(n) {
 			return moment(parseInt(n.created_utc) * 1000).locale(this.locale).format('LLL')
 		},

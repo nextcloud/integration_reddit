@@ -68,20 +68,17 @@
 </template>
 
 <script>
-import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
-import CheckIcon from 'vue-material-design-icons/Check.vue'
-import CloseIcon from 'vue-material-design-icons/Close.vue'
-
-import RedditIcon from './icons/RedditIcon.vue'
-
-import NcButton from '@nextcloud/vue/components/NcButton'
-import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
-
+import axios from '@nextcloud/axios'
+import { showError, showSuccess } from '@nextcloud/dialogs'
 import { loadState } from '@nextcloud/initial-state'
 import { generateUrl, imagePath } from '@nextcloud/router'
-import axios from '@nextcloud/axios'
+import NcButton from '@nextcloud/vue/components/NcButton'
+import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
+import CheckIcon from 'vue-material-design-icons/Check.vue'
+import CloseIcon from 'vue-material-design-icons/Close.vue'
+import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
+import RedditIcon from './icons/RedditIcon.vue'
 import { delay, detectBrowser } from '../utils.js'
-import { showSuccess, showError } from '@nextcloud/dialogs'
 
 export default {
 	name: 'PersonalSettings',
@@ -117,9 +114,11 @@ export default {
 			return this.state.client_id
 				&& (this.state.client_secret || window.location.protocol === 'https:')
 		},
+
 		usingCustomApp() {
 			return this.state.client_id && this.state.client_secret
 		},
+
 		connected() {
 			return this.state.user_name && this.state.user_name !== ''
 		},
@@ -130,7 +129,7 @@ export default {
 
 	mounted() {
 		const paramString = window.location.search.slice(1)
-		// eslint-disable-next-line
+
 		const urlParams = new URLSearchParams(paramString)
 		const rdToken = urlParams.get('redditToken')
 		if (rdToken === 'success') {
@@ -157,12 +156,14 @@ export default {
 			this.state.user_name = ''
 			this.saveOptions()
 		},
+
 		onInput() {
 			const that = this
 			delay(() => {
 				that.saveOptions()
 			}, 2000)()
 		},
+
 		saveOptions() {
 			const req = {
 				values: {
@@ -171,18 +172,17 @@ export default {
 			}
 			const url = generateUrl('/apps/integration_reddit/config')
 			axios.put(url, req)
-				.then((response) => {
+				.then(() => {
 					showSuccess(t('integration_reddit', 'Reddit options saved'))
 				})
 				.catch((error) => {
-					showError(
-						t('integration_reddit', 'Failed to save Reddit options')
-						+ ': ' + error.response?.request?.responseText,
-					)
+					showError(t('integration_reddit', 'Failed to save Reddit options')
+						+ ': ' + error.response?.request?.responseText)
 				})
 				.then(() => {
 				})
 		},
+
 		onOAuthClick() {
 			const redirectUri = this.state.client_secret
 				? this.redirect_uri
@@ -204,14 +204,12 @@ export default {
 			}
 			const url = generateUrl('/apps/integration_reddit/config')
 			axios.put(url, req)
-				.then((response) => {
+				.then(() => {
 					window.location.replace(requestUrl)
 				})
 				.catch((error) => {
-					showError(
-						t('integration_reddit', 'Failed to save Reddit OAuth state')
-						+ ': ' + error.response?.request?.responseText,
-					)
+					showError(t('integration_reddit', 'Failed to save Reddit OAuth state')
+						+ ': ' + error.response?.request?.responseText)
 				})
 				.then(() => {
 				})

@@ -28,7 +28,7 @@ export function detectBrowser() {
 	}
 
 	// Chrome 1 - 79
-	// eslint-disable-next-line
+
 	if (!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) {
 		return 'chrome'
 	}
@@ -60,8 +60,7 @@ export function detectBrowser() {
 	// Blink engine detection
 	// eslint-disable-next-line
 	if (((typeof isChrome !== 'undefined' && isChrome) || (typeof isOpera !== 'undefined' && isOpera))
-		&& !!window.CSS
-	) {
+		&& !!window.CSS) {
 		return 'blink'
 	}
 	return 'unknown browser'
