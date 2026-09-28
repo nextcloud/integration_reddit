@@ -16,7 +16,7 @@ OC.L10N.register(
     "Connected accounts" : "Prepojené účty",
     "Reddit integration" : "Reddit integrácia",
     "Integration of Reddit social news aggregation service" : "Integrácia služby agregácie sociálnych správ Reddit",
-    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Integrácia s Reddit poskytuje ovládací prvok pre prehľad, zobrazujúcí nedávne novinky, k odberu ktorým ste prihlásený.",
+    "Reddit integration provides a dashboard widget displaying your recent subscribed news." : "Integrácia s Reddit poskytuje ovládací prvok pre prehľad, zobrazujúci nedávne novinky, k odberu ktorých ste prihlásený.",
     "Reddit admin options saved" : "Možnosti administrátora Reddit boli uložené",
     "Failed to save Reddit admin options" : "Nepodarilo sa uložiť možnosti administrátora Reddit",
     "There are 3 ways to allow your Nextcloud users to use OAuth to authenticate to Reddit:" : "Existujú 3 spôsoby, ako umožniť používateľom Nextcloud používať OAuth na autentifikáciu k serveru Reddit:",
