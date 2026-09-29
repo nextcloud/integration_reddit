@@ -33,10 +33,10 @@
 				:label="t('integration_reddit', 'Application ID')"
 				:placeholder="t('integration_reddit', 'Client ID of your Reddit application')"
 				:readonly="readonly"
-				:show-trailing-button="!!state.client_id"
-				@trailing-button-click="state.client_id = ''; onInput()"
+				:showTrailingButton="!!state.client_id"
+				@trailingButtonClick="state.client_id = ''; onInput()"
 				@focus="readonly = false"
-				@update:model-value="onInput">
+				@update:modelValue="onInput">
 				<template #icon>
 					<KeyOutlineIcon :size="20" />
 				</template>
@@ -47,10 +47,10 @@
 				:label="t('integration_reddit', 'Application secret')"
 				:placeholder="t('integration_reddit', 'Client secret of your Reddit application')"
 				:readonly="readonly"
-				:show-trailing-button="!!state.client_secret"
-				@trailing-button-click="state.client_secret = ''; onInput()"
+				:showTrailingButton="!!state.client_secret"
+				@trailingButtonClick="state.client_secret = ''; onInput()"
 				@focus="readonly = false"
-				@update:model-value="onInput">
+				@update:modelValue="onInput">
 				<template #icon>
 					<KeyOutlineIcon :size="20" />
 				</template>
@@ -60,19 +60,16 @@
 </template>
 
 <script>
-import KeyOutlineIcon from 'vue-material-design-icons/KeyOutline.vue'
-
-import RedditIcon from './icons/RedditIcon.vue'
-
+import axios from '@nextcloud/axios'
+import { showError, showSuccess } from '@nextcloud/dialogs'
+import { loadState } from '@nextcloud/initial-state'
+import { confirmPassword } from '@nextcloud/password-confirmation'
+import { generateUrl } from '@nextcloud/router'
 import NcNoteCard from '@nextcloud/vue/components/NcNoteCard'
 import NcTextField from '@nextcloud/vue/components/NcTextField'
-
-import { loadState } from '@nextcloud/initial-state'
-import { generateUrl } from '@nextcloud/router'
-import axios from '@nextcloud/axios'
+import KeyOutlineIcon from 'vue-material-design-icons/KeyOutline.vue'
+import RedditIcon from './icons/RedditIcon.vue'
 import { delay } from '../utils.js'
-import { showSuccess, showError } from '@nextcloud/dialogs'
-import { confirmPassword } from '@nextcloud/password-confirmation'
 
 export default {
 	name: 'AdminSettings',
@@ -114,6 +111,7 @@ export default {
 				this.saveOptions(values, true)
 			}, 2000)()
 		},
+
 		async saveOptions(values, sensitive = false) {
 			if (sensitive) {
 				await confirmPassword()
@@ -125,14 +123,12 @@ export default {
 				? generateUrl('/apps/integration_reddit/sensitive-admin-config')
 				: generateUrl('/apps/integration_reddit/admin-config')
 			axios.put(url, req)
-				.then((response) => {
+				.then(() => {
 					showSuccess(t('integration_reddit', 'Reddit admin options saved'))
 				})
 				.catch((error) => {
-					showError(
-						t('integration_reddit', 'Failed to save Reddit admin options')
-						+ ': ' + error.response?.request?.responseText,
-					)
+					showError(t('integration_reddit', 'Failed to save Reddit admin options')
+						+ ': ' + error.response?.request?.responseText)
 					console.debug(error)
 				})
 				.then(() => {

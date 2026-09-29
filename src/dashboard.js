@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-import { linkTo } from '@nextcloud/router'
 import { getCSPNonce } from '@nextcloud/auth'
+import { linkTo } from '@nextcloud/router'
 
-__webpack_nonce__ = getCSPNonce() // eslint-disable-line
+__webpack_nonce__ = getCSPNonce()
 __webpack_public_path__ = linkTo('integration_reddit', 'js/') // eslint-disable-line
 
 document.addEventListener('DOMContentLoaded', () => {
