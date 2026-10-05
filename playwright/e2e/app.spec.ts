@@ -98,7 +98,14 @@ test.describe('Dashboard widget', () => {
 	test('link to Reddit under a full widget', async ({ page }) => {
 		await showOnlyWidgets(page, 'reddit_news')
 		// the widget shows seven posts and links to Reddit for the rest
-		const posts = Array.from({ length: 8 }, (_, index) => ({ ...post, id: `probe-${index}` }))
+		// Reddit identifies a post by its fullname, which is what the widget keys
+		// and de-duplicates on; varying only the id gave eight copies of one post
+		const posts = Array.from({ length: 8 }, (_, index) => ({
+			...post,
+			id: `probe-${index}`,
+			name: `t3_probe-${index}`,
+			permalink: `/r/NextCloud/comments/probe-${index}/nextcloud_36_is_out/`,
+		}))
 		await page.route('**/apps/integration_reddit/notifications**', (route) => route.fulfill({ json: posts }))
 		await page.route('**/apps/integration_reddit/avatar**', (route) => route.fulfill({ contentType: 'image/png', body: png }))
 		await page.goto('apps/dashboard/')

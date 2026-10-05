@@ -14,3 +14,4 @@ tests/.phpunit.cache/
 *.code-workspace
 /test-results/
 /playwright-report/
+/coverage/

@@ -15,7 +15,10 @@
     "stylelint": "stylelint \"src/**/*.vue\" \"src/**/*.scss\" \"src/**/*.css\"",
     "stylelint:fix": "stylelint \"src/**/*.vue\" \"src/**/*.scss\" \"src/**/*.css\" --fix",
     "playwright": "playwright test",
-    "playwright:ui": "playwright test --ui"
+    "playwright:ui": "playwright test --ui",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
@@ -57,7 +60,12 @@
     "@nextcloud/stylelint-config": "^3.1.1",
     "@nextcloud/webpack-vue-config": "^7.0.4",
     "@playwright/test": "^1.63.0",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "@vitest/coverage-v8": "^4.1.11",
+    "@vue/test-utils": "^2.5.1",
     "eslint-webpack-plugin": "^6.0.0",
-    "stylelint-webpack-plugin": "^5.0.1"
+    "jsdom": "^28.1.0",
+    "stylelint-webpack-plugin": "^5.0.1",
+    "vitest": "^4.1.11"
   }
 }
