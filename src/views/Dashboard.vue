@@ -35,8 +35,6 @@
 <script>
 import axios from '@nextcloud/axios'
 import { showError } from '@nextcloud/dialogs'
-import { getLocale } from '@nextcloud/l10n'
-import moment from '@nextcloud/moment'
 import { generateUrl, imagePath } from '@nextcloud/router'
 import NcButton from '@nextcloud/vue/components/NcButton'
 import NcDashboardWidget from '@nextcloud/vue/components/NcDashboardWidget'
@@ -45,6 +43,10 @@ import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import LoginVariantIcon from 'vue-material-design-icons/LoginVariant.vue'
 import RedditIcon from '../components/icons/RedditIcon.vue'
+
+// enough to recognise what the next listing repeats, several times the 25 a
+// listing holds, and far more than the handful the widget shows
+const MAX_HELD = 100
 
 export default {
 	name: 'RedditDashboard',
@@ -70,12 +72,9 @@ export default {
 		return {
 			notifications: [],
 			showMoreUrl: 'https://reddit.com/new',
-			// lastDate could be computed but we want to keep the value when first notification is removed
-			// to avoid getting it again on next request
-			lastDate: null,
-			locale: getLocale(),
 			loop: null,
 			state: 'loading',
+			failedPolls: 0,
 			settingsUrl: generateUrl('/settings/user/connected-accounts'),
 			windowVisibility: true,
 		}
@@ -85,7 +84,7 @@ export default {
 		items() {
 			return this.notifications.map((n) => {
 				return {
-					id: n.name,
+					id: this.keyOf(n),
 					targetUrl: this.getNotificationTarget(n),
 					avatarUrl: this.getAvatarUrl(n),
 					avatarUsername: n.subreddit,
@@ -97,16 +96,13 @@ export default {
 			})
 		},
 
-		lastId() {
-			const nbNotif = this.notifications.length
-			return (nbNotif > 0) ? this.notifications[0].name : null
-		},
-
 		emptyContentMessage() {
 			if (this.state === 'no-token') {
 				return t('integration_reddit', 'No Reddit account connected')
 			} else if (this.state === 'error') {
 				return t('integration_reddit', 'Error connecting to Reddit')
+			} else if (this.state === 'unreachable') {
+				return t('integration_reddit', 'Could not reach Reddit')
 			} else if (this.state === 'ok') {
 				return t('integration_reddit', 'No Reddit news!')
 			}
@@ -116,7 +112,7 @@ export default {
 		emptyContentIcon() {
 			if (this.state === 'no-token') {
 				return RedditIcon
-			} else if (this.state === 'error') {
+			} else if (this.state === 'error' || this.state === 'unreachable') {
 				return CloseIcon
 			} else if (this.state === 'ok') {
 				return CheckIcon
@@ -136,6 +132,7 @@ export default {
 	},
 
 	beforeUnmount() {
+		this.stopLoop()
 		document.removeEventListener('visibilitychange', this.changeWindowVisibility)
 	},
 
@@ -157,54 +154,73 @@ export default {
 		},
 
 		launchLoop() {
+			if (this.state === 'no-token' || this.state === 'error') {
+				// the account is the problem, so asking again changes nothing
+				// and would raise the same toast on every tab switch
+				return
+			}
 			this.fetchNotifications()
 			this.loop = setInterval(() => this.fetchNotifications(), 60000)
 		},
 
 		fetchNotifications() {
+			// the 'after' param does not page this listing, so every poll asks
+			// for the current one and processNotifications keeps what is new
 			const req = {}
-			// dunnow why 'after' param does not work
-			/* if (this.lastId) {
-				req.params = {
-					after: this.lastId
-				}
-			} */
 			axios.get(generateUrl('/apps/integration_reddit/notifications'), req).then((response) => {
 				this.processNotifications(response.data)
+				this.failedPolls = 0
 				this.state = 'ok'
 			}).catch((error) => {
-				clearInterval(this.loop)
 				if (error.response && error.response.status === 400) {
+					this.stopLoop()
 					this.state = 'no-token'
 				} else if (error.response && error.response.status === 401) {
+					this.stopLoop()
 					showError(t('integration_reddit', 'Failed to get Reddit news') + ' '
 						+ error.response.request.responseText)
 					this.state = 'error'
 				} else {
-					// there was an error in notif processing
+					// a transient failure: keep polling, but say something once
+					// it is clearly not transient any more
+					this.failedPolls++
+					if (this.failedPolls >= 3) {
+						this.state = 'unreachable'
+					}
 					console.debug(error)
 				}
 			})
 		},
 
 		processNotifications(newNotifications) {
-			if (this.lastDate) {
-				// just add those which are more recent than our most recent one
-				let i = 0
-				while (i < newNotifications.length && this.lastDate < newNotifications[i].created_utc) {
-					i++
-				}
-				if (i > 0) {
-					const toAdd = this.filter(newNotifications.slice(0, i))
-					this.notifications = toAdd.concat(this.notifications)
-				}
-			} else {
-				// first time we don't check the date
-				this.notifications = this.filter(newNotifications)
+			if (!Array.isArray(newNotifications)) {
+				return
 			}
-			// update lastDate manually (explained in data)
-			const nbNotif = this.notifications.length
-			this.lastDate = (nbNotif > 0) ? this.notifications[0].created_utc : null
+			// a post is identified by its fullname, so comparing those keeps
+			// what is new whatever order the listing arrives in, where
+			// comparing created_utc dropped a post sharing its second
+			const seen = new Set(this.notifications.map((n) => this.keyOf(n)))
+			const toAdd = []
+			for (const n of this.filter(newNotifications)) {
+				const key = this.keyOf(n)
+				if (key !== undefined && seen.has(key)) {
+					continue
+				}
+				seen.add(key)
+				toAdd.push(n)
+			}
+			if (toAdd.length > 0) {
+				// newest first whatever order they arrived in, since two polls
+				// can be in flight, and only as many as it takes to recognise
+				// what the next listing repeats
+				this.notifications = toAdd.concat(this.notifications)
+					.sort((a, b) => (Number(b.created_utc) || 0) - (Number(a.created_utc) || 0))
+					.slice(0, MAX_HELD)
+			}
+		},
+
+		keyOf(n) {
+			return n.name ?? n.permalink
 		},
 
 		filter(notifications) {
@@ -217,14 +233,16 @@ export default {
 					? generateUrl('/apps/integration_reddit/avatar?username={username}', { username: n.author })
 					: undefined
 			} else if (n.notification_type === 'post') {
-				return n.thumbnail === 'self' || n.thumbnail === 'spoiler'
-					? generateUrl('/apps/integration_reddit/avatar?subreddit={subreddit}', { subreddit: n.subreddit })
-					: generateUrl('/apps/integration_reddit/thumbnail?url={url}', { url: n.thumbnail })
+				// reddit answers with self, spoiler, default, nsfw, image or
+				// nothing at all when a post has no thumbnail of its own
+				return typeof n.thumbnail === 'string' && n.thumbnail.startsWith('http')
+					? generateUrl('/apps/integration_reddit/thumbnail?url={url}&subreddit={subreddit}', { url: n.thumbnail, subreddit: n.subreddit })
+					: generateUrl('/apps/integration_reddit/avatar?subreddit={subreddit}', { subreddit: n.subreddit })
 			}
 		},
 
 		getNotificationTarget(n) {
-			return 'https://reddit.com' + n.permalink
+			return n.permalink ? 'https://reddit.com' + n.permalink : 'https://reddit.com'
 		},
 
 		getSubline(n) {
@@ -240,9 +258,6 @@ export default {
 			return ''
 		},
 
-		getFormattedDate(n) {
-			return moment(parseInt(n.created_utc) * 1000).locale(this.locale).format('LLL')
-		},
 	},
 }
 </script>

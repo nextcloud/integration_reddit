@@ -10,6 +10,36 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Run the frontend unit tests in CI
+- Drop moment from the dashboard widget, which no longer needed it
+
+### Security
+
+- Only fetch a post thumbnail from Reddit's own image host, instead of any host whose name contains it
+
+### Fixed
+
+- Stop the dashboard widget from polling once it has been removed
+- Keep the dashboard widget polling after a transient failure, and report once Reddit cannot be reached
+- Show the Chrome and Chromium instructions for registering the protocol handler again
+- Report a dismissed password confirmation in the admin settings instead of saving nothing in silence
+- Show the subreddit icon for a post whose thumbnail is one of Reddit's placeholders
+- Keep a post created in the same second as one already shown
+- Keep the dashboard widget's list of posts from growing for the lifetime of the page
+- Show the newest post first, whichever order the answers arrive in
+- Report an unreachable Reddit as a temporary failure instead of an expired login
+- Answer a thumbnail request without a url instead of failing with a server error
+- Report a Reddit that is overloaded or rate-limiting as a temporary failure, not as a refused login
+- Keep the dashboard widget quiet after a failed login instead of reporting it again on every tab switch
+- Keep showing a connected account when the server refused to disconnect it
+- Clear the stored client secret along with the application id, which cannot authenticate without it
+- Report an unreachable Reddit while exchanging the OAuth token instead of failing with a server error
+- Ask Reddit for nothing when an avatar is requested without a user or a subreddit
+- Show the subreddit icon in search results and link previews for a post with no thumbnail of its own
+- Link a post the server passed through without a permalink to Reddit itself
+
 ## 2.4.0 - 2026-09-29
 ### Changed
 - added support of NC36

@@ -15,52 +15,33 @@ export function delay(callback, ms) {
 	}
 }
 
+/**
+ * Which browser the page is running in, as far as the personal settings need
+ * to know: it picks the instructions for registering the protocol handler.
+ *
+ * This used to probe objects instead of the user agent, and every probe but
+ * Opera's had stopped being reachable: chrome.webstore went in Chrome 71 and
+ * chrome.runtime is not exposed to a page, InstallTrigger went in Firefox 115,
+ * safari.pushNotification in Safari 16, document.documentMode was Internet
+ * Explorer and window.StyleMedia the old Edge. Chrome users were shown no
+ * instructions at all because of it.
+ */
 export function detectBrowser() {
-	// Opera 8.0+
-	// eslint-disable-next-line
-	if ((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) {
+	const userAgent = navigator.userAgent
+
+	// Opera carries Chrome/ as well, so it has to be asked about first
+	if (/ OPR\//.test(userAgent)) {
 		return 'opera'
 	}
 
-	// Firefox 1.0+
-	if (typeof InstallTrigger !== 'undefined') {
+	if (/Firefox\//.test(userAgent)) {
 		return 'firefox'
 	}
 
-	// Chrome 1 - 79
-	if (!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) {
+	// Chrome, Chromium and the Chromium-based Edge, which carries Chrome/ too
+	if (/Chrom(e|ium)\//.test(userAgent)) {
 		return 'chrome'
 	}
 
-	// Safari 3.0+ "[object HTMLElementConstructor]"
-	// eslint-disable-next-line
-	if (/constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === '[object SafariRemoteNotification]'; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification))) {
-		return 'safari'
-	}
-
-	// Internet Explorer 6-11
-	// eslint-disable-next-line
-	if (/*@cc_on!@*/false || !!document.documentMode) {
-		return 'ie'
-	}
-
-	// Edge 20+
-	// eslint-disable-next-line
-	if ((typeof isIE === 'undefined' || !isIE) && !!window.StyleMedia) {
-		return 'edge'
-	}
-
-	// Edge (based on chromium) detection
-	// eslint-disable-next-line
-	if (typeof isChrome !== 'undefined' && isChrome && (navigator.userAgent.indexOf('Edg') != -1)) {
-		return 'edge-chromium'
-	}
-
-	// Blink engine detection
-	// eslint-disable-next-line
-	if (((typeof isChrome !== 'undefined' && isChrome) || (typeof isOpera !== 'undefined' && isOpera))
-		&& !!window.CSS) {
-		return 'blink'
-	}
 	return 'unknown browser'
 }

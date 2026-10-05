@@ -54,11 +54,13 @@ class RedditAPIController extends Controller {
 		}
 		$result = $this->redditAPIService->getNotifications($this->userId, $after);
 		if (!isset($result['error'])) {
-			$response = new DataResponse($result);
-		} else {
-			$response = new DataResponse($result, 401);
+			return new DataResponse($result);
 		}
-		return $response;
+		if (isset($result['unreachable'])) {
+			// the account is fine, Reddit is not answering: worth retrying
+			return new DataResponse($result, Http::STATUS_SERVICE_UNAVAILABLE);
+		}
+		return new DataResponse($result, 401);
 	}
 
 	/**
@@ -93,8 +95,8 @@ class RedditAPIController extends Controller {
 	#[NoAdminRequired]
 	#[NoCSRFRequired]
 	public function getThumbnail(?string $url = null, string $subreddit = '??'): DataDisplayResponse|RedirectResponse {
-		$thumbnailResponse = $this->redditAPIService->getThumbnail($url);
-		if (isset($thumbnailResponse['body'], $thumbnailResponse['headers'])) {
+		$thumbnailResponse = $url === null ? null : $this->redditAPIService->getThumbnail($url);
+		if ($thumbnailResponse !== null && isset($thumbnailResponse['body'], $thumbnailResponse['headers'])) {
 			$response = new DataDisplayResponse(
 				$thumbnailResponse['body'],
 				Http::STATUS_OK,

@@ -78,7 +78,7 @@ import CheckIcon from 'vue-material-design-icons/Check.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import OpenInNewIcon from 'vue-material-design-icons/OpenInNew.vue'
 import RedditIcon from './icons/RedditIcon.vue'
-import { delay, detectBrowser } from '../utils.js'
+import { detectBrowser } from '../utils.js'
 
 export default {
 	name: 'PersonalSettings',
@@ -97,7 +97,6 @@ export default {
 	data() {
 		return {
 			state: loadState('integration_reddit', 'user-config'),
-			readonly: true,
 			redirect_uri: window.location.protocol + '//' + window.location.host + generateUrl('/apps/integration_reddit/oauth-redirect'),
 			redirect_uri_protocol: 'web+nextcloudreddit://oauth-protocol-redirect',
 			chromiumImagePath: imagePath('integration_reddit', 'chromium.png'),
@@ -152,26 +151,17 @@ export default {
 
 	methods: {
 		onLogoutClick() {
-			this.state.user_name = ''
-			this.saveOptions()
+			this.saveOptions({ user_name: '' })
 		},
 
-		onInput() {
-			const that = this
-			delay(() => {
-				that.saveOptions()
-			}, 2000)()
-		},
-
-		saveOptions() {
-			const req = {
-				values: {
-					user_name: this.state.user_name,
-				},
-			}
+		saveOptions(values) {
+			const req = { values }
 			const url = generateUrl('/apps/integration_reddit/config')
 			axios.put(url, req)
 				.then(() => {
+					// only once the server agrees, or the page would show the
+					// account as disconnected while the token is still stored
+					Object.assign(this.state, values)
 					showSuccess(t('integration_reddit', 'Reddit options saved'))
 				})
 				.catch((error) => {
