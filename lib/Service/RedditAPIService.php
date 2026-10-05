@@ -46,6 +46,9 @@ class RedditAPIService {
 	 * @throws \OCP\PreConditionNotMetException
 	 */
 	public function getAvatar(string $userId, ?string $username, ?string $subreddit): ?string {
+		if (($username ?? '') === '' && ($subreddit ?? '') === '') {
+			return null;
+		}
 		$url = null;
 		if (!is_null($username)) {
 			$response = $this->request($userId, 'user/' . urlencode($username) . '/about');
@@ -166,8 +169,11 @@ class RedditAPIService {
 	public function getThumbnail(string $url): ?array {
 		try {
 			$domain = parse_url($url, PHP_URL_HOST);
+			if ($domain === null || $domain === false) {
+				return null;
+			}
 			if ((preg_match('/^[a-z]\.thumbs\.redditmedia\.com$/i', $domain) === 1)
-				|| (preg_match('/i\.redd\..*/i', $domain) === 1)) {
+				|| (preg_match('/^i\.redd\.it$/i', $domain) === 1)) {
 				$thumbnailResponse = $this->client->get($url);
 				return [
 					'body' => $thumbnailResponse->getBody(),
@@ -281,7 +287,7 @@ class RedditAPIService {
 			$respCode = $response->getStatusCode();
 
 			if ($respCode >= 400) {
-				return ['error' => $this->l10n->t('Bad credentials')];
+				return $this->failedRequest($respCode, $this->l10n->t('Bad credentials'));
 			}
 			$result = json_decode($body, true);
 			$json_decode_code = json_last_error();
@@ -292,7 +298,18 @@ class RedditAPIService {
 			return ['error' => $this->l10n->t('Failed to get Reddit news')];
 		} catch (ServerException|ClientException $e) {
 			$this->logger->warning('Reddit API error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
-			return ['error' => $e->getMessage()];
+			// Guzzle puts the status of the answer in the exception's code
+			return $this->failedRequest($e->getCode(), $e->getMessage());
+		} catch (Exception|Throwable $e) {
+			// a name that does not resolve, a refused connection or a dropped
+			// transfer reaches here, and used to leave the controller with a 500
+			$this->logger->warning('Reddit is unreachable : ' . $e->getMessage(), ['app' => Application::APP_ID]);
+			return [
+				'error' => $this->l10n->t('Could not reach Reddit'),
+				// nothing is wrong with the account, so the caller must not
+				// answer this like an expired token
+				'unreachable' => true,
+			];
 		}
 	}
 
@@ -364,6 +381,24 @@ class RedditAPIService {
 	 * @param string $method
 	 * @return array
 	 */
+	/**
+	 * Describe a failed request so the caller can tell the two kinds apart. The
+	 * dashboard widget stops polling and asks the user to connect again when it
+	 * is told the answer was unauthorised, so only an answer about the account
+	 * itself may be reported that way: Reddit answers 503 when it is overloaded
+	 * and 429 when it rate-limits, and neither says anything about the user.
+	 *
+	 * @param int $status the status Reddit answered with, 0 if it did not answer
+	 * @param string $message what to tell the user
+	 * @return array{error: string, unreachable?: true}
+	 */
+	private function failedRequest(int $status, string $message): array {
+		if ($status === 401 || $status === 403) {
+			return ['error' => $message];
+		}
+		return ['error' => $message, 'unreachable' => true];
+	}
+
 	public function requestOAuthAccessToken(string $clientID, string $clientSecret, array $params = [], string $method = 'GET'): array {
 		try {
 			$url = 'https://www.reddit.com/api/v1/access_token';
@@ -402,9 +437,12 @@ class RedditAPIService {
 			} else {
 				return json_decode($body, true);
 			}
-		} catch (ServerException|ClientException  $e) {
+		} catch (ServerException|ClientException $e) {
 			$this->logger->warning('Reddit OAuth error : ' . $e->getMessage(), ['app' => Application::APP_ID]);
 			return ['error' => $e->getMessage()];
+		} catch (Exception|Throwable $e) {
+			$this->logger->warning('Reddit is unreachable : ' . $e->getMessage(), ['app' => Application::APP_ID]);
+			return ['error' => $this->l10n->t('Could not reach Reddit')];
 		}
 	}
 }

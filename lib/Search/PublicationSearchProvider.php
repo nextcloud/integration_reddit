@@ -140,10 +140,19 @@ class PublicationSearchProvider implements IProvider {
 	 * @return string
 	 */
 	protected function getThumbnailUrl(array $entry): string {
-		return isset($entry['data']['thumbnail'])
-			? (($entry['data']['thumbnail'] === 'self' || $entry['data']['thumbnail'] === 'spoiler')
-				? $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $entry['data']['subreddit']])
-				: $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getThumbnail', ['url' => $entry['data']['thumbnail']]))
-			: '';
+		$thumbnail = $entry['data']['thumbnail'] ?? '';
+		$subreddit = $entry['data']['subreddit'] ?? '';
+		// Reddit answers self, spoiler, default, nsfw, image or nothing at all
+		// for a post with no thumbnail of its own, and none of those can be
+		// fetched: the route would fall back to an avatar named after nothing
+		if (!str_starts_with($thumbnail, 'http')) {
+			return $subreddit === ''
+				? ''
+				: $this->urlGenerator->linkToRouteAbsolute(Application::APP_ID . '.redditAPI.getAvatar', ['subreddit' => $subreddit]);
+		}
+		return $this->urlGenerator->linkToRouteAbsolute(
+			Application::APP_ID . '.redditAPI.getThumbnail',
+			['url' => $thumbnail, 'subreddit' => $subreddit],
+		);
 	}
 }

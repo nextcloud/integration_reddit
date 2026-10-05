@@ -107,6 +107,10 @@ export default {
 				}
 				if (this.state.client_secret !== 'dummySecret') {
 					values.client_secret = this.state.client_secret
+				} else if (this.state.client_id === '') {
+					// a stored secret without an application id of its own is
+					// paired with the built-in one, which authenticates for nobody
+					values.client_secret = ''
 				}
 				this.saveOptions(values, true)
 			}, 2000)()
@@ -114,7 +118,13 @@ export default {
 
 		async saveOptions(values, sensitive = false) {
 			if (sensitive) {
-				await confirmPassword()
+				try {
+					await confirmPassword()
+				} catch (error) {
+					showError(t('integration_reddit', 'Password confirmation is required to save these options'))
+					console.debug(error)
+					return
+				}
 			}
 			const req = {
 				values,
