@@ -25,7 +25,7 @@ OC.L10N.register(
     "Leave all fields empty to use default Nextcloud Reddit OAuth app." : "Ak chcete použiť predvolenú aplikáciu Nextcloud Reddit OAuth, nechajte všetky polia prázdne.",
     "Create your own Reddit \"web application\" in Reddit preferences and put the application ID and secret below." : "Vytvorte si vlastnú „webovú aplikáciu“ Reddit v predvoľbách Redditu a nižšie uveďte ID a tajný kľúč aplikácie.",
     "Reddit app settings" : "Nastavenia aplikácie Reddit",
-    "Make sure you set the \"Redirection URI\" to" : "Nezabudnite nastaviť \"Redirect URI\" na",
+    "Make sure you set the \"Redirection URI\" to" : "Nezabudnite nastaviť \"Redirection URI\" na",
     "Create your own Reddit \"mobile application\" in Reddit preferences and put the application ID below. Leave the \"Application secret\" field empty." : "Vytvorte si vlastnú „mobilnú aplikáciu“ Reddit v predvoľbách Redditu a nižšie uveďte ID aplikácie. Pole „Tajomstvo aplikácie“ nechajte prázdne.",
     "Application ID" : "ID aplikácie",
     "Client ID of your Reddit application" : "ID klienta vašej aplikácie Reddit",
