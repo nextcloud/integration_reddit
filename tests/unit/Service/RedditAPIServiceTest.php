@@ -12,7 +12,9 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
+use OCA\Reddit\AppInfo\Application;
 use OCA\Reddit\Service\RedditAPIService;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\Http\Client\IClient;
 use OCP\Http\Client\IClientService;
 use OCP\Http\Client\IResponse;
@@ -54,6 +56,7 @@ class RedditAPIServiceTest extends TestCase {
 			$this->createMock(LoggerInterface::class),
 			$l10n,
 			$crypto,
+			$this->createMock(IAppConfig::class),
 			$config,
 		);
 	}
@@ -115,6 +118,92 @@ class RedditAPIServiceTest extends TestCase {
 
 	public static function provideFailuresThatAreTheAccount(): array {
 		return ['unauthorised' => [401], 'forbidden' => [403]];
+	}
+
+	/**
+	 * Requests news with an expired token and the app's lazy rows set to
+	 * $lazyValues, and returns the Authorization header the refresh sent.
+	 *
+	 * @param array<string, string> $lazyValues
+	 */
+	private function refreshAuthorization(array $lazyValues): ?string {
+		$appConfig = $this->createMock(IAppConfig::class);
+		$appConfig->method('getAppValueString')->willReturnCallback(
+			fn (string $key, string $default = '', bool $lazy = false): string => $lazy
+				? ($lazyValues[$key] ?? $default)
+				: $default,
+		);
+		$config = $this->createMock(IConfig::class);
+		$config->method('getUserValue')->willReturnCallback(
+			fn ($userId, $appName, $key, $default = '') => match ($key) {
+				'token' => 'encrypted-token',
+				'refresh_token' => 'encrypted-refresh-token',
+				'token_expires_at' => '1',
+				default => $default,
+			}
+		);
+		// what the server hands a read of a lazy row through IConfig
+		$config->method('getAppValue')->willReturnCallback(fn ($app, $key, $default = '') => $default);
+		$crypto = $this->createMock(ICrypto::class);
+		$crypto->method('decrypt')->willReturnCallback(
+			fn (string $value): string => $value === 'encrypted-secret' ? 's3cret' : 'a-token',
+		);
+		$authorization = null;
+		$this->client->method('post')->willReturnCallback(
+			function (string $url, array $options) use (&$authorization): IResponse {
+				$authorization = $options['headers']['Authorization'];
+				return $this->served(200, json_encode(['access_token' => 'new-token']));
+			}
+		);
+		$this->client->method('get')->willReturn($this->served(200, '{}'));
+		$l10n = $this->createMock(IL10N::class);
+		$l10n->method('t')->willReturnArgument(0);
+		$clientService = $this->createMock(IClientService::class);
+		$clientService->method('newClient')->willReturn($this->client);
+		$apiService = new RedditAPIService(
+			$clientService,
+			$this->createMock(LoggerInterface::class),
+			$l10n,
+			$crypto,
+			$appConfig,
+			$config,
+		);
+
+		$apiService->request('admin', 'new');
+
+		return $authorization;
+	}
+
+	/**
+	 * The client id and secret are lazy rows, which a read that does not ask
+	 * for lazy values is handed the default for: the refresh would then go out
+	 * with the built-in client id and no secret.
+	 */
+	public function testAnExpiredTokenIsRefreshedWithTheStoredClient(): void {
+		$this->assertSame(
+			'Basic ' . base64_encode('my-client:s3cret'),
+			$this->refreshAuthorization(['client_id' => 'my-client', 'client_secret' => 'encrypted-secret']),
+		);
+	}
+
+	/**
+	 * Most instances use the built-in Reddit application, and clearing the
+	 * admin's own stores an empty id.
+	 *
+	 * @dataProvider provideInstancesWithoutAClientOfTheirOwn
+	 */
+	public function testAnExpiredTokenIsRefreshedWithTheBuiltInClientWhenNoneIsStored(array $lazyValues): void {
+		$this->assertSame(
+			'Basic ' . base64_encode(Application::DEFAULT_REDDIT_CLIENT_ID . ':'),
+			$this->refreshAuthorization($lazyValues),
+		);
+	}
+
+	public static function provideInstancesWithoutAClientOfTheirOwn(): array {
+		return [
+			'none ever stored' => [[]],
+			'cleared by the admin' => [['client_id' => '', 'client_secret' => '']],
+		];
 	}
 
 	public function testAnAnswerIsHandedBackAsItCame(): void {
