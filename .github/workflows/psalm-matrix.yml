@@ -70,6 +70,9 @@ jobs:
       - name: Install composer dependencies
         uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
 
+      - name: Check for vulnerable PHP dependencies
+        run: composer audit --locked
+
       - name: Install nextcloud/ocp:${{ matrix.ocp-version }}
         env:
           OCP_VERSION: ${{ matrix.ocp-version }}
