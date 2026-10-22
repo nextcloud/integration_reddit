@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Run the frontend unit tests in CI
 - Drop moment from the dashboard widget, which no longer needed it
+- Load the app's settings only on the requests that read them, instead of on every request
+- Refuse an admin setting the endpoint does not own, or a value that is not a string
 
 ### Security
 

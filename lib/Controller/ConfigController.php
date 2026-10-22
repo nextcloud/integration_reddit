@@ -11,11 +11,13 @@ use DateTime;
 use OCA\Reddit\AppInfo\Application;
 use OCA\Reddit\Service\RedditAPIService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\Attribute\PasswordConfirmationRequired;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\RedirectResponse;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\IConfig;
 use OCP\IL10N;
 use OCP\IRequest;
@@ -28,6 +30,7 @@ class ConfigController extends Controller {
 	public function __construct(
 		string $appName,
 		IRequest $request,
+		private IAppConfig $appConfig,
 		private IConfig $config,
 		private IURLGenerator $urlGenerator,
 		private IL10N $l,
@@ -68,24 +71,45 @@ class ConfigController extends Controller {
 	 * @return DataResponse
 	 */
 	public function setAdminConfig(array $values): DataResponse {
+		if (!$this->isAllowed($values, ['link_preview_enabled'])) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
 		foreach ($values as $key => $value) {
-			if (in_array($key, ['token', 'refresh_token']) && $value !== '') {
-				$value = $this->crypto->encrypt($value);
-			}
-			$this->config->setAppValue(Application::APP_ID, $key, $value);
+			$this->appConfig->setAppValueString($key, $value, lazy: true);
 		}
 		return new DataResponse(1);
 	}
 
 	#[PasswordConfirmationRequired]
 	public function setSensitiveAdminConfig(array $values): DataResponse {
+		if (!$this->isAllowed($values, ['client_id', 'client_secret'])) {
+			return new DataResponse([], Http::STATUS_BAD_REQUEST);
+		}
 		foreach ($values as $key => $value) {
 			if (in_array($key, ['client_secret'], true) && $value !== '') {
 				$value = $this->crypto->encrypt($value);
 			}
-			$this->config->setAppValue(Application::APP_ID, $key, $value);
+			$this->appConfig->setAppValueString($key, $value, lazy: true);
 		}
 		return new DataResponse([]);
+	}
+
+	/**
+	 * Whether every key is one the endpoint may write and every value a
+	 * string. Any other key could name one of the server's own rows of the
+	 * app, such as "enabled", and a lazy write would leave the app looking
+	 * disabled.
+	 *
+	 * @param array $values
+	 * @param list<string> $keys
+	 */
+	private function isAllowed(array $values, array $keys): bool {
+		foreach ($values as $key => $value) {
+			if (!in_array($key, $keys, true) || !is_string($value)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -137,8 +161,8 @@ class ConfigController extends Controller {
 			);
 		}
 		$configState = $this->config->getUserValue($this->userId, Application::APP_ID, 'oauth_state');
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$clientID = $this->appConfig->getAppValueString('client_id', Application::DEFAULT_REDDIT_CLIENT_ID, lazy: true) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$clientSecret = $this->appConfig->getAppValueString('client_secret', lazy: true);
 		if ($clientSecret !== '') {
 			$clientSecret = $this->crypto->decrypt($clientSecret);
 		}

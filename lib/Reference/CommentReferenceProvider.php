@@ -11,6 +11,7 @@ use OC\Collaboration\Reference\LinkReferenceProvider;
 use OC\Collaboration\Reference\ReferenceManager;
 use OCA\Reddit\AppInfo\Application;
 use OCA\Reddit\Service\RedditAPIService;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\Collaboration\Reference\IReference;
 use OCP\Collaboration\Reference\IReferenceProvider;
 use OCP\Collaboration\Reference\Reference;
@@ -23,6 +24,7 @@ class CommentReferenceProvider implements IReferenceProvider {
 	private const RICH_OBJECT_TYPE = Application::APP_ID . '_comment';
 
 	public function __construct(
+		private IAppConfig $appConfig,
 		private IConfig $config,
 		private IL10N $l10n,
 		private IURLGenerator $urlGenerator,
@@ -44,7 +46,7 @@ class CommentReferenceProvider implements IReferenceProvider {
 		if (!$linkPreviewEnabled) {
 			return false;
 		}
-		$adminLinkPreviewEnabled = $this->config->getAppValue(Application::APP_ID, 'link_preview_enabled', '1') === '1';
+		$adminLinkPreviewEnabled = $this->appConfig->getAppValueString('link_preview_enabled', '1', lazy: true) === '1';
 		if (!$adminLinkPreviewEnabled) {
 			return false;
 		}

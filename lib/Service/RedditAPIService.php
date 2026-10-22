@@ -12,6 +12,7 @@ use Exception;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use OCA\Reddit\AppInfo\Application;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\Http\Client\IClient;
 use OCP\Http\Client\IClientService;
 use OCP\IConfig;
@@ -33,6 +34,7 @@ class RedditAPIService {
 		private LoggerInterface $logger,
 		private IL10N $l10n,
 		private ICrypto $crypto,
+		private IAppConfig $appConfig,
 		private IConfig $config,
 	) {
 		$this->client = $clientService->newClient();
@@ -338,8 +340,8 @@ class RedditAPIService {
 	 * @throws \OCP\PreConditionNotMetException
 	 */
 	private function refreshToken(string $userId): bool {
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$clientID = $this->appConfig->getAppValueString('client_id', Application::DEFAULT_REDDIT_CLIENT_ID, lazy: true) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$clientSecret = $this->appConfig->getAppValueString('client_secret', lazy: true);
 		$clientSecret = $clientSecret === '' ? '' : $this->crypto->decrypt($clientSecret);
 		$refreshToken = $this->config->getUserValue($userId, Application::APP_ID, 'refresh_token');
 		$refreshToken = $refreshToken === '' ? '' : $this->crypto->decrypt($refreshToken);

@@ -9,6 +9,7 @@ namespace OCA\Reddit\Settings;
 
 use OCA\Reddit\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IAppConfig;
 use OCP\AppFramework\Services\IInitialState;
 use OCP\IConfig;
 use OCP\Settings\ISettings;
@@ -16,6 +17,7 @@ use OCP\Settings\ISettings;
 class Personal implements ISettings {
 
 	public function __construct(
+		private IAppConfig $appConfig,
 		private IConfig $config,
 		private IInitialState $initialStateService,
 		private ?string $userId,
@@ -28,8 +30,8 @@ class Personal implements ISettings {
 	public function getForm(): TemplateResponse {
 		$userName = $this->config->getUserValue($this->userId, Application::APP_ID, 'user_name');
 
-		$clientID = $this->config->getAppValue(Application::APP_ID, 'client_id', Application::DEFAULT_REDDIT_CLIENT_ID) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
-		$clientSecret = $this->config->getAppValue(Application::APP_ID, 'client_secret');
+		$clientID = $this->appConfig->getAppValueString('client_id', Application::DEFAULT_REDDIT_CLIENT_ID, lazy: true) ?: Application::DEFAULT_REDDIT_CLIENT_ID;
+		$clientSecret = $this->appConfig->getAppValueString('client_secret', lazy: true);
 
 		$userConfig = [
 			'client_id' => $clientID,
