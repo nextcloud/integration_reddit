@@ -17,10 +17,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Load the app's settings only on the requests that read them, instead of on every request
 - Refuse an admin setting the endpoint does not own, or a value that is not a string
 
-### Security
-
-- Only fetch a post thumbnail from Reddit's own image host, instead of any host whose name contains it
-
 ### Fixed
 
 - Stop the dashboard widget from polling once it has been removed
@@ -42,155 +38,287 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Show the subreddit icon in search results and link previews for a post with no thumbnail of its own
 - Link a post the server passed through without a permalink to Reddit itself
 
+### Security
+
+- Only fetch a post thumbnail from Reddit's own image host, instead of any host whose name contains it
+
 ## 2.4.0 - 2026-09-29
+
+### Added
+
+- Added support for Nextcloud 36
+
 ### Changed
-- added support of NC36
-- update Psalm and @nextcloud/eslint-config, and sync the lint workflows
-- bump dependencies
+
+- Update Psalm and @nextcloud/eslint-config, and sync the lint workflows
+- Update dependencies
 
 ### Fixed
-- show the content of the dashboard widget again, it stayed empty because of an error when loading
-- name the link under a full dashboard widget after the widget again, it read "More items …"
+
+- Show the content of the dashboard widget again, it stayed empty because of an error when loading
+- Name the link under a full dashboard widget after the widget again, it read "More items …"
 
 ## 2.3.0 - 2026-07-27
+
+### Added
+
+- Added support for Nextcloud 35
+
 ### Changed
-- added support of NC35
-- bump dependencies
+
+- Update dependencies
 
 ## 2.2.2 - 2026-04-20
+
+### Added
+
+- Added support for Nextcloud 34
+
 ### Changed
-- added support of NC34, dropped NC30, NC31, and NC32
-- minimum required PHP raised from 8.1 to 8.2
-- bump dependencies
+
+- Update dependencies
+
+### Removed
+
+- Nextcloud 30 to 32 and PHP 8.1 support
 
 ## 2.1.1 - 2025-11-10
+
+### Added
+
+- Added support for Nextcloud 33
+
 ### Changed
-- added support of NC33
-- bump dependencies
+
+- Update dependencies
 
 ## 2.1.0 - 2025-07-22
+
+### Added
+
+- Added support for Nextcloud 32
+
 ### Changed
-- minimum required NC raised from v28 to v30
-- bump js libs
+
+- Update dependencies
+
+### Removed
+
+- Nextcloud 28 and 29, and PHP 8.0 support
 
 ## 2.0.5 - 2024-11-18
+
+### Added
+
+- Added support for Nextcloud 31
+
 ### Changed
-- bump js libs
+
+- Update dependencies
 
 ### Fixed
-- encrypt secrets in the database and not expose them to UI
+
+- Encrypt secrets in the database and do not expose them to the UI
 
 ## 2.0.4 - 2024-07-24
+
+### Added
+
+- Added support for Nextcloud 30
+
 ### Changed
-- added support of NC30, minimum required NC raised from v27 to v28
-- bump js libs
+
+- Update dependencies
+
+### Removed
+
+- Nextcloud 27 support
 
 ## 2.0.3 - 2024-03-08
+
+### Added
+
+- Added support for Nextcloud 29
+
 ### Changed
-- added support of NC29, minimum required NC raised from v26 to v27
-- bump js libs
+
+- Update dependencies
+
+### Removed
+
+- Nextcloud 26 support
 
 ## 2.0.2 - 2023-10-24
+
 ### Changed
-- bump js libs
 
-## 2.0.1 – 2023-06-30
-### Fixed
-- fallback to OpenGraph when not getting information about links
+- Update dependencies
 
-## 2.0.0 – 2023-04-21
-### Changed
-- dependency update and maintenance
-- supported php>=8.0
+## 2.0.1 - 2023-06-30
 
-## 1.0.7 – 2023-02-22
-### Changed
-- add 26 compat
-- lazy load dashboard widget
-- use @nextcloud/vue 7.6.1
-
-## 1.0.5 – 2022-08-29
-### Changed
-- implement proper token refresh based on expiration date
-- use material icons everywhere
-- make the app ready for NC 25 style changes
-- bump js libs, asjut to new eslint config
-
-## 1.0.2 – 2021-09-13
-### Changed
-- bump js libs
-
-### Fixed
-- bug when OAuth fails and no error provided in redirection URL
-[#19](https://github.com/nextcloud/integration_reddit/issues/19) @bionicworx
-
-## 1.0.1 – 2021-06-28
-### Changed
-- stop polling widget content when document is hidden
-- bump js libs
-- get rid of all deprecated stuff
-- bump min NC version to 22
-- cleanup backend code
-
-## 1.0.0 – 2021-03-19
-### Changed
-- bump js libs
-
-## 0.0.11 – 2021-02-16
-### Changed
-- app certificate
-
-## 0.0.10 – 2021-02-12
-### Changed
-- bump js libs
-- bump max NC version
-
-### Fixed
-- import nc dialog style
-
-## 0.0.9 – 2021-01-01
-### Changed
-- bump js libs
-
-### Fixed
-- browser detection
-
-## 0.0.6 – 2020-12-10
-### Changed
-- bump js libs
-
-### Fixed
-- avoid crash when accessibility app is not installed
-
-## 0.0.5 – 2020-10-22
 ### Added
-- automatic releases
 
-### Changed
-- use Webpack 5 and style lint
+- Added support for Nextcloud 28
 
 ### Fixed
-- possible problem with redirect URI when generated on server side
 
-## 0.0.4 – 2020-10-12
+- Fall back to OpenGraph when not getting information about links
+
+## 2.0.0 - 2023-04-21
+
+### Added
+
+- Added support for Nextcloud 27
+
+### Changed
+
+- Require PHP 8.0 or later
+- Update dependencies and do maintenance
+
+### Removed
+
+- Nextcloud 22 to 25 support
+
+## 1.0.7 - 2023-02-22
+
+### Added
+
+- Added support for Nextcloud 26
+
+### Changed
+
+- Lazy load the dashboard widget
+- Use @nextcloud/vue 7.6.1
+
+## 1.0.5 - 2022-08-29
+
+### Added
+
+- Added support for Nextcloud 24 and 25
+
+### Changed
+
+- Implement proper token refresh based on the expiration date
+- Use Material icons everywhere
+- Make the app ready for the Nextcloud 25 style changes
+- Adjust to the new ESLint config
+- Update dependencies
+
+## 1.0.2 - 2021-09-13
+
+### Changed
+
+- Update dependencies
+
 ### Fixed
-- don't expose token to settings UI
 
-## 0.0.3 – 2020-10-02
+- Bug when OAuth fails and no error is provided in the redirection URL
+
+## 1.0.1 - 2021-06-28
+
 ### Added
-- more hints about protocol registration
-- lots of translations
+
+- Added support for Nextcloud 23
 
 ### Changed
-- improve code quality
-- improve settings screenshots
-- bump libs
 
-## 0.0.2 – 2020-09-21
+- Stop polling the widget content when the document is hidden
+- Get rid of all deprecated stuff
+- Clean up the backend code
+- Update dependencies
+
+### Removed
+
+- Nextcloud 20 and 21 support
+
+## 1.0.0 - 2021-03-19
+
 ### Changed
-* improve authentication design
-* improve widget empty content
 
-## 0.0.1 – 2020-09-02
+- Update dependencies
+
+## 0.0.11 - 2021-02-16
+
+### Changed
+
+- Republish to use the new app certificate
+
+## 0.0.10 - 2021-02-12
+
 ### Added
-* the app
+
+- Added support for Nextcloud 22
+
+### Changed
+
+- Update dependencies
+
+### Fixed
+
+- Import the Nextcloud dialog style
+
+## 0.0.9 - 2021-01-01
+
+### Changed
+
+- Update dependencies
+
+### Fixed
+
+- Browser detection
+
+## 0.0.6 - 2020-12-10
+
+### Changed
+
+- Update dependencies
+
+### Fixed
+
+- Avoid a crash when the Accessibility app is not installed
+
+## 0.0.5 - 2020-10-22
+
+### Added
+
+- Automatic releases
+
+### Changed
+
+- Use Webpack 5 and stylelint
+
+### Fixed
+
+- Possible problem with the redirect URI when generated on the server side
+
+## 0.0.4 - 2020-10-12
+
+### Fixed
+
+- Don't expose the token to the settings UI
+
+## 0.0.3 - 2020-10-02
+
+### Added
+
+- More hints about protocol registration
+- Lots of translations
+
+### Changed
+
+- Improve the code quality
+- Improve the settings screenshots
+- Update dependencies
+
+## 0.0.2 - 2020-09-21
+
+### Changed
+
+- Improve the authentication design
+- Improve the widget empty content
+
+## 0.0.1 - 2020-09-02
+
+### Added
+
+- Initial release for Nextcloud 20 and 21
