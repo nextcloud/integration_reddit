@@ -5,6 +5,7 @@
     "Bad credentials" : "Credențiale greșite",
     "OAuth access token refused" : "Token-ul OAuth a fost refuzat",
     "Connected accounts" : "Conturile conectate",
+    "Password confirmation is required to save these options" : "Pentru a salva aceste opțiuni este necesară confirmarea parolei",
     "Application ID" : "ID-ul aplicației",
     "Application secret" : "Secretul aplicației",
     "Connected as {user}" : "Conectat ca {user}"
